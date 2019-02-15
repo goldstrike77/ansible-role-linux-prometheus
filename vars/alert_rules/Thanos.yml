@@ -1,0 +1,98 @@
+---
+prometheus_thanos_alert_rules:
+# Thanos
+  - alert: ThanosCompactHalted
+    expr: thanos_compactor_halted{service="thanos-compact_exporter"} == 1
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      description: 'Thanos compaction has failed to run and now is halted'
+
+  - alert: ThanosCompactCompactionsFailed
+    expr: rate(prometheus_tsdb_compactions_failed_total{service="thanos-compact_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Compact is failing compaction'
+
+  - alert: ThanosCompactBucketOperationsFailed
+    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-compact_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Compact bucket operations are failing'
+
+  - alert: ThanosCompactNotRunIn24Hours
+    expr: (time() - max by(environment,group,instance,job,service)(thanos_objstore_bucket_last_successful_upload_time{service="thanos-compact_exporter"}) ) /60/60 > 24
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Compaction has not been run in 24 hours'
+
+  - alert: ThanosComactionIsNotRunning
+    expr: up{service="thanos-compact_exporter"} == 0 or absent({service="thanos-compact_exporter"})
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Compaction is not running'
+
+  - alert: ThanosComactionMultipleCompactionsAreRunning
+    expr: sum by(environment,group,instance,job,service)(up{service="thanos-compact_exporter"}) > 1
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Multiple replicas of Thanos compaction shouldn't be running"
+
+  - alert: ThanosStoreGrpcErrorRate
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-store_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Store is returning Internal/Unavailable errors'
+
+  - alert: ThanosStoreBucketOperationsFailed
+    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-store_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Store is failing to do bucket operations'
+
+  - alert: ThanosSidecarPrometheusDown
+    expr: thanos_sidecar_prometheus_up{service="thanos-sidecar_exporter"} == 0
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      description: 'Thanos Sidecar cannot connect to Prometheus'
+
+  - alert: ThanosSidecarBucketOperationsFailed
+    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-sidecar_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Sidecar bucket operations are failing'
+
+  - alert: ThanosSidecarGrpcErrorRate
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-sidecar_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: Thanos Sidecar is returning Internal/Unavailable errors
+
+  - alert: ThanosQueryGrpcErrorRate
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-query_exporter"}[5m]) > 0
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Thanos Query is returning Internal/Unavailable errors'

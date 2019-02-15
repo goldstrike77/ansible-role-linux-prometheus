@@ -1,0 +1,126 @@
+---
+- name: Check current thanos version
+  command: '/usr/local/bin/thanos --version'
+  register: thanos_current_version
+  changed_when: false
+  failed_when: false
+
+- name: Delete existing thanos version if different
+  file:
+    path: '/usr/local/bin/thanos'
+    state: absent
+  when:
+    - thanos_current_version.stderr is defined
+    - thanos_version not in thanos_current_version.stderr
+
+- name: Install thanos
+  unarchive:
+    src: '{{ thanos_soft_url }}/v{{ thanos_version }}/thanos-{{ thanos_version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.tar.gz'
+    dest: '/usr/local/bin'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+    validate_certs: 'no'
+    timeout: '60'  
+  register: thanos_upgrade
+  when:
+    - thanos_current_version.rc == 2 or thanos_version not in thanos_current_version.stderr
+  ignore_errors: true
+
+- name: Thanos base components systemd service file transfer
+  template:
+    src: 'thanos-{{ item }}.service.j2'
+    dest: '/lib/systemd/system/thanos-{{ item }}.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: '{{ thanos_base_components }}'
+  register: thanos_base_systemd
+
+- name: Thanos base components default file transfer
+  template:
+    src: 'thanos-{{ item }}.default.j2'
+    dest: '/etc/default/thanos-{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: '{{ thanos_base_components }}'
+  register: thanos_base_default
+
+- name: Creating thanos data folder
+  file:
+    dest: '{{ prometheus_data_path }}/thanos'
+    state: 'directory'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: 0755
+  when: thanos_obj_arg is defined
+
+- name: Thanos objstore config file transfer
+  template:
+    src: 'bucket.yml.j2'
+    dest: '{{ prometheus_data_path }}/thanos/bucket.yml'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0644'
+  when: thanos_obj_arg is defined
+  register: thanos_bucket
+
+- name: Thanos optional components systemd service file transfer
+  template:
+    src: 'thanos-{{ item }}.service.j2'
+    dest: '/lib/systemd/system/thanos-{{ item }}.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: '{{ thanos_opti_components }}'
+  when: thanos_obj_arg is defined
+  register: thanos_opti_systemd
+
+- name: Thanos optional components default file transfer
+  template:
+    src: 'thanos-{{ item }}.default.j2'
+    dest: '/etc/default/thanos-{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: '{{ thanos_opti_components }}'
+  when: thanos_obj_arg is defined
+  register: thanos_opti_default
+
+- name: Creating thanos compact process folder
+  file:
+    dest: '{{ prometheus_data_path }}/compact'
+    state: 'directory'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: 0755
+  when:
+    - thanos_obj_arg is defined
+    - thanos_compactor in ansible_default_ipv4.address
+
+- name: Thanos compact systemd service file transfer
+  template:
+    src: 'thanos-compact.service.j2'
+    dest: '/lib/systemd/system/thanos-compact.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when:
+    - thanos_obj_arg is defined
+    - thanos_compactor in ansible_default_ipv4.address
+  register: thanos_compact_systemd
+
+- name: Thanos compact default file transfer
+  template:
+    src: 'thanos-compact.default.j2'
+    dest: '/etc/default/thanos-compact'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when:
+    - thanos_obj_arg is defined
+    - thanos_compactor in ansible_default_ipv4.address
+  register: thanos_compact_default

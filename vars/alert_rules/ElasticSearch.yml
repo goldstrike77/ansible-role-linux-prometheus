@@ -1,0 +1,24 @@
+---
+prometheus_elasticsearch_alert_rules:
+# ElasticSearch
+  - alert: ES_Node_Down
+    expr: "elasticsearch_node_stats_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "ElasticSearch node has been down"
+  - alert: ES_Heap_Usage
+    expr: "elasticsearch_jvm_memory_used_bytes{area='heap'} / elasticsearch_jvm_memory_max_bytes{area='heap'} > 0.95"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "ElasticSearch node heap usage is over 95%"
+  - alert: ES_Cluster_Downgrade
+    expr: "elasticsearch_cluster_health_number_of_nodes < 3"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "ElasticSearch cluster running on less than 3 nodes"

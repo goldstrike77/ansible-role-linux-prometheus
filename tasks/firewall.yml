@@ -1,0 +1,11 @@
+---
+- name: Allow prometheus service port
+  firewalld:
+    port: '{{ item.value }}/tcp'
+    permanent: 'true'
+    immediate: 'true'
+    state: 'enabled'
+  with_dict:
+    - '{{ prometheus_port }}'
+    - '{{ thanos_port }}'
+    - '{{ trickster_port }}'

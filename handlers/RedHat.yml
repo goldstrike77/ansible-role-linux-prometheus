@@ -1,0 +1,53 @@
+---
+- name: Restart prometheus service
+  systemd:
+    name: '{{ item }}'
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+  with_items:
+    - '{{ prometheus_service }}'
+
+- name: Reload prometheus service
+  systemd:
+    name: '{{ item }}'
+    state: reloaded
+  with_items:
+    - '{{ prometheus_service }}'
+
+- name: Restart consul-template service
+  systemd:
+    name: 'consul-template'
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+
+- name: Restart thanos base components service
+  systemd:
+    name: 'thanos-{{ item }}.service'
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+  with_items: '{{ thanos_base_components }}'
+
+- name: Restart thanos optional components service
+  systemd:
+    name: 'thanos-{{ item }}.service'
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+  with_items: '{{ thanos_opti_components }}'
+
+- name: Restart thanos compact service
+  systemd:
+    name: 'thanos-compact.service'
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+
+- name: Restart trickster service
+  systemd:
+    name: 'trickster.service'
+    enabled: yes
+    state: restarted
+    daemon_reload: yes

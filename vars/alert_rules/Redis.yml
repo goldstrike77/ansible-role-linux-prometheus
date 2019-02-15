@@ -1,0 +1,10 @@
+---
+prometheus_redis_alert_rules:
+# Redis in-memory store
+  - alert: Redis_Down
+    expr: "redis_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Redis has been down"

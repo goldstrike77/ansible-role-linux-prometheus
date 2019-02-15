@@ -1,0 +1,3 @@
+---
+- include: 'RedHat.yml'
+  when: ansible_os_family == 'RedHat'

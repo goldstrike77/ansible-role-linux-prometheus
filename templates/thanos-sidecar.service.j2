@@ -1,0 +1,27 @@
+[Unit]
+Description=Thanos Sidecar
+
+[Service]
+{% if ansible_processor_vcpus > 1 %}
+Environment=GOMAXPROCS={{ (ansible_processor_vcpus * 0.5 + 1)|int }}
+{% else %}
+Environment=GOMAXPROCS=1
+{% endif %}
+Type=simple
+User=prometheus
+Group=prometheus
+LimitNOFILE={{ thanos_arg.ulimit_nofile }}
+LimitNPROC={{ thanos_arg.ulimit_nproc }}
+LimitCORE={{ thanos_arg.ulimit_core }}
+LimitMEMLOCK={{ thanos_arg.ulimit_memlock }}
+EnvironmentFile=-/etc/default/thanos-sidecar
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=thanos-sidecar
+ExecStart=/usr/local/bin/thanos sidecar $THANOS_SIDECAR_OPTS
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

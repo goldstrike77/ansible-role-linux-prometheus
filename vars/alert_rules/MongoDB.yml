@@ -1,0 +1,10 @@
+---
+prometheus_mongodb_alert_rules:
+# MongoDB database
+  - alert: MongoDB_Down
+    expr: "mongodb_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Instance has been down"

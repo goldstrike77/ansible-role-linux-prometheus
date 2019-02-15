@@ -1,0 +1,66 @@
+---
+prometheus_os_alert_rules:
+# Operating system
+  - alert: Instance_Down
+    expr: "up{job='Instance'} == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Instance has been down"
+  - alert: Instance_PS_Load
+    expr: "(node_load5 / count without (cpu, mode) (node_cpu{mode='system'})) > 5"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Processor load has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%'
+  - alert: Instance_CPU_Load
+    expr: '((100 * (1 - avg by(environment,group,instance,job,service)(irate(node_cpu{mode="idle"}[10m])))) > 80) or ((100 * (1 - avg by(environment,group,instance,job,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 80)'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'CPU usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%'
+  - alert: Instance_RAM_Usage
+    expr: '((sum(node_memory_MemTotal)by(environment,group,instance,job,service) - sum(node_memory_MemFree + node_memory_Buffers + node_memory_Cached)by(environment,group,instance,job,service)) / (sum(node_memory_MemTotal)by(environment,group,instance,job,service)) * 100 > 80) or ((sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,job,service) - sum(wmi_os_physical_memory_free_bytes)by(environment,group,instance,job,service)) / (sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,job,service)) * 100 > 80)'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%'
+  - alert: Instance_FS_Usage
+    expr: '(node_filesystem_free{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Filesystem {{ $labels.filesystem }} has less than 20% disk space"
+  - alert: Instance_FS_Usage
+    expr: '(node_filesystem_free{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)'
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      description: "Filesystem {{ $labels.filesystem }} has less than 10% disk space"
+  - alert: Instance_NIC_Receive
+    expr: '(irate(node_network_receive_bytes{device!~"lo|docker.*"}[5m]) > 300000000) or (irate(wmi_net_bytes_received_total[5m]) > 300000000)'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "{{ $labels.device }} has more than 300M receive"
+  - alert: Instance_NIC_Transmit
+    expr: '(irate(node_network_transmit_bytes{device!~"lo|docker.*"}[5m]) > 30000000) or (irate(wmi_net_bytes_sent_total[5m]) > 30000000)'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "{{ $labels.device }} has more than 300M traffic"
+  - alert: Service_NTP
+    expr: 'node_scrape_collector_success{collector="ntp"} == 0'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "NTP service has been down"

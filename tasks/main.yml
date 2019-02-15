@@ -1,0 +1,62 @@
+---
+- name: Include OS-specific variables
+  include_vars: '{{ ansible_os_family }}.yml'
+
+- name: Include tasks for specific OS
+  include: '{{ ansible_os_family }}.yml'
+
+- name: Configure the prometheus firewall
+  include: 'firewall.yml'
+
+- name: Include prometheus tasks
+  include: 'prometheus.yml'
+
+- name: Restart the prometheus service
+  shell: echo ''
+  notify: 'Restart prometheus service'
+  when: soft_updated.changed or soft_config.changed
+
+- name: Include consul-template tasks
+  include: 'consul-template.yml'
+
+- name: Restart the consul-template service
+  shell: echo ''
+  notify: 'Restart consul-template service'
+  when: consul_template_config_update|changed or consul_template_ctmpl_update|changed or consul_template_systemd_update|changed
+
+- name: Include thanos tasks
+  include: 'thanos.yml'
+  when: thanos_version is defined
+
+- name: Restart the thanos base components service
+  shell: echo ''
+  notify: 'Restart thanos base components service'
+  when: thanos_upgrade|changed or thanos_base_systemd|changed or thanos_base_default|changed or thanos_bucket|changed
+
+- name: Restart thanos optional components service
+  shell: echo ''
+  notify: 'Restart thanos optional components service'
+  when: thanos_upgrade|changed or thanos_opti_systemd|changed or thanos_opti_default|changed or thanos_bucket|changed
+
+- name: Restart thanos compact service
+  shell: echo ''
+  notify: 'Restart thanos compact service'
+  when: (thanos_compact_systemd|changed or thanos_compact_default|changed or thanos_bucket|changed) and thanos_compactor in ansible_default_ipv4.address
+
+- name: Include trickster tasks
+  include: 'trickster.yml'
+  when: trickster_version is defined
+
+- name: Restart trickster service
+  shell: echo ''
+  notify: 'Restart trickster service'
+  when: trickster_upgrade|changed or trickster_config|changed or trickster_systemd|changed
+
+- name: Force the handler to run immediately
+  meta: flush_handlers
+
+- name: Ensure MTA service is enabled
+  systemd:
+    name: 'postfix.service'
+    enabled: 'yes'
+    state: 'started'

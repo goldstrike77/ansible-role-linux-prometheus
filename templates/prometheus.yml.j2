@@ -1,0 +1,72 @@
+# Global configuration
+global:
+  scrape_interval:     {{ prometheus_arg.scrape_interval }}
+  scrape_timeout:      {{ prometheus_arg.scrape_timeout }}
+  evaluation_interval: {{ prometheus_arg.evaluation_interval }}
+  external_labels:
+    replica: {{ inventory_hostname|upper }}
+
+# Alertmanager configuration
+alerting:
+  alert_relabel_configs:
+    - regex: 'replica'
+      action: labeldrop
+  alertmanagers:
+    - static_configs:
+      - targets: ['{{ alertmanager_server | list | join(":" + prometheus_port.alertmanager + "', '") }}:{{ prometheus_port.alertmanager }}']
+
+# Rule configuration
+rule_files:
+  - {{ prometheus_conf_path }}/rules/*.rules
+
+# Scrape configuration
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['{{ ansible_host }}:9090']
+      labels:
+        group: "{{ host_group|upper }}"
+        instance: {{ inventory_hostname|upper }}
+
+  # Instance service discovery configuration
+  - job_name: 'Instance'
+{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
+    consul_sd_configs:
+      - server: '{{ prometheus_consul_server }}'
+        token: {{ prometheus_consul_token }}
+        refresh_interval: {{ prometheus_arg.refresh_interval }}
+        services: ['{{ "', '".join(vars["target_services"]) }}']
+    relabel_configs:
+      - source_labels: [__meta_consul_service_metadata_instance]
+        target_label: 'instance'
+      - source_labels: [__meta_consul_service_metadata_group]
+        target_label: 'group'
+      - source_labels: [__meta_consul_service_metadata_environment]
+        target_label: 'environment'
+      - source_labels: [__meta_consul_service]
+        target_label: 'service'
+{% else %}
+{% endif %}
+
+  - job_name: 'Minio'
+    metrics_path: /minio/prometheus/metrics
+{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
+    consul_sd_configs:
+      - server: '{{ prometheus_consul_server }}'
+        token: {{ prometheus_consul_token }}
+        refresh_interval: {{ prometheus_arg.refresh_interval }}
+        services: ['minio_exporter']
+    relabel_configs:
+      - source_labels: [__meta_consul_service_metadata_instance]
+        target_label: 'instance'
+      - source_labels: [__meta_consul_service_metadata_group]
+        target_label: 'group'
+      - source_labels: [__meta_consul_service_metadata_environment]
+        target_label: 'environment'
+      - source_labels: [__meta_consul_service_metadata_tenant]
+        target_label: 'tenant'
+      - source_labels: [__meta_consul_service]
+        target_label: 'service'
+{% else %}
+{% endif %}

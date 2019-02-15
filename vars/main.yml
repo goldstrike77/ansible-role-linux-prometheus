@@ -1,0 +1,87 @@
+---
+prometheus_conf_files:
+  - { src: 'prometheus.default.j2',   dest: '/etc/default/prometheus' }
+  - { src: 'prometheus.yml.j2',       dest: '{{ prometheus_conf_path }}/prometheus.yml' }
+  - { src: 'alertmanager.yml.j2',     dest: '{{ prometheus_conf_path }}/alertmanager.yml' }
+  - { src: 'alertmanager.service.j2', dest: '/lib/systemd/system/alertmanager.service' }
+  - { src: 'prometheus.service.j2',   dest: '/lib/systemd/system/prometheus.service' }  
+
+prometheus_service:
+  - 'alertmanager.service'
+  - 'prometheus.service'
+
+prometheus_alert_rules:
+  - 'Consul'
+  - 'ElasticSearch'
+  - 'OS'
+  - 'Minio'
+  - 'MongoDB'
+  - 'MySQL'
+  - 'PostgreSQL'
+  - 'Redis'
+  - 'Thanos'
+
+consul_soft_url: 'http://releases.hashicorp.com'
+
+thanos_soft_url: 'http://github.com/improbable-eng/thanos/releases/download'
+
+trickster_soft_url: 'http://github.com/Comcast/trickster/releases/download/'
+
+thanos_base_components:
+  - 'sidecar'
+  - 'query'
+
+thanos_opti_components:
+  - 'store'
+
+architecture:
+  amd64: 'amd64'
+  x86_64: 'amd64'
+  armv6l: 'arm'
+  armv7l: 'arm'
+  aarch64: 'arm64'
+  32-bit: '386'
+  64-bit: 'amd64'
+
+consul_template_ctmpl:
+  - 'lnode-discovery'
+
+target_services:
+  - 'consul_exporter'
+  - 'elasticsearch_exporter'
+  - 'jmx_exporter'
+  - 'mongodb_exporter'
+  - 'mysqld_exporter'
+  - 'node_exporter'
+  - 'php-fpm_exporter'
+  - 'postgres_exporter'
+  - 'redis_exporter'
+  - 'thanos-compact_exporter'
+  - 'thanos-query_exporter'
+  - 'thanos-sidecar_exporter'
+  - 'thanos-store_exporter'
+  - 'trickster_exporter'
+  - 'vmware_exporter'
+  - 'wmi_exporter'
+
+alertmanager_server: "\
+  {% set _alertmanager_server = [] %}\
+  {% for host in groups[group_names[-1]] %}\
+    {% if ( prometheus ) %}\
+      {% if _alertmanager_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+    {% endif %}\
+  {% endfor %}\
+  {{ _alertmanager_server }}"
+alertmanager_initial: "{{ alertmanager_server[0] }}"
+
+thanos_server: "\
+  {% set _thanos_server = [] %}\
+  {% for host in groups[group_names[-1]] %}\
+    {% if ( prometheus ) %}\
+      {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
+        {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+      {% endif %}\
+    {% endif %}\
+  {% endfor %}\
+  {{ _thanos_server }}"
+thanos_compactor: "{{ alertmanager_server[0] }}"

@@ -1,0 +1,41 @@
+global:
+  smtp_smarthost: '{{ alertmanager_arg.smtp_smarthost }}'
+  smtp_from: '{{ alertmanager_arg.smtp_from }}'
+  smtp_require_tls: {{ alertmanager_arg.smtp_require_tls }}
+  smtp_auth_username: '{{ alertmanager_arg.smtp_auth_username }}'
+  smtp_auth_password: '{{ alertmanager_arg.smtp_auth_password }}'
+  wechat_api_url: '{{ alertmanager_arg.wechat_api_url }}'
+
+templates:
+- '/etc/prometheus/templates/default.tmpl'
+
+route:
+  group_by: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
+  group_wait: '{{ alertmanager_arg.group_wait }}'
+  group_interval: '{{ alertmanager_arg.group_interval }}'
+  repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
+  receiver: team-infra-mails
+  routes:
+    - match:
+        severity: critical
+      receiver: team-infra-wechat
+
+inhibit_rules:
+- source_match:
+    severity: 'critical'
+  target_match:
+    severity: 'warning'
+  equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
+
+receivers:
+  - name: "team-infra-wechat"
+    wechat_configs:
+      - send_resolved: true
+        to_user: '{{ alertmanager_arg.wechat_to_user }}'
+        agent_id: '{{ alertmanager_arg.wechat_agent_id }}'
+        corp_id: '{{ alertmanager_wechat_api_corp_id }}'
+        api_secret: '{{ alertmanager_wechat_api_secret }}'
+  - name: 'team-infra-mails'
+    email_configs:
+      - send_resolved: true
+        to: '{{ alertmanager_arg.mail_to_user }}'

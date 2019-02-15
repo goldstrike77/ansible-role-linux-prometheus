@@ -1,0 +1,16 @@
+[
+{$ range tree "prometheus/linux" $}
+{
+"targets": ["{$ .Value $}"],
+  "labels": {
+    "hostname": "{$ .Key $}"
+  }
+},
+{$ end $}
+{
+"targets": ["10.10.10.10:9100"],
+  "labels": {
+    "hostname": "template"
+  }
+}
+]

@@ -1,0 +1,17 @@
+---
+prometheus_consul_alert_rules:
+# Redis distributed service discovery
+  - alert: Consul_Down
+    expr: "consul_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Consul node has been down"
+  - alert: Consul_Service
+    expr: "sum by (node, service_name)(consul_catalog_service_node_healthy == 0)"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Consul services are failing"

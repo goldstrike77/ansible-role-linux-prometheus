@@ -1,0 +1,127 @@
+---
+# General parameters #
+prometheus: 'false'
+prometheus_conf_path: '/etc/prometheus'
+prometheus_data_path: '/data'
+thanos_version: '0.3.0'
+trickster_version: '0.1.7'
+prometheus_consul_server: '127.0.0.1:8500'
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
+alertmanager_wechat_api_corp_id: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
+alertmanager_wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
+thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870' # Secret key to encrypt cluster gossip
+
+# Listen port #
+prometheus_port: 
+  alertmanager: '9093'
+  cluster: '9094'
+  prometheus: '9090'
+thanos_port:
+  compact_http: '19194'
+  query_cluster: '19292'
+  query_grpc: '19092'
+  query_http: '19192'
+  sidecar_cluster: '19291'
+  sidecar_grpc: '19091'
+  sidecar_http: '19191'
+  store_cluster: '19293'
+  store_grpc: '19093'
+  store_http: '19193'
+trickster_port:
+  proxy_server: '19090'
+  metrics: '8082'
+
+# Prometheus System Variables #
+prometheus_arg:
+  evaluation_interval: '30s' # How frequently to evaluate rules
+  query_max_concurrency: '256' # Maximum number of queries executed concurrently
+  refresh_interval: '60s' # Refresh interval to re-read the instance list
+  sd_conf: 'consul_sd_configs' # Service discovery configurations
+  scrape_interval: '60s' # How frequently to scrape targets from this job
+  scrape_timeout: '10s' # How long until a scrape request times out
+  storage_tsdb_block_duration: '2h' # Must be set to equal values to disable local compaction
+  storage_tsdb_retention: '30d' # How long to retain samples in storage
+  ulimit_core: 'infinity' # The number of coredump launched by systemd
+  ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
+  ulimit_nofile: '262144' # The number of files launched by systemd
+  ulimit_nproc: '262144' # The number of processes launched by systemd
+
+# Alertmanager System Variables #
+alertmanager_arg:
+  mail_to_user: 'somebody@somebody.com'
+  group_by:
+    - 'alertname'
+    - 'cluster'
+    - 'service'
+  group_wait: '60s'
+  group_interval: '60s'
+  repeat_interval: '2h'
+  smtp_auth_password: 'password'
+  smtp_auth_username: 'user'
+  smtp_from: 'do-not-reply@somebody.com'
+  smtp_require_tls: 'false'
+  smtp_smarthost: '127.0.0.1:25'
+  wechat_agent_id: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
+  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+  wechat_to_user: 'xxxxxxx'
+
+# Thanos System Variables #
+thanos_arg:
+  chunk_pool_size: '2GB' # Maximum size of concurrently allocatable bytes for chunks
+  cluster_gossip_interval: '10s' # Between sending gossip messages
+  cluster_pushpull_interval: '10s' # Between gossip state syncs
+  cluster_refresh_interval: '1m' # membership to refresh
+  index_cache_size: '1GB' # Maximum size of items held in the index cache
+  log_format: 'logfmt'
+  log_level: 'info'
+  query_auto_downsampling: false # Enable automatic adjustment source data
+  query_max_concurrent: '200' # Maximum number of queries processed concurrently
+  query_timeout: '1m' # Maximum time to process query
+  ulimit_core: 'infinity' # The number of coredump launched by systemd
+  ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
+  ulimit_nofile: '262144' # The number of files launched by systemd
+  ulimit_nproc: '262144' # The number of processes launched by systemd
+
+# Thanos objstore Variables #
+thanos_obj_arg:
+  type: 'S3'
+  bucket: 'thanos'
+  endpoint: '127.0.0.1:9001'
+  insecure: 'true'
+  signature_version2: 'false'
+  access_key: 'QTNTQZZP1NOBNCL5LPRX'
+  secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
+
+# Trickster System Variables #
+trickster_arg:
+  cache_type: 'memory' # Defines what kind of cache Trickster uses
+  compression: 'true' # Determines whether the cache should be compressed
+  default_step: '300' # Defines the step in seconds of a query_range request if not provided by the client
+  fast_forward_disable: 'false' # Turn off the 'fast forward' feature for any requests proxied
+  ignore_no_cache_header: 'false' # Disable a client's ability to send a no-cache to refresh a cached query
+  max_value_age_secs: '86400' # Defines the maximum age of specific datapoints in seconds
+  reap_sleep_ms: '1000' # Defines how long the cache reaper waits between reap cycles in millisecond
+  record_ttl_secs: '43200' # Defines the relative expiration of cached queries in seconds
+  ulimit_core: 'infinity' # The number of coredump launched by systemd
+  ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
+  ulimit_nofile: '262144' # The number of files launched by systemd
+  ulimit_nproc: '262144' # The number of processes launched by systemd
+
+# Consul templatee Variables #
+consul_template_version: '0.19.5'
+consul_template_arg:
+  conf_path: '/etc/consul-template.d'
+  consul_port: '8500'
+  consul_server: '127.0.0.1'
+  enable_syslog: 'true'
+  log_level: 'info'
+  retry_attempts: '12'
+  retry_backoff: '250ms'
+  retry_enabled: 'true'
+  retry_max_backoff: '3m'
+  template_backup: 'true'
+  template_command_timeout: '60s'
+  uid: '2011'
+  ulimit_nofile: '8192'
+  ulimit_nproc: '8192'
+  user: 'consul'

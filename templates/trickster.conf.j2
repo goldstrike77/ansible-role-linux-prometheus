@@ -1,0 +1,27 @@
+[main]
+instance_id = 1
+
+[proxy_server]
+listen_port = {{ trickster_port.proxy_server }}
+
+[cache]
+cache_type = '{{ trickster_arg.cache_type }}'
+record_ttl_secs = {{ trickster_arg.record_ttl_secs }}
+reap_sleep_ms = {{ trickster_arg.reap_sleep_ms }}
+compression = {{ trickster_arg.compression }}
+
+[origins]
+    [origins.default]
+    origin_url = 'http://127.0.0.1:{% if thanos_version is defined %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
+    api_path = '/api/v1'
+    default_step = {{ trickster_arg.default_step }}
+    ignore_no_cache_header = {{ trickster_arg.ignore_no_cache_header }}
+    max_value_age_secs = {{ trickster_arg.max_value_age_secs }}
+    fast_forward_disable = {{ trickster_arg.fast_forward_disable }}
+
+[metrics]
+listen_port = {{ trickster_port.metrics }}
+
+[logging]
+log_level = 'info'
+log_file = '/var/log/trickster.log'

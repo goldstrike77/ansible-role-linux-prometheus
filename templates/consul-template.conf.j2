@@ -1,0 +1,28 @@
+log_level = "{{ consul_template_arg.log_level }}"
+syslog {
+  enabled = {{ consul_template_arg.enable_syslog }}
+}
+
+consul {
+  address = "{{ consul_template_arg.consul_server }}:{{ consul_template_arg.consul_port }}"
+  retry {
+    enabled = {{ consul_template_arg.retry_enabled }}
+    attempts = {{ consul_template_arg.retry_attempts }}
+    backoff = "{{ consul_template_arg.retry_backoff }}"
+    max_backoff = "{{ consul_template_arg.retry_max_backoff }}"
+  }
+}
+
+template {
+  source = "{{ consul_template_arg.conf_path }}/ctmpl/{{ item }}.ctmpl"
+  destination = "{{ consul_template_arg.conf_path }}/conf.d/{{ item }}.json"
+  command = ""
+  command_timeout = "{{ consul_template_arg.template_command_timeout }}"
+  backup = {{ consul_template_arg.template_backup }}
+  left_delimiter = "{$"
+  right_delimiter = "$}"
+  wait {
+    min = "2s"
+    max = "20s"
+  }
+}

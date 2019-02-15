@@ -1,0 +1,28 @@
+# -*- mode: conf -*-
+
+[Unit]
+Description=The Prometheus 2 monitoring system and time series database.
+Documentation=https://prometheus.io
+After=network.target
+
+[Service]
+{% if ansible_processor_vcpus > 1 %}
+Environment=GOMAXPROCS={{ (ansible_processor_vcpus * 0.5 + 1)|int }}
+{% else %}
+Environment=GOMAXPROCS=1
+{% endif %}
+EnvironmentFile=-/etc/default/prometheus
+User=prometheus
+LimitNOFILE={{ prometheus_arg.ulimit_nofile }}
+LimitNPROC={{ prometheus_arg.ulimit_nproc }}
+LimitCORE={{ prometheus_arg.ulimit_core }}
+LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
+ExecStart=/usr/bin/prometheus \
+          --web.console.libraries=/usr/share/prometheus/console_libraries \
+          --web.console.templates=/usr/share/prometheus/consoles \
+          $PROMETHEUS_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

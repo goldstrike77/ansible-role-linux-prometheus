@@ -1,0 +1,32 @@
+# -*- mode: conf -*-
+
+[Unit]
+Description=Prometheus Alertmanager.
+Documentation=https://github.com/prometheus/alertmanager
+After=network.target
+
+[Service]
+{% if ansible_processor_vcpus > 1 %}
+Environment=GOMAXPROCS={{ (ansible_processor_vcpus * 0.5 + 1)|int }}
+{% else %}
+Environment=GOMAXPROCS=1
+{% endif %}
+EnvironmentFile=-/etc/default/alertmanager
+User=prometheus
+LimitNOFILE={{ prometheus_arg.ulimit_nofile }}
+LimitNPROC={{ prometheus_arg.ulimit_nproc }}
+LimitCORE={{ prometheus_arg.ulimit_core }}
+LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
+ExecStart=/usr/bin/alertmanager \
+          --config.file={{ prometheus_conf_path }}/alertmanager.yml \
+          --storage.path={{ prometheus_data_path }}/alertmanager \
+          --cluster.listen-address=0.0.0.0:{{ prometheus_port.cluster }} \
+{% if alertmanager_initial not in ansible_default_ipv4.address %}
+          --cluster.peer={{ alertmanager_initial }}:{{ prometheus_port.cluster }} \
+{% endif %}
+          $ALERTMANAGER_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
