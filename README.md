@@ -295,7 +295,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       signature_version2: 'false'
       access_key: 'QTNTQZZP1NOBNCL5LPRX'
       secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
-    trickster_arg
+    trickster_arg:
       cache_type: 'memory'
       compression: 'true'
       default_step: '300'
