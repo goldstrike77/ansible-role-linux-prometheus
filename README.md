@@ -230,7 +230,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       prometheus: '9090'
     thanos_port:
       compact_http: '19194'
-       query_cluster: '19292'
+      query_cluster: '19292'
       query_grpc: '19092'
       query_http: '19192'
       sidecar_cluster: '19291'
@@ -281,10 +281,10 @@ You can also use the group_vars or the host_vars files for setting the variables
       log_format: 'logfmt'
       log_level: 'info'
       query_auto_downsampling: false
-       query_max_concurrent: '200'
-       query_timeout: '1m'
-       ulimit_core: 'infinity'
-       ulimit_memlock: 'infinity'
+      query_max_concurrent: '200'
+      query_timeout: '1m'
+      ulimit_core: 'infinity'
+      ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
     thanos_obj_arg:
