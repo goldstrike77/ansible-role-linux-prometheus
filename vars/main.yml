@@ -67,7 +67,7 @@ target_services:
 alertmanager_server: "\
   {% set _alertmanager_server = [] %}\
   {% for host in groups[group_names[-1]] %}\
-    {% if ( prometheus ) %}\
+    {% if ( prometheus_is_install ) %}\
       {% if _alertmanager_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
     {% endif %}\
   {% endfor %}\
@@ -77,7 +77,7 @@ alertmanager_initial: "{{ alertmanager_server[0] }}"
 thanos_server: "\
   {% set _thanos_server = [] %}\
   {% for host in groups[group_names[-1]] %}\
-    {% if ( prometheus ) %}\
+    {% if ( prometheus_is_install ) %}\
       {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
         {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
       {% endif %}\
