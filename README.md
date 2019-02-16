@@ -101,11 +101,13 @@ The following list of supported the Prometheus releases:
 
 In order to get the Prometheus running, you'll have to define the following properties before executing the role:
 
-* `prometheus`: a boolean value, whether install the prometheus.
+* `prometheus_is_install`: a boolean value, whether install the prometheus.
 
 ### Main parameters #
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
-* `prometheus`: A boolean value, whether install the prometheus.
+
+##### General parameters
+* `prometheus_is_install`: A boolean value, whether install the prometheus.
 * `prometheus_conf_path`: Specify the Prometheus data directory.
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
 * `thanos_version`: Specify the Thanos version.
@@ -115,6 +117,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_wechat_api_corp_id`:  The corp id for authentication.
 * `alertmanager_wechat_api_secret`: The API key to use when talking to the WeChat API.
 * `thanos_cluster_secret_key`: Initial secret key to encrypt cluster gossip.
+
+##### Listen port
 * `prometheus_port.alertmanager`: alertmanager instance listen port.
 * `prometheus_port.cluster`:  alertmanager cluster listen port.
 * `prometheus_port.prometheus`: Prometheus instance listen port.
@@ -130,6 +134,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_port.store_http`: Port for store HTTP endpoints.
 * `trickster_port.proxy_server`: Defines the port on which Trickster's Proxy server listens.
 * `trickster_port.metrics`: Defines the port that Trickster's metrics server listens on at /metrics.
+
+##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
 * `prometheus_arg.query_max_concurrency`: Maximum number of queries executed concurrently.
 * `prometheus_arg.refresh_interval`: Refresh interval to re-read the instance list.
@@ -142,6 +148,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_arg.ulimit_memlock`: The number of memory lock launched by systemd.
 * `prometheus_arg.ulimit_nofile`: The number of files launched by systemd.
 * `prometheus_arg.ulimit_nproc`: The number of processes launched by systemd
+
+##### Alertmanager System Variables
 * `alertmanager_arg.mail_to_user`: The email address to send notifications to.
 * `alertmanager_arg.group_by`: They are grouped by alertname.
 * `alertmanager_arg.group_wait`: How long to initially wait to send a notification for a group of alerts.
@@ -155,6 +163,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.wechat_agent_id`: The wechat agent ID.
 * `alertmanager_arg.wechat_api_url`: The WeChat API URL.
 * `alertmanager_arg.wechat_to_user`: The WeChat user to send notifications to.
+
+##### Thanos System Variables
 * `thanos_arg.chunk_pool_size`: Maximum size of concurrently allocatable bytes for chunks.
 * `thanos_arg.cluster_gossip_interval`: Between sending gossip messages.
 * `thanos_arg.cluster_pushpull_interval`: Between gossip state syncs
@@ -169,6 +179,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_arg.ulimit_memlock`: The number of memory lock launched by systemd.
 * `thanos_arg.ulimit_nofile`: The number of files launched by systemd.
 * `thanos_arg.ulimit_nproc`: The number of processes launched by systemd.
+
+##### Thanos objstore Variables
 * `thanos_obj_arg.type`: Objstore service type.
 * `thanos_obj_arg.bucket`: Object storage bucket name.
 * `thanos_obj_arg.endpoint`: Objstore service endpoint.
@@ -176,6 +188,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_obj_arg.signature_version2`: I don't know what that means.
 * `thanos_obj_arg.access_key`:  AccessKeyID.
 * `thanos_obj_arg.secret_key`: SecretAccessKey.
+
+##### Trickster System Variables
 * `trickster_arg.cache_type`: Defines what kind of cache Trickster uses.
 * `trickster_arg.compression`: Determines whether the cache should be compressed.
 * `trickster_arg.default_step`: I don't know what it means.
