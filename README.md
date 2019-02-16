@@ -214,9 +214,9 @@ There are no dependencies on other roles.
 ### Hosts inventory file
 See tests/inventory for an example.
 
-    node01 ansible_host='192.168.1.10' prometheus='true'
-    node02 ansible_host='192.168.1.11' prometheus='true'
-    node03 ansible_host='192.168.1.12' prometheus='true'
+    node01 ansible_host='192.168.1.10' prometheus_is_install='true'
+    node02 ansible_host='192.168.1.11' prometheus_is_install='true'
+    node03 ansible_host='192.168.1.12' prometheus_is_install='true'
 
 ### Vars in role configuration
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
