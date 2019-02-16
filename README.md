@@ -147,7 +147,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_arg.ulimit_core`: The number of coredump launched by systemd.
 * `prometheus_arg.ulimit_memlock`: The number of memory lock launched by systemd.
 * `prometheus_arg.ulimit_nofile`: The number of files launched by systemd.
-* `prometheus_arg.ulimit_nproc`: The number of processes launched by systemd
+* `prometheus_arg.ulimit_nproc`: The number of processes launched by systemd.
 
 ##### Alertmanager System Variables
 * `alertmanager_arg.mail_to_user`: The email address to send notifications to.
