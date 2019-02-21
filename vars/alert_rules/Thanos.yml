@@ -65,7 +65,7 @@ prometheus_thanos_alert_rules:
     annotations:
       description: 'Thanos Store is failing to do bucket operations'
 
-  - alert: ThanosSidecarPrometheusDown
+  - alert: ThanosSidecarPrometheus
     expr: thanos_sidecar_prometheus_up{service="thanos-sidecar_exporter"} == 0
     for: 10m
     labels:

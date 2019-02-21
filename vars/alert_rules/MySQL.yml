@@ -1,20 +1,20 @@
 ---
 prometheus_mysql_alert_rules:
 # MySQL database
-  - alert: MySQL_Down
+  - alert: MySQL
     expr: "mysql_up == 0"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Instance has been down"
-  - alert: MySQL_Rep_Down
+      description: "Instance has been stoped"
+  - alert: MySQL_Rep
     expr: "mysql_slave_status_slave_io_running == 0 or mysql_slave_status_slave_sql_running == 0"
     for: 10m
     labels:
       severity: critical
     annotations:
-      description: "Slave replication (IO or SQL) has been down"
+      description: "Slave replication (IO or SQL) has been stoped"
   - alert: MySQL_Rep_Lag
     expr: "(mysql_slave_lag_seconds > 30) and on(instance) (predict_linear(mysql_slave_lag_seconds[5m],60 * 2) > 0)"
     for: 10m

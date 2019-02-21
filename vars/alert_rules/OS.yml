@@ -1,13 +1,13 @@
 ---
 prometheus_os_alert_rules:
 # Operating system
-  - alert: Instance_Down
+  - alert: Instance
     expr: "up{job='Instance'} == 0"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Instance has been down"
+      description: "Instance has been stoped"
   - alert: Instance_PS_Load
     expr: "(node_load5 / count without (cpu, mode) (node_cpu{mode='system'})) > 5"
     for: 10m
@@ -57,10 +57,10 @@ prometheus_os_alert_rules:
       severity: warning
     annotations:
       description: "{{ $labels.device }} has more than 300M traffic"
-  - alert: Service_NTP
-    expr: 'node_scrape_collector_success{collector="ntp"} == 0'
+  - alert: Instance_Service
+    expr: '(node_systemd_unit_state{state="inactive"} == 1) or (wmi_service_state{state="stopped"} == 1)'
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "NTP service has been down"
+      description: "Service has been stoped"
