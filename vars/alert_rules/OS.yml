@@ -1,13 +1,6 @@
 ---
 prometheus_os_alert_rules:
 # Operating system
-  - alert: Instance
-    expr: "up{job='Instance'} == 0"
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      description: "Instance has been unreachable"
   - alert: Instance_PS_Load
     expr: "(node_load5 / count without (cpu, mode) (node_cpu{mode='system'})) > 5"
     for: 10m

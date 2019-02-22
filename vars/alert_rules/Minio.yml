@@ -1,7 +1,7 @@
 ---
 prometheus_minio_alert_rules:
 # Minio object storage
-  - alert: Minio_DiskOffline
+  - alert: Minio_Disk_Offline
     expr: "minio_offline_disks != 0"
     for: 10m
     labels:

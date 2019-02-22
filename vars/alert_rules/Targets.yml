@@ -1,0 +1,10 @@
+---
+prometheus_targets_alert_rules:
+# Targets
+  - alert: Targets
+    expr: "up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Endpoint has been unreachable"

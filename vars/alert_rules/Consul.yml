@@ -1,7 +1,7 @@
 ---
 prometheus_consul_alert_rules:
 # Redis distributed service discovery
-  - alert: Consul
+  - alert: Consul_Instance
     expr: "consul_up == 0"
     for: 5m
     labels:

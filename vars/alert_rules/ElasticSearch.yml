@@ -1,7 +1,7 @@
 ---
 prometheus_elasticsearch_alert_rules:
 # ElasticSearch
-  - alert: ES_Node
+  - alert: ES_Instance
     expr: "elasticsearch_node_stats_up == 0"
     for: 5m
     labels:

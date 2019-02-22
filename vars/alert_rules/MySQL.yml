@@ -1,7 +1,7 @@
 ---
 prometheus_mysql_alert_rules:
 # MySQL database
-  - alert: MySQL
+  - alert: MySQL_Instance
     expr: "mysql_up == 0"
     for: 5m
     labels:

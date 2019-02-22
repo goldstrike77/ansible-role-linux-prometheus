@@ -19,6 +19,7 @@ prometheus_alert_rules:
   - 'MySQL'
   - 'PostgreSQL'
   - 'Redis'
+  - 'Targets'
   - 'Thanos'
 
 consul_soft_url: 'http://releases.hashicorp.com'

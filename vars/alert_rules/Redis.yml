@@ -1,7 +1,7 @@
 ---
 prometheus_redis_alert_rules:
 # Redis in-memory store
-  - alert: Redis
+  - alert: Redis_Instance
     expr: "redis_up == 0"
     for: 5m
     labels:

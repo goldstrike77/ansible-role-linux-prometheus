@@ -1,7 +1,7 @@
 ---
 prometheus_mongodb_alert_rules:
 # MongoDB database
-  - alert: MongoDB
+  - alert: MongoDB_Instance
     expr: "mongodb_up == 0"
     for: 5m
     labels:
