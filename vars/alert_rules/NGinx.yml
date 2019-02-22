@@ -1,0 +1,10 @@
+---
+prometheus_nginx_alert_rules:
+# NGinx
+  - alert: NGinx_Instance
+    expr: "nginx_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Instance has been stoped"
