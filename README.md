@@ -224,7 +224,7 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: all
       roles:
          - role: ansible-role-linux prometheus
-           prometheus: true
+           prometheus_is_install: true
 
 ### Combination of group vars and playbook
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
