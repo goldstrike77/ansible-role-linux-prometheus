@@ -67,15 +67,15 @@ target_services:
   - 'vmware_exporter'
   - 'wmi_exporter'
 
-alertmanager_server: "\
-  {% set _alertmanager_server = [] %}\
+prometheus_server: "\
+  {% set _prometheus_server = [] %}\
   {% for host in groups[group_names[-1]] %}\
     {% if ( prometheus_is_install ) %}\
-      {% if _alertmanager_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+      {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
     {% endif %}\
   {% endfor %}\
-  {{ _alertmanager_server }}"
-alertmanager_initial: "{{ alertmanager_server[0] }}"
+  {{ _prometheus_server }}"
+alertmanager_initial: "{{ prometheus_server[0] }}"
 
 thanos_server: "\
   {% set _thanos_server = [] %}\
@@ -87,4 +87,4 @@ thanos_server: "\
     {% endif %}\
   {% endfor %}\
   {{ _thanos_server }}"
-thanos_compactor: "{{ alertmanager_server[0] }}"
+thanos_compactor: "{{ prometheus_server[0] }}"

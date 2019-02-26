@@ -13,7 +13,7 @@ alerting:
       action: labeldrop
   alertmanagers:
     - static_configs:
-      - targets: ['{{ alertmanager_server | list | join(":" + prometheus_port.alertmanager + "', '") }}:{{ prometheus_port.alertmanager }}']
+      - targets: ['{{ prometheus_server | list | join(":" + prometheus_port.alertmanager + "', '") }}:{{ prometheus_port.alertmanager }}']
 
 # Rule configuration
 rule_files:
@@ -46,6 +46,11 @@ scrape_configs:
         target_label: 'environment'
       - source_labels: [__meta_consul_service]
         target_label: 'service'
+{% if prometheus_server | length > 2 %}
+      - source_labels: [__meta_consul_service_address]
+        regex: '[({{ ip_sequence | list | unique | sort | join("|") }}).]+$'
+        action: keep
+{% endif %}
 {% else %}
 {% endif %}
 
