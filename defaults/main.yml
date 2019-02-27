@@ -40,7 +40,7 @@ prometheus_arg:
   scrape_interval: '60s' # How frequently to scrape targets from this job
   scrape_timeout: '10s' # How long until a scrape request times out
   storage_tsdb_block_duration: '2h' # Must be set to equal values to disable local compaction
-  storage_tsdb_retention: '30d' # How long to retain samples in storage
+  storage_tsdb_retention: '15d' # How long to retain samples in storage
   ulimit_core: 'infinity' # The number of coredump launched by systemd
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd

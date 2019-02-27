@@ -52,6 +52,7 @@ target_services:
   - 'consul_exporter'
   - 'elasticsearch_exporter'
   - 'jmx_exporter'
+  - 'minio_exporter'
   - 'mongodb_exporter'
   - 'mysqld_exporter'
   - 'nginx_exporter'

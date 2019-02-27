@@ -46,32 +46,14 @@ scrape_configs:
         target_label: 'environment'
       - source_labels: [__meta_consul_service]
         target_label: 'service'
+      - source_labels: [__meta_consul_service]
+        regex: 'minio_exporter'
+        target_label: __metrics_path__
+        replacement: '/minio/prometheus/metrics'
 {% if prometheus_server | length > 2 %}
-      - source_labels: [__meta_consul_service_address]
-        regex: '[({{ ip_sequence | list | unique | sort | join("|") }}).]+$'
+      - source_labels: [__address__]
+        regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
         action: keep
 {% endif %}
-{% else %}
-{% endif %}
-
-  - job_name: 'Minio'
-    metrics_path: /minio/prometheus/metrics
-{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
-    consul_sd_configs:
-      - server: '{{ prometheus_consul_server }}'
-        token: {{ prometheus_consul_token }}
-        refresh_interval: {{ prometheus_arg.refresh_interval }}
-        services: ['minio_exporter']
-    relabel_configs:
-      - source_labels: [__meta_consul_service_metadata_instance]
-        target_label: 'instance'
-      - source_labels: [__meta_consul_service_metadata_group]
-        target_label: 'group'
-      - source_labels: [__meta_consul_service_metadata_environment]
-        target_label: 'environment'
-      - source_labels: [__meta_consul_service_metadata_tenant]
-        target_label: 'tenant'
-      - source_labels: [__meta_consul_service]
-        target_label: 'service'
 {% else %}
 {% endif %}
