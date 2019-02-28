@@ -42,6 +42,8 @@ scrape_configs:
         regex: 'minio_exporter'
         target_label: __metrics_path__
         replacement: '/minio/prometheus/metrics'
+      - source_labels: [__meta_consul_service_metadata_tenant]
+        target_label: 'tenant'
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
