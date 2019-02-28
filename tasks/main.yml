@@ -1,4 +1,28 @@
 ---
+- name: Gather Prometheus node variables
+  set_fact:
+    prometheus_server: "\
+      {% set _prometheus_server = [] %}\
+      {% for host in groups[group_names[-1]] %}\
+        {% if ( prometheus_is_install ) %}\
+          {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+        {% endif %}\
+      {% endfor %}\
+      {{ _prometheus_server }}"
+
+- name: Gather Thanos node variables 
+  set_fact:
+    thanos_server: "\
+      {% set _thanos_server = [] %}\
+      {% for host in groups[group_names[-1]] %}\
+        {% if ( prometheus_is_install ) %}\
+          {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
+            {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+          {% endif %}\
+        {% endif %}\
+      {% endfor %}\
+      {{ _thanos_server }}"
+
 - name: Include OS-specific variables
   include_vars: '{{ ansible_os_family }}.yml'
 
@@ -41,7 +65,7 @@
 - name: Restart thanos compact service
   shell: echo ''
   notify: 'Restart thanos compact service'
-  when: (thanos_compact_systemd|changed or thanos_compact_default|changed or thanos_bucket|changed) and thanos_compactor in ansible_default_ipv4.address
+  when: (thanos_compact_systemd|changed or thanos_compact_default|changed or thanos_bucket|changed) and prometheus_server[0] in ansible_default_ipv4.address
 
 - name: Include trickster tasks
   include: 'trickster.yml'

@@ -99,7 +99,7 @@
     mode: 0755
   when:
     - thanos_obj_arg is defined
-    - thanos_compactor in ansible_default_ipv4.address
+    - prometheus_server[0] in ansible_default_ipv4.address
 
 - name: Thanos compact systemd service file transfer
   template:
@@ -110,7 +110,7 @@
     mode: '0644'
   when:
     - thanos_obj_arg is defined
-    - thanos_compactor in ansible_default_ipv4.address
+    - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_systemd
 
 - name: Thanos compact default file transfer
@@ -122,5 +122,5 @@
     mode: '0644'
   when:
     - thanos_obj_arg is defined
-    - thanos_compactor in ansible_default_ipv4.address
+    - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_default
