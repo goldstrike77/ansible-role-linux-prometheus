@@ -3,7 +3,7 @@
 prometheus_is_install: false
 prometheus_conf_path: '/etc/prometheus'
 prometheus_data_path: '/data'
-thanos_version: '0.3.0'
+thanos_version: '0.3.1'
 trickster_version: '0.1.7'
 prometheus_consul_server: '127.0.0.1:8500'
 prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
@@ -108,7 +108,7 @@ trickster_arg:
   ulimit_nproc: '262144' # The number of processes launched by systemd
 
 # Consul templatee Variables #
-consul_template_version: '0.19.5'
+consul_template_version: '0.20.0'
 consul_template_arg:
   conf_path: '/etc/consul-template.d'
   consul_port: '8500'
