@@ -50,7 +50,7 @@ scrape_configs:
         regex: 'minio_exporter'
         target_label: __metrics_path__
         replacement: '/minio/prometheus/metrics'
-{% if prometheus_server | length > 2 %}
+{% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
         action: keep

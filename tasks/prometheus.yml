@@ -2,7 +2,7 @@
 - name: Generate IP address filter
   set_fact:
     ip_sequence: "{{ ip_sequence | default([]) + [item[-1] | int] }}"
-  with_sequence: start={{ prometheus_server.index(ansible_default_ipv4.address) }} count={{ (prometheus_server | length - 1) * (prometheus_server | length + 1) }} stride={{ prometheus_server | length }}
+  with_sequence: start={{ prometheus_server.index(ansible_default_ipv4.address) }} end={{ prometheus_server | length * 4 }} stride=2
 
 - name: Creating prometheus configure folder
   file:

@@ -89,8 +89,8 @@ thanos_obj_arg:
   endpoint: '127.0.0.1:9001'
   insecure: 'true'
   signature_version2: 'false'
-  access_key: 'QTNTQZZP1NOBNCL5LPRX'
-  secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
+  access_key: '0GTXRMXD4FDFWURPABCG'
+  secret_key: 'ODaHlToJWUkbzWI1TNkbZX43SiFPLRLoZeASP0Z8'
 
 # Trickster System Variables #
 trickster_arg:
