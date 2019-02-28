@@ -21,14 +21,6 @@ rule_files:
 
 # Scrape configuration
 scrape_configs:
-  # Prometheus itself
-  - job_name: 'prometheus'
-    static_configs:
-    - targets: ['{{ ansible_host }}:9090']
-      labels:
-        group: "{{ host_group|upper }}"
-        instance: {{ inventory_hostname|upper }}
-
   # Instance service discovery configuration
   - job_name: 'Instance'
 {% if prometheus_arg.sd_conf == 'consul_sd_configs' %}

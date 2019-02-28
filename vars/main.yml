@@ -11,6 +11,7 @@ prometheus_service:
   - 'prometheus.service'
 
 prometheus_alert_rules:
+  - 'Alertmanager'
   - 'Consul'
   - 'ElasticSearch'
   - 'OS'
@@ -49,6 +50,7 @@ consul_template_ctmpl:
   - 'lnode-discovery'
 
 target_services:
+  - 'alertmanager_exporter'
   - 'consul_exporter'
   - 'elasticsearch_exporter'
   - 'jmx_exporter'
@@ -59,6 +61,7 @@ target_services:
   - 'node_exporter'
   - 'php-fpm_exporter'
   - 'postgres_exporter'
+  - 'prometheus_exporter'
   - 'redis_exporter'
   - 'thanos-compact_exporter'
   - 'thanos-query_exporter'

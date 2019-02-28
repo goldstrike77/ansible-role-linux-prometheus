@@ -1,0 +1,10 @@
+---
+prometheus_alertmanager_alert_rules:
+# Alertmanager
+  - alert: Alertmanager
+    expr: "rate(alertmanager_notifications_failed_total[5m]) > 0" 
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "Alertmanager is seeing errors for integration {{$labels.integration}}"
