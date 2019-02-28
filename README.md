@@ -100,23 +100,28 @@ The following list of supported the Prometheus releases:
 ### Distributed
 * Targets will be dispersed if greater than 3 prometheus nodes.
 * Use the last digital of the IP Address or host number to spread the load between multiple prometheus nodes.
-    for example:
-    node01:
-      - source_labels: [__address__]
-        regex: '.+[02468]:.+'
-        action: keep
-    node02:
-      - source_labels: [__address__]
-        regex: '.+[13579]:.+'
-        action: keep
-    node03:
-      - source_labels: [__address__]
-        regex: '.+[02468]:.+'
-        action: keep
-    node04:
-      - source_labels: [__address__]
-        regex: '.+[13579]:.+'
-        action: keep
+
+for example:
+
+        node01:
+          - source_labels: [__address__]
+            regex: .+[02468]:.+
+            action: keep
+
+        node02:
+          - source_labels: [__address__]
+            regex: .+[13579]:.+
+            action: keep
+
+        node03:
+          - source_labels: [__address__]
+            regex: .+[02468]:.+
+            action: keep
+
+        node04:
+          - source_labels: [__address__]
+            regex: .+[13579]:.+
+            action: keep
 
 ## Role variables
 ### Minimal configuration
@@ -235,6 +240,7 @@ There are no dependencies on other roles.
 
 ### Hosts inventory file
 See tests/inventory for an example, all host must belong to one child group.
+
     [demo_mon]
     node01 ansible_host='192.168.1.10' prometheus_is_install='true'
     node02 ansible_host='192.168.1.11' prometheus_is_install='true'
