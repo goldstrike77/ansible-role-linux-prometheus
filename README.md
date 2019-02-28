@@ -12,8 +12,8 @@ __Table of Contents__
 - [Overview](#overview)
 - [Requirements](#requirements)
   * [Operating systems](#operating-systems)
-  * [Prometheus Versions](#Prometheus-versions)
-  * [Distributed](#Distributed)
+  * [Prometheus versions](#Prometheus-versions)
+  * [Distributed mode](#Distributed-mode)
 - [ Role variables](#Role-variables)
   * [Minimal Configuration](#minimal-configuration)
   * [Main Configuration](#Main-parameters)
@@ -97,7 +97,7 @@ The following list of supported the Prometheus releases:
 
 * Prometheus v2.2.1+ 
 
-### Distributed
+### Distributed mode
 * Targets will be dispersed if greater than 3 prometheus nodes.
 * Use the last digital of the IP Address or host number to spread the load between multiple prometheus nodes.
 
