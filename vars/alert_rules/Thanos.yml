@@ -26,7 +26,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Compact bucket operations are failing'
 
   - alert: Thanos_Compact_NotRunIn24Hours
-    expr: (time() - max by(environment,group,instance,job,service)(thanos_objstore_bucket_last_successful_upload_time{service="thanos-compact_exporter"}) ) /60/60 > 24
+    expr: (time() - max by(environment,group,instance,service)(thanos_objstore_bucket_last_successful_upload_time{service="thanos-compact_exporter"}) ) /60/60 > 24
     for: 10m
     labels:
       severity: warning
@@ -42,7 +42,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Compaction is not running'
 
   - alert: Thanos_Compact_MultipleCompactionsAreRunning
-    expr: sum by(environment,group,instance,job,service)(up{service="thanos-compact_exporter"}) > 1
+    expr: sum by(environment,group,instance,service)(up{service="thanos-compact_exporter"}) > 1
     for: 10m
     labels:
       severity: warning

@@ -9,7 +9,7 @@ global:
 # Alertmanager configuration
 alerting:
   alert_relabel_configs:
-    - regex: 'replica'
+    - regex: 'replica|job'
       action: labeldrop
   alertmanagers:
     - static_configs:
@@ -47,7 +47,7 @@ scrape_configs:
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
-        action: keep
+        action: 'keep'
 {% endif %}
 {% else %}
 {% endif %}

@@ -9,14 +9,14 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Processor load has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%'
   - alert: Instance_CPU_Load
-    expr: '((100 * (1 - avg by(environment,group,instance,job,service)(irate(node_cpu{mode="idle"}[10m])))) > 80) or ((100 * (1 - avg by(environment,group,instance,job,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 80)'
+    expr: '((100 * (1 - avg by(environment,group,instance,service)(irate(node_cpu{mode="idle"}[10m])))) > 80) or ((100 * (1 - avg by(environment,group,instance,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 80)'
     for: 10m
     labels:
       severity: warning
     annotations:
       description: 'CPU usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%'
   - alert: Instance_RAM_Usage
-    expr: '((sum(node_memory_MemTotal)by(environment,group,instance,job,service) - sum(node_memory_MemFree + node_memory_Buffers + node_memory_Cached)by(environment,group,instance,job,service)) / (sum(node_memory_MemTotal)by(environment,group,instance,job,service)) * 100 > 80) or ((sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,job,service) - sum(wmi_os_physical_memory_free_bytes)by(environment,group,instance,job,service)) / (sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,job,service)) * 100 > 80)'
+    expr: '((sum(node_memory_MemTotal)by(environment,group,instance,service) - sum(node_memory_MemFree + node_memory_Buffers + node_memory_Cached)by(environment,group,instance,service)) / (sum(node_memory_MemTotal)by(environment,group,instance,service)) * 100 > 80) or ((sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,service) - sum(wmi_os_physical_memory_free_bytes)by(environment,group,instance,service)) / (sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,service)) * 100 > 80)'
     for: 10m
     labels:
       severity: warning
