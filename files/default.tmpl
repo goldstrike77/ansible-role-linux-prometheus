@@ -9,7 +9,7 @@ Start: {{ .StartsAt.Format "Mon, 02 Jan 2006 15:04:05 MST" }}
 
 {{ define "__text_alert_resolved_list" }}{{ range . }}
 Start: {{ .StartsAt.Format "Mon, 02 Jan 2006 15:04:05 MST" }}
-Een:   {{ .EndsAt.Format "Mon, 02 Jan 2006 15:04:05 MST" }}
+End:   {{ .EndsAt.Format "Mon, 02 Jan 2006 15:04:05 MST" }}
 {{ range .Labels.SortedPairs }}{{ .Name | title }}: {{ .Value }}
 {{ end }}{{ range .Annotations.SortedPairs }}{{ .Name | title }}: {{ .Value }}{{ end }}
 {{ end }}{{ end }}
