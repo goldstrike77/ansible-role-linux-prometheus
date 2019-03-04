@@ -30,6 +30,8 @@ scrape_configs:
         refresh_interval: {{ prometheus_arg.refresh_interval }}
         services: ['{{ "', '".join(vars["target_services"]) }}']
     relabel_configs:
+      - source_labels: [__meta_consul_service_address]
+        target_label: 'ipaddress'
       - source_labels: [__meta_consul_service_metadata_instance]
         target_label: 'instance'
       - source_labels: [__meta_consul_service_metadata_group]
