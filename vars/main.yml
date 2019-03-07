@@ -53,6 +53,7 @@ target_services:
   - 'alertmanager_exporter'
   - 'consul_exporter'
   - 'elasticsearch_exporter'
+  - 'grafana_exporter'
   - 'jmx_exporter'
   - 'minio_exporter'
   - 'mongodb_exporter'
