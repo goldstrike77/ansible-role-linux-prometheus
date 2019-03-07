@@ -13,7 +13,6 @@ Environment=GOMAXPROCS=1
 User={{ consul_template_arg.user }}
 LimitNOFILE={{ consul_template_arg.ulimit_nofile }}
 LimitNPROC={{ consul_template_arg.ulimit_nproc }}
-Restart=on-failure
 ExecStart=/usr/local/bin/consul-template $OPTIONS -config={{ consul_template_arg.conf_path }}/server
 ExecReload=/bin/kill -SIGHUP $MAINPID
 ExecStop=/bin/kill -SIGINT $MAINPID

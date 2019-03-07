@@ -15,7 +15,6 @@ LimitNPROC={{ thanos_arg.ulimit_nproc }}
 LimitCORE={{ thanos_arg.ulimit_core }}
 LimitMEMLOCK={{ thanos_arg.ulimit_memlock }}
 EnvironmentFile=-/etc/default/thanos-store
-Restart=on-failure
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=thanos-store
