@@ -29,7 +29,7 @@
   changed_when: false
   failed_when: false
 
-- name: Delete existing consul version if different
+- name: Delete existing consul-template version if different
   file:
     path: '/usr/local/bin/consul-template'
     state: absent
