@@ -49,7 +49,7 @@ scrape_configs:
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
-        action: 'keep'
+        action: 'drop'
 {% endif %}
 {% else %}
 {% endif %}
