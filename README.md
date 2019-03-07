@@ -105,16 +105,16 @@ for example:
 
         node01: - source_labels: [__address__]
                   regex: .+[02468]:.+
-                  action: keep
+                  action: drop
         node02: - source_labels: [__address__]
                   regex: .+[13579]:.+
-                  action: keep
+                  action: drop
         node03: - source_labels: [__address__]
                   regex: .+[02468]:.+
-                  action: keep
+                  action: drop
         node04: - source_labels: [__address__]
                   regex: .+[13579]:.+
-                  action: keep
+                  action: drop
 
 ## Role variables
 ### Minimal configuration
