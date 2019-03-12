@@ -11,19 +11,19 @@
     state: absent
   when:
     - trickster_current_version.stdout is defined
-    - trickster_version not in trickster_current_version.stdout
+    - trickster_arg.version not in trickster_current_version.stdout
 
 - name: Install trickster
   block:
     - name: Trickster download
       get_url:
-        url: '{{ trickster_soft_url }}/v{{ trickster_version }}/trickster-{{ trickster_version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz'
+        url: '{{ trickster_soft_url }}/v{{ trickster_arg.version }}/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz'
         dest: '/tmp'
         timeout: '60'
         validate_certs: 'no'
       register: result
     - name: Trickster uncompress
-      shell: 'gunzip -c /tmp/trickster-{{ trickster_version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz > /usr/local/bin/trickster'
+      shell: 'gunzip -c /tmp/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz > /usr/local/bin/trickster'
       when: result is succeeded
     - name: Trickster permission
       file:
@@ -35,10 +35,10 @@
       register: trickster_upgrade
     - name: Trickster compress file destroy
       file:
-        path: '/tmp/trickster-{{ trickster_version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz'
+        path: '/tmp/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz'
         state: 'absent'
   when:
-    - trickster_current_version.rc == 2 or trickster_version not in trickster_current_version.stdout
+    - trickster_current_version.rc == 2 or trickster_arg.version not in trickster_current_version.stdout
   ignore_errors: true
 
 - name: Trickster systemd service file transfer

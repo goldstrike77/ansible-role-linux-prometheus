@@ -12,7 +12,7 @@ compression = {{ trickster_arg.compression }}
 
 [origins]
     [origins.default]
-    origin_url = 'http://127.0.0.1:{% if thanos_version is defined %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
+    origin_url = 'http://127.0.0.1:{% if thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
     api_path = '/api/v1'
     default_step = {{ trickster_arg.default_step }}
     ignore_no_cache_header = {{ trickster_arg.ignore_no_cache_header }}

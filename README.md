@@ -127,11 +127,12 @@ In order to get the Prometheus running, you'll have to define the following prop
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `prometheus_is_install`: A boolean value, whether install the prometheus.
+* `prometheus_is_install`: A boolean value, whether install the Prometheus.
+* `thanos_is_install`: A boolean value, whether install the Thanos.
+* `trickster_is_install`: A boolean value, whether install the Trickster.
+* `thanos_bucket_is_used`: A boolean value, whether use object storage.
 * `prometheus_conf_path`: Specify the Prometheus data directory.
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
-* `thanos_version`: Specify the Thanos version.
-* `trickster_version`: Specify the Trickster version
 * `prometheus_consul_server`: The consul address and port.
 * `prometheus_consul_token`: The consul acl token.
 * `alertmanager_wechat_api_corp_id`:  The corp id for authentication.
@@ -199,6 +200,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_arg.ulimit_memlock`: The number of memory lock launched by systemd.
 * `thanos_arg.ulimit_nofile`: The number of files launched by systemd.
 * `thanos_arg.ulimit_nproc`: The number of processes launched by systemd.
+* `thanos_arg.version`: Specify the Thanos version.
 
 ##### Thanos objstore Variables
 * `thanos_obj_arg.type`: Objstore service type.
@@ -222,6 +224,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `trickster_arg.ulimit_memlock`:  The number of memory lock launched by systemd.
 * `trickster_arg.ulimit_nofile`: The number of files launched by systemd.
 * `trickster_arg.ulimit_nproc`: The number of processes launched by systemd.
+* `trickster_arg.version`: Specify the Trickster version.
 
 ### Other parameters
 There are some variables in vars/main.yml:
@@ -252,8 +255,9 @@ You can also use the group_vars or the host_vars files for setting the variables
 
     prometheus_conf_path: '/etc/prometheus'
     prometheus_data_path: '/data'
-    thanos_version: '0.2.1'
-    trickster_version: '0.1.5'
+    thanos_is_install: true
+    trickster_is_install: true
+    thanos_bucket_is_used: true
     prometheus_consul_server: '127.0.0.1:8500'
     prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
     alertmanager_wechat_api_corp_id: 'wxe787605fxxxxxxxx'
@@ -322,6 +326,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
+      version: '0.3.2'
     thanos_obj_arg:
       type: 'S3'
       bucket: 'thanos'
@@ -343,6 +348,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
+      version: '0.1.7'
 
 ## License
 

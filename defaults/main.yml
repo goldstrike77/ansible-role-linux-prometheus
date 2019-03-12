@@ -1,15 +1,16 @@
 ---
 # General parameters #
-prometheus_is_install: false
-prometheus_conf_path: '/etc/prometheus'
-prometheus_data_path: '/data'
-thanos_version: '0.3.2'
-trickster_version: '0.1.7'
-prometheus_consul_server: '127.0.0.1:8500'
-prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
 alertmanager_wechat_api_corp_id: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
 alertmanager_wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
+prometheus_conf_path: '/etc/prometheus'
+prometheus_consul_server: '127.0.0.1:8500'
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
+prometheus_data_path: '/data'
+prometheus_is_install: false
+thanos_bucket_is_used: false
 thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870' # Secret key to encrypt cluster gossip
+thanos_is_install: false
+trickster_is_install: false
 
 # Listen port #
 prometheus_port: 
@@ -81,6 +82,7 @@ thanos_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
+  version: '0.3.2'
 
 # Thanos objstore Variables #
 thanos_obj_arg:
@@ -106,6 +108,7 @@ trickster_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
+  version: '0.1.7'
 
 # Consul templatee Variables #
 consul_template_version: '0.20.0'

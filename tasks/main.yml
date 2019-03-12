@@ -50,7 +50,7 @@
 
 - name: Include thanos tasks
   include: 'thanos.yml'
-  when: thanos_version is defined
+  when: thanos_is_install
 
 - name: Restart the thanos base components service
   shell: echo ''
@@ -69,7 +69,7 @@
 
 - name: Include trickster tasks
   include: 'trickster.yml'
-  when: trickster_version is defined
+  when: trickster_is_install
 
 - name: Restart trickster service
   shell: echo ''
