@@ -23,7 +23,6 @@
     extra_opts: [--strip-components=1]
     remote_src: yes
     validate_certs: 'no'
-    timeout: '60'  
   register: thanos_upgrade
   when:
     - thanos_current_version.rc == 2 or thanos_arg.version not in thanos_current_version.stderr
