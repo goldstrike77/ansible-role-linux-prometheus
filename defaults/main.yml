@@ -11,6 +11,12 @@ thanos_bucket_is_used: false
 thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870' # Secret key to encrypt cluster gossip
 thanos_is_install: false
 trickster_is_install: false
+consul_is_register: false
+consul_exporter_token: '00000000-0000-0000-0000-000000000000'
+consul_clients:
+  - '1.1.1.1'
+  - '1.1.1.2'
+consul_http_port: '8500'
 
 # Listen port #
 prometheus_port: 

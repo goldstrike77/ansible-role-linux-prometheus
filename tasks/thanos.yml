@@ -123,3 +123,61 @@
     - thanos_bucket_is_used
     - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_default
+
+
+- name: Register thanos sidecar exporter service with an http health check
+  uri:
+    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    headers:
+      X-Consul-Token: "{{ consul_exporter_token }}"
+    body: '{"ID":"{{ inventory_hostname | upper }}_thanos-sidecar_exporter","name":"thanos-sidecar_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.sidecar_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.sidecar_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
+    body_format: 'json'
+  environment:
+    no_proxy: '{{ item }}'
+  with_items: '{{ consul_clients }}'
+  when: consul_is_register
+
+- name: Register thanos query exporter service with an http health check
+  uri:
+    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    headers:
+      X-Consul-Token: "{{ consul_exporter_token }}"
+    body: '{"ID":"{{ inventory_hostname | upper }}_thanos-query_exporter","name":"thanos-query_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.query_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.query_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
+    body_format: 'json'
+  environment:
+    no_proxy: '{{ item }}'
+  with_items: '{{ consul_clients }}'
+  when: consul_is_register
+
+- name: Register thanos store exporter service with an http health check
+  uri:
+    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    headers:
+      X-Consul-Token: "{{ consul_exporter_token }}"
+    body: '{"ID":"{{ inventory_hostname | upper }}_thanos-store_exporter","name":"thanos-store_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.store_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.store_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
+    body_format: 'json'
+  environment:
+    no_proxy: '{{ item }}'
+  with_items: '{{ consul_clients }}'
+  when:
+    - thanos_bucket_is_used
+    - consul_is_register
+
+- name: Register thanos compact exporter service with an http health check
+  uri:
+    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    headers:
+      X-Consul-Token: "{{ consul_exporter_token }}"
+    body: '{"ID":"{{ inventory_hostname | upper }}_thanos-compact_exporter","name":"thanos-compact_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.compact_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.compact_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
+    body_format: 'json'
+  environment:
+    no_proxy: '{{ item }}'
+  with_items: '{{ consul_clients }}'
+  when: 
+    - thanos_bucket_is_used
+    - consul_is_register
+    - prometheus_server[0] in ansible_default_ipv4.address
