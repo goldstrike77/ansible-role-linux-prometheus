@@ -124,7 +124,6 @@
     - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_default
 
-
 - name: Register thanos sidecar exporter service with an http health check
   uri:
     url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
@@ -137,6 +136,7 @@
     no_proxy: '{{ item }}'
   with_items: '{{ consul_clients }}'
   when: consul_is_register
+  no_log: true
 
 - name: Register thanos query exporter service with an http health check
   uri:
@@ -150,6 +150,7 @@
     no_proxy: '{{ item }}'
   with_items: '{{ consul_clients }}'
   when: consul_is_register
+  no_log: true
 
 - name: Register thanos store exporter service with an http health check
   uri:
@@ -165,6 +166,7 @@
   when:
     - thanos_bucket_is_used
     - consul_is_register
+  no_log: true
 
 - name: Register thanos compact exporter service with an http health check
   uri:
@@ -181,3 +183,4 @@
     - thanos_bucket_is_used
     - consul_is_register
     - prometheus_server[0] in ansible_default_ipv4.address
+  no_log: true

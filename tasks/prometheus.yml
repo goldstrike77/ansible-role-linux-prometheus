@@ -81,6 +81,7 @@
     no_proxy: '{{ item }}'
   with_items: '{{ consul_clients }}'
   when: consul_is_register
+  no_log: true
 
 - name: Register alertmanager exporter service with an http health check
   uri:
@@ -94,3 +95,4 @@
     no_proxy: '{{ item }}'
   with_items: '{{ consul_clients }}'
   when: consul_is_register
+  no_log: true

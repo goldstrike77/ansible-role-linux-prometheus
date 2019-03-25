@@ -71,3 +71,4 @@
     no_proxy: '{{ item }}'
   with_items: '{{ consul_clients }}'
   when: consul_is_register
+  no_log: true
