@@ -1,3 +1,6 @@
+## Prometheus
+![](https://img.shields.io/badge/Ansible-Prometheus-green.svg?logo=angular&style=for-the-badge)
+
 >__Please note that the original design goal of this role was more concerned with the initial installation and bootstrapping environment, which currently does not involve performing continuous maintenance, and therefore are only suitable for testing and development purposes,  should not be used in production environments.__
 
 >__请注意，此角色的最初设计目标更关注初始安装和引导环境，目前不涉及执行连续维护，因此仅适用于测试和开发目的，不应在生产环境中使用。__
@@ -357,7 +360,7 @@ You can also use the group_vars or the host_vars files for setting the variables
 
 ## License
 
-MIT
+![](https://img.shields.io/badge/MIT-purple.svg?style=for-the-badge)
 
 ## Author Information
 Please send your suggestions to make this role better.
