@@ -1,24 +1,59 @@
 ---
 prometheus_elasticsearch_alert_rules:
 # ElasticSearch
-  - alert: ES_Instance
+  - alert: Elastic_Instance
     expr: "elasticsearch_node_stats_up == 0"
     for: 5m
     labels:
       severity: critical
     annotations:
       description: "ElasticSearch node has been stoped"
-  - alert: ES_Heap_Usage
+  - alert: Elastic_Heap_Usage
     expr: "elasticsearch_jvm_memory_used_bytes{area='heap'} / elasticsearch_jvm_memory_max_bytes{area='heap'} > 0.95"
     for: 10m
     labels:
       severity: warning
     annotations:
       description: "ElasticSearch node heap usage is over 95%"
-  - alert: ES_Cluster_Downgrade
+  - alert: Elastic_Cluster_Downgrade
     expr: "elasticsearch_cluster_health_number_of_nodes < 3"
     for: 10m
     labels:
       severity: warning
     annotations:
       description: "ElasticSearch cluster running on less than 3 nodes"
+  - alert: Elastic_Cluster_Health
+    expr: "(elasticsearch_cluster_health_status{color='red'}==1) or (elasticsearch_cluster_health_status{color='yellow'}==1)"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Not all primary and replica shards are allocated in cluster"
+  - alert: Elastic_JVM_GC_Runs
+    expr: "rate(elasticsearch_jvm_gc_collection_seconds_count{}[5m])>5"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "JVM GC per seconds has a value of {{ $value }}"
+  - alert: Elastic_JVM_GC_Run_Time
+    expr: "rate(elasticsearch_jvm_gc_collection_seconds_sum[5m])>0.3"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "JVM GC run time in seconds has a value of {{ $value }}"
+  - alert: Elastic_json_parse_failures
+    expr: "elasticsearch_cluster_health_json_parse_failures>0"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "JSON parse failures has a value of {{ $value }}"
+  - alert: Elastic_breakers_tripped
+    expr: "rate(elasticsearch_breakers_tripped{}[5m])>0"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Breakers tripped has a value of {{ $value }}"
