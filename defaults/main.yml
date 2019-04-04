@@ -11,12 +11,14 @@ thanos_bucket_is_used: false
 thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870' # Secret key to encrypt cluster gossip
 thanos_is_install: false
 trickster_is_install: false
-consul_is_register: false
-consul_exporter_token: '00000000-0000-0000-0000-000000000000'
-consul_clients:
-  - '1.1.1.1'
-  - '1.1.1.2'
-consul_http_port: '8500'
+
+# Service Mesh #
+environments: 'SIT' # Define the service environment.
+consul_is_register: false # Whether register a client service with consul.
+consul_exporter_token: '00000000-0000-0000-0000-000000000000' # Consul client ACL token.
+consul_clients: # List of consul clients.
+  - 'localhost'
+consul_http_port: '8500' # The consul HTTP API port.
 
 # Listen port #
 prometheus_port: 

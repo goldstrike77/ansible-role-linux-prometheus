@@ -140,6 +140,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_wechat_api_corp_id`:  The corp id for authentication.
 * `alertmanager_wechat_api_secret`: The API key to use when talking to the WeChat API.
 * `thanos_cluster_secret_key`: Initial secret key to encrypt cluster gossip.
+
+##### Service Mesh
 * `environments`: Define the object environment.
 * `consul_is_register`: a boolean value, whether register a client service with consul.
 * `consul_clients`: Consul client addresses list.
