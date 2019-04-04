@@ -49,12 +49,11 @@ architecture:
 consul_template_ctmpl:
   - 'lnode-discovery'
 
-target_services:
+unauthenticate_target_services:
   - 'alertmanager_exporter'
   - 'consul_exporter'
   - 'elasticsearch_exporter'
   - 'grafana_exporter'
-  - 'graylog_exporter'
   - 'jmx_exporter'
   - 'minio_exporter'
   - 'mongodb_exporter'
@@ -72,3 +71,6 @@ target_services:
   - 'trickster_exporter'
   - 'vmware_exporter'
   - 'wmi_exporter'
+
+authenticate_target_services:
+  - 'graylog_exporter'
