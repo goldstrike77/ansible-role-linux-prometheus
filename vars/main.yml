@@ -52,7 +52,7 @@ consul_template_ctmpl:
 unauthenticate_target_services:
   - 'alertmanager_exporter'
   - 'consul_exporter'
-  - 'elasticsearch_exporter'
+  - 'elastic_exporter'
   - 'grafana_exporter'
   - 'jmx_exporter'
   - 'minio_exporter'
