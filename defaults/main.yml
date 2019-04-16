@@ -16,8 +16,7 @@ trickster_is_install: false
 environments: 'SIT' # Define the service environment.
 consul_is_register: false # Whether register a client service with consul.
 consul_exporter_token: '00000000-0000-0000-0000-000000000000' # Consul client ACL token.
-consul_clients: # List of consul clients.
-  - 'localhost'
+consul_clients: 'localhost' # List of consul clients.
 consul_http_port: '8500' # The consul HTTP API port.
 
 # Listen port #

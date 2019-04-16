@@ -74,25 +74,36 @@
     url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
     method: 'PUT'
     headers:
-      X-Consul-Token: "{{ consul_exporter_token }}"
+      X-Consul-Token: '{{ consul_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
     body: '{"ID":"{{ inventory_hostname | upper }}_prometheus_exporter","name":"prometheus_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.prometheus }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.prometheus }}/metrics","interval":"60s","tls_skip_verify":true,"method":"GET","timeout":"5s"}]}'
     body_format: 'json'
   environment:
     no_proxy: '{{ item }}'
-  with_items: '{{ consul_clients }}'
-  when: consul_is_register
+  loop: '{{ consul_clients|flatten(levels=1) }}'
+  register: register_status
+  until: register_status.status == 200
+  retries: 10
+  delay: 3
   no_log: true
 
 - name: Register alertmanager exporter service with an http health check
   uri:
     url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
     method: 'PUT'
+    status_code: '200'
     headers:
-      X-Consul-Token: "{{ consul_exporter_token }}"
+      X-Consul-Token: '{{ consul_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
     body: '{"ID":"{{ inventory_hostname | upper }}_alertmanager_exporter","name":"alertmanager_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.alertmanager }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }}/metrics","interval":"60s","tls_skip_verify":true,"method":"GET","timeout":"5s"}]}'
     body_format: 'json'
   environment:
     no_proxy: '{{ item }}'
-  with_items: '{{ consul_clients }}'
-  when: consul_is_register
+  loop: '{{ consul_clients|flatten(levels=1) }}'
+  register: register_status
+  until: register_status.status == 200
+  retries: 10
+  delay: 3
   no_log: true

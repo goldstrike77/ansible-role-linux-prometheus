@@ -23,6 +23,7 @@ prometheus_alert_rules:
   - 'Redis'
   - 'Targets'
   - 'Thanos'
+  - 'Tomcat'
 
 consul_soft_url: 'http://releases.hashicorp.com'
 
