@@ -46,6 +46,10 @@ scrape_configs:
         replacement: '/minio/prometheus/metrics'
       - source_labels: [__meta_consul_service_metadata_tenant]
         target_label: 'tenant'
+      - source_labels: [__meta_consul_service_metadata_cluster]
+        target_label: 'cluster'
+      - source_labels: [__meta_consul_service_metadata_replicaset]
+        target_label: 'replicaset'
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
@@ -81,6 +85,10 @@ scrape_configs:
         replacement: '/api/plugins/org.graylog.plugins.metrics.prometheus/metrics'
       - source_labels: [__meta_consul_service_metadata_tenant]
         target_label: 'tenant'
+      - source_labels: [__meta_consul_service_metadata_cluster]
+        target_label: 'cluster'
+      - source_labels: [__meta_consul_service_metadata_replicaset]
+        target_label: 'replicaset'
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
