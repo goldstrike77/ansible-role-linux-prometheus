@@ -57,6 +57,7 @@ dependencies:
   # if you add dependencies to this list.
   - role: 'ansible-role-linux-grafana'
     vars:
+      grafana_ngx_dept: '{% if prometheus_ngx_dept %}false{% endif %}'
       grafana_path: '{{ prometheus_grafana_path }}'
       grafana_version: '{{ prometheus_grafana_version }}'
       grafana_admin_user: '{{ prometheus_grafana_admin_user }}'
@@ -67,4 +68,26 @@ dependencies:
           settings:
             - server: '127.0.0.1'
               port: '{% if trickster_is_install %}{{ trickster_port.proxy_server }}{% elif thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
-    when: prometheus_grafana_dept
+    when: prometheus_ngx_dept or prometheus_grafana_dept
+  - role: 'ansible-role-linux-nginx'
+    vars:
+      ngx_version: '{{ prometheus_ngx_version }}'
+      ngx_port_http: '{{ prometheus_ngx_port_http }}'
+      ngx_port_https: '{{prometheus_ngx_port_https }}'
+      ngx_allow_methods:
+        - 'POST'
+        - 'PUT'
+        - 'GET'
+        - 'HEAD'
+      ngx_site:
+        - domain: '{{ prometheus_ngx_domain }}'
+          type: 'proxy'
+          location: '/'
+          syntax:
+            - 'expires off'
+            - 'proxy_set_header Host $http_host'
+          backend_address: '{{ prometheus_server }}'
+          backend_port: '{{ prometheus_grafana_port }}'
+          sticky: 'ip_hash'
+          keepalive: '32'
+    when: prometheus_ngx_dept or prometheus_grafana_dept

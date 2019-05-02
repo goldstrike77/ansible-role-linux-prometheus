@@ -40,12 +40,21 @@ trickster_port:
   metrics: '8082'
 
 # Grafana parameters #
-prometheus_grafana_dept: false # A boolean value, whether install the grafana for metrics visualization.
+prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
 prometheus_grafana_path: '/data' # Specify the Grafana data directory.
 prometheus_grafana_version: '5' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'password' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
+
+# NGinx parameters #
+prometheus_ngx_dept: false # A boolean value, whether proxy Grafana web interface using NGinx.
+prometheus_ngx_domain: 'visual.example.com' # Defines domain name.
+prometheus_ngx_version: 'standard' # extras or standard
+prometheus_ngx_port_http: '80' # NGinx HTTP listen port.
+prometheus_ngx_port_https: '443' # NGinx HTTPs listen port.
+prometheus_ngx_backend: # Define groups of servers that can be referenced.
+  - '127.0.0.1'
 
 # Prometheus System Variables #
 prometheus_arg:
