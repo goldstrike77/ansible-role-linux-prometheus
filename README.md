@@ -162,20 +162,19 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `trickster_port.metrics`: Defines the port that Trickster's metrics server listens on at /metrics.
 
 ##### Grafana parameters
-* `prometheus_grafana_dept`: A boolean value, whether install the grafana for metrics visualization.
+* `prometheus_grafana_dept`: A boolean value, whether install the Grafana for metrics visualization.
 * `prometheus_grafana_path`: Specify the Grafana data directory.
 * `prometheus_grafana_version`: Specify the Grafana version.
 * `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
 * `prometheus_grafana_admin_password`: The password of the default Grafana admin.
 * `prometheus_grafana_port`: Grafana instance listen port.
-
-##### NGinx parameters
-* `prometheus_ngx_dept`: A boolean value, whether proxy Grafana web interface using NGinx.
-* `prometheus_ngx_domain`: Defines domain name.
-* `prometheus_ngx_version`: extras or standard
-* `prometheus_ngx_port_http`: NGinx HTTP listen port.
-* `prometheus_ngx_port_https`: NGinx HTTPs listen port.
-* `prometheus_ngx_backend`: Define groups of servers that can be referenced.
+* `prometheus_grafana_ngx_dept`: A boolean value, whether proxy Grafana web interface using NGinx.
+* `prometheus_grafana_ngx_domain`: Defines domain name.
+* `prometheus_grafana_ngx_version`: extras or standard
+* `prometheus_grafana_ngx_port_http`: NGinx HTTP listen port.
+* `prometheus_grafana_ngx_port_https`: NGinx HTTPs listen port.
+* `prometheus_grafana_ngx_backend`: Define groups of servers that can be referenced.
+  - '127.0.0.1'
 
 ##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
@@ -309,16 +308,16 @@ You can also use the group_vars or the host_vars files for setting the variables
       metrics: '8082'
     prometheus_grafana_dept: false
     prometheus_grafana_path: '/data'
-    prometheus_grafana_version:
+    prometheus_grafana_version: '5'
     prometheus_grafana_admin_user: 'admin'
     prometheus_grafana_admin_password: 'password'
     prometheus_grafana_port: '3000'
-    prometheus_ngx_dept: false
-    prometheus_ngx_domain: 'visual.example.com'
-    prometheus_ngx_version: 'standard'
-    prometheus_ngx_port_http: '80'
-    prometheus_ngx_port_https: '443'
-    prometheus_ngx_backend:
+    prometheus_grafana_ngx_dept: false
+    prometheus_grafana_ngx_domain: 'visual.example.com'
+    prometheus_grafana_ngx_version: 'standard'
+    prometheus_grafana_ngx_port_http: '80'
+    prometheus_grafana_ngx_port_https: '443'
+    prometheus_grafana_ngx_backend:
       - '127.0.0.1'
     prometheus_arg:
       evaluation_interval: '30s'
