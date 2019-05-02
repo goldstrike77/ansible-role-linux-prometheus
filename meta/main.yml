@@ -71,11 +71,6 @@ dependencies:
       grafana_ngx_version: '{{ prometheus_grafana_ngx_version }}'
       grafana_ngx_port_http: '{{ prometheus_grafana_ngx_port_http }}'
       grafana_ngx_port_https: '{{prometheus_grafana_ngx_port_https }}'
-      grafana_ngx_allow_methods:
-        - 'POST'
-        - 'PUT'
-        - 'GET'
-        - 'HEAD'
       grafana_ngx_site:
         - domain: '{{ prometheus_grafana_ngx_domain }}'
           type: 'proxy'
