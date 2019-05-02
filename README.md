@@ -206,6 +206,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.wechat_api_url`: The WeChat API URL.
 * `alertmanager_arg.wechat_to_user`: The WeChat user to send notifications to.
 
+##### Alertmanager rules
+* `prometheus_alert_rules`: Defining alerting rules.
+
 ##### Thanos System Variables
 * `thanos_arg.chunk_pool_size`: Maximum size of concurrently allocatable bytes for chunks.
 * `thanos_arg.cluster_gossip_interval`: Between sending gossip messages.
@@ -347,6 +350,9 @@ You can also use the group_vars or the host_vars files for setting the variables
       wechat_agent_id: '0'
       wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
       wechat_to_user: 'xxxxxxx'
+    prometheus_alert_rules:
+      - 'Consul'
+      - 'ElasticSearch'
     thanos_arg:
       chunk_pool_size: '2GB'
       cluster_gossip_interval: '10s'

@@ -1,27 +1,27 @@
 ---
-- name: Gather Prometheus node variables
-  set_fact:
-    prometheus_server: "\
-      {% set _prometheus_server = [] %}\
-      {% for host in groups[group_names[-1]] %}\
-        {% if ( prometheus_is_install ) %}\
-          {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
-        {% endif %}\
-      {% endfor %}\
-      {{ _prometheus_server }}"
+#- name: Gather Prometheus node variables
+#  set_fact:
+#    prometheus_server: "\
+#      {% set _prometheus_server = [] %}\
+#      {% for host in groups[group_names[-1]] %}\
+#        {% if ( prometheus_is_install ) %}\
+#          {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+#        {% endif %}\
+#      {% endfor %}\
+#      {{ _prometheus_server }}"
 
-- name: Gather Thanos node variables 
-  set_fact:
-    thanos_server: "\
-      {% set _thanos_server = [] %}\
-      {% for host in groups[group_names[-1]] %}\
-        {% if ( prometheus_is_install ) %}\
-          {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
-            {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
-          {% endif %}\
-        {% endif %}\
-      {% endfor %}\
-      {{ _thanos_server }}"
+#- name: Gather Thanos node variables 
+#  set_fact:
+#    thanos_server: "\
+#      {% set _thanos_server = [] %}\
+#      {% for host in groups[group_names[-1]] %}\
+#        {% if ( prometheus_is_install ) %}\
+#          {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
+#            {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+#          {% endif %}\
+#        {% endif %}\
+#      {% endfor %}\
+#      {{ _thanos_server }}"
 
 - name: Include OS-specific variables
   include_vars: '{{ ansible_os_family }}.yml'

@@ -90,6 +90,22 @@ alertmanager_arg:
   wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
   wechat_to_user: 'xxxxxxx'
 
+# Alertmanager rules #
+prometheus_alert_rules: # Alerting rules
+  - 'Alertmanager'
+  - 'Consul'
+  - 'ElasticSearch'
+  - 'OS'
+  - 'Minio'
+  - 'MongoDB'
+  - 'MySQL'
+  - 'NGinx'
+  - 'PostgreSQL'
+  - 'Redis'
+  - 'Targets'
+  - 'Thanos'
+  - 'Tomcat'
+
 # Thanos System Variables #
 thanos_arg:
   chunk_pool_size: '2GB' # Maximum size of concurrently allocatable bytes for chunks

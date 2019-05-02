@@ -1,4 +1,24 @@
 ---
+prometheus_server: "\
+  {% set _prometheus_server = [] %}\
+  {% for host in groups[group_names[-1]] %}\
+    {% if ( prometheus_is_install ) %}\
+      {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+    {% endif %}\
+  {% endfor %}\
+  {{ _prometheus_server }}"
+
+thanos_server: "\
+  {% set _thanos_server = [] %}\
+  {% for host in groups[group_names[-1]] %}\
+    {% if ( prometheus_is_install ) %}\
+      {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
+        {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
+      {% endif %}\
+    {% endif %}\
+  {% endfor %}\
+  {{ _thanos_server }}"
+
 prometheus_conf_files:
   - { src: 'prometheus.default.j2',   dest: '/etc/default/prometheus' }
   - { src: 'prometheus.yml.j2',       dest: '{{ prometheus_conf_path }}/prometheus.yml' }
@@ -9,21 +29,6 @@ prometheus_conf_files:
 prometheus_service:
   - 'alertmanager.service'
   - 'prometheus.service'
-
-prometheus_alert_rules:
-  - 'Alertmanager'
-  - 'Consul'
-  - 'ElasticSearch'
-  - 'OS'
-  - 'Minio'
-  - 'MongoDB'
-  - 'MySQL'
-  - 'NGinx'
-  - 'PostgreSQL'
-  - 'Redis'
-  - 'Targets'
-  - 'Thanos'
-  - 'Tomcat'
 
 consul_soft_url: 'http://releases.hashicorp.com'
 
