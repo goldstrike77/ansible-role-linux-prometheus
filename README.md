@@ -173,7 +173,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_ngx_version`: extras or standard
 * `prometheus_grafana_ngx_port_http`: NGinx HTTP listen port.
 * `prometheus_grafana_ngx_port_https`: NGinx HTTPs listen port.
-* `prometheus_grafana_ngx_backend`: Define groups of backend servers that can be referenced.
 
 ##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
@@ -316,8 +315,6 @@ You can also use the group_vars or the host_vars files for setting the variables
     prometheus_grafana_ngx_version: 'standard'
     prometheus_grafana_ngx_port_http: '80'
     prometheus_grafana_ngx_port_https: '443'
-    prometheus_grafana_ngx_backend:
-      - '127.0.0.1'
     prometheus_arg:
       evaluation_interval: '30s'
       query_max_concurrency: '256'

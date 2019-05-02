@@ -51,8 +51,6 @@ prometheus_grafana_ngx_domain: 'visual.example.com' # Defines domain name.
 prometheus_grafana_ngx_version: 'standard' # extras or standard
 prometheus_grafana_ngx_port_http: '80' # NGinx HTTP listen port.
 prometheus_grafana_ngx_port_https: '443' # NGinx HTTPs listen port.
-prometheus_grafana_ngx_backend: # Define groups of servers that can be referenced.
-  - '127.0.0.1'
 
 # Prometheus System Variables #
 prometheus_arg:
