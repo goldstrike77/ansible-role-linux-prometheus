@@ -1,28 +1,4 @@
 ---
-#- name: Gather Prometheus node variables
-#  set_fact:
-#    prometheus_server: "\
-#      {% set _prometheus_server = [] %}\
-#      {% for host in groups[group_names[-1]] %}\
-#        {% if ( prometheus_is_install ) %}\
-#          {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
-#        {% endif %}\
-#      {% endfor %}\
-#      {{ _prometheus_server }}"
-
-#- name: Gather Thanos node variables 
-#  set_fact:
-#    thanos_server: "\
-#      {% set _thanos_server = [] %}\
-#      {% for host in groups[group_names[-1]] %}\
-#        {% if ( prometheus_is_install ) %}\
-#          {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
-#            {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
-#          {% endif %}\
-#        {% endif %}\
-#      {% endfor %}\
-#      {{ _thanos_server }}"
-
 - name: Include OS-specific variables
   include_vars: '{{ ansible_os_family }}.yml'
 
@@ -38,7 +14,7 @@
 - name: Restart the prometheus service
   shell: echo ''
   notify: 'Restart prometheus service'
-  when: soft_updated.changed or soft_config.changed
+  when: soft_updated is changed or soft_config is changed
 
 - name: Include consul-template tasks
   include: 'consul-template.yml'
@@ -46,7 +22,7 @@
 - name: Restart the consul-template service
   shell: echo ''
   notify: 'Restart consul-template service'
-  when: consul_template_config_update|changed or consul_template_ctmpl_update|changed or consul_template_systemd_update|changed
+  when: consul_template_config_update is changed or consul_template_ctmpl_update is changed or consul_template_systemd_update is changed
 
 - name: Include thanos tasks
   include: 'thanos.yml'
@@ -55,17 +31,17 @@
 - name: Restart the thanos base components service
   shell: echo ''
   notify: 'Restart thanos base components service'
-  when: thanos_upgrade|changed or thanos_base_systemd|changed or thanos_base_default|changed or thanos_bucket|changed
+  when: thanos_upgrade is changed or thanos_base_systemd is changed or thanos_base_default is changed or thanos_bucket is changed
 
 - name: Restart thanos optional components service
   shell: echo ''
   notify: 'Restart thanos optional components service'
-  when: thanos_upgrade|changed or thanos_opti_systemd|changed or thanos_opti_default|changed or thanos_bucket|changed
+  when: thanos_upgrade is changed or thanos_opti_systemd is changed or thanos_opti_default is changed or thanos_bucket is changed
 
 - name: Restart thanos compact service
   shell: echo ''
   notify: 'Restart thanos compact service'
-  when: (thanos_compact_systemd|changed or thanos_compact_default|changed or thanos_bucket|changed) and prometheus_server[0] in ansible_default_ipv4.address
+  when: (thanos_compact_systemd is changed or thanos_compact_default is changed or thanos_bucket is changed) and prometheus_server[0] in ansible_default_ipv4.address
 
 - name: Include trickster tasks
   include: 'trickster.yml'
@@ -74,7 +50,7 @@
 - name: Restart trickster service
   shell: echo ''
   notify: 'Restart trickster service'
-  when: trickster_upgrade|changed or trickster_config|changed or trickster_systemd|changed
+  when: trickster_upgrade is changed or trickster_config is changed or trickster_systemd is changed
 
 - name: Force the handler to run immediately
   meta: flush_handlers
