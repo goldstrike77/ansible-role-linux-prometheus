@@ -91,7 +91,7 @@ alertmanager_arg:
   wechat_to_user: 'xxxxxxx'
 
 # Alertmanager rules #
-prometheus_alert_rules: # Alerting rules
+prometheus_alert_rules: # Defining alerting rules.
   - 'Alertmanager'
   - 'Consul'
   - 'ElasticSearch'
