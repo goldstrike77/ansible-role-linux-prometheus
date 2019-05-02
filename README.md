@@ -31,10 +31,6 @@ __Table of Contents__
 
 ## Architecture
 
-<p><img src="https://raw.githubusercontent.com/goldstrike77/goldstrike77.github.io/master/img/logo/pexels-photo-256219.jpeg" /></p>
-
-shit! wrong picture...
-
                                      ┌───────────────┐
                                      │ Load Balancer │
                                      └───────┬───────┘
@@ -165,6 +161,14 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `trickster_port.proxy_server`: Defines the port on which Trickster's Proxy server listens.
 * `trickster_port.metrics`: Defines the port that Trickster's metrics server listens on at /metrics.
 
+##### Grafana parameters
+* `prometheus_grafana_dept`: A boolean value, whether install the grafana for metrics visualization.
+* `prometheus_grafana_path`: Specify the Grafana data directory.
+* `prometheus_grafana_version`: Specify the Grafana version.
+* `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
+* `prometheus_grafana_admin_password`: The password of the default Grafana admin.
+* `prometheus_grafana_port`: Grafana instance listen port.
+
 ##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
 * `prometheus_arg.query_max_concurrency`: Maximum number of queries executed concurrently.
@@ -239,7 +243,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 There are some variables in vars/main.yml:
 
 ## Dependencies
-There are no dependencies on other roles.
+- Ansible versions > 2.6 are supported.
+- [Grafana](https://github.com/goldstrike77/ansible-role-linux-grafana.git)
 
 ## Example
 
@@ -290,6 +295,12 @@ You can also use the group_vars or the host_vars files for setting the variables
     trickster_port:
       proxy_server: '19090'
       metrics: '8082'
+    prometheus_grafana_dept: false
+    prometheus_grafana_path: '/data'
+    prometheus_grafana_version:
+    prometheus_grafana_admin_user: 'admin'
+    prometheus_grafana_admin_password: 'password'
+    prometheus_grafana_port: '3000'
     prometheus_arg:
       evaluation_interval: '30s'
       query_max_concurrency: '256'

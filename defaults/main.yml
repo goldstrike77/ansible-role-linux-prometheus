@@ -39,6 +39,14 @@ trickster_port:
   proxy_server: '19090'
   metrics: '8082'
 
+# Grafana parameters #
+prometheus_grafana_dept: false # A boolean value, whether install the grafana for metrics visualization.
+prometheus_grafana_path: '/data' # Specify the Grafana data directory.
+prometheus_grafana_version: '5' # Specify the Grafana version.
+prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
+prometheus_grafana_admin_password: 'password' # The password of the default Grafana admin.
+prometheus_grafana_port: '3000' # Grafana instance listen port.
+
 # Prometheus System Variables #
 prometheus_arg:
   evaluation_interval: '30s' # How frequently to evaluate rules
