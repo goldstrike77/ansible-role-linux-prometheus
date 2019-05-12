@@ -138,11 +138,11 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_cluster_secret_key`: Initial secret key to encrypt cluster gossip.
 
 ##### Service Mesh
-* `environments`: Define the object environment.
-* `consul_is_register`: a boolean value, whether register a client service with consul.
-* `consul_clients`: Consul client addresses list.
-* `consul_http_port`: Consul client listen port.
-* `consul_exporter_token`: Consul client ACL token.
+* `environments`: Define the service environment.
+* `consul_public_register`: Whether register a exporter service with public consul client.
+* `consul_public_exporter_token`: Public Consul client ACL token.
+* `consul_public_clients`: List of public consul clients.
+* `consul_public_http_port`: The consul HTTP API port.
 
 ##### Listen port
 * `prometheus_port.alertmanager`: alertmanager instance listen port.
@@ -386,6 +386,11 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
       version: '0.1.7'
+    environments: 'SIT'
+    consul_public_register: false
+    consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
+    consul_public_clients: 'localhost'
+    consul_public_http_port: '8500'
 
 ## License
 

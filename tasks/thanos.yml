@@ -124,85 +124,101 @@
     - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_default
 
-- name: Register thanos sidecar exporter service with an http health check
+- name: Register exporter service with an http health check
   uri:
-    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
+    url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
-    headers:
-      X-Consul-Token: '{{ consul_exporter_token }}'
-      X-Requested-By: '{{ ansible_default_ipv4.address }}'
-      cache-control: 'no-cache'
     body: '{"ID":"{{ inventory_hostname | upper }}_thanos-sidecar_exporter","name":"thanos-sidecar_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.sidecar_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.sidecar_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
     body_format: 'json'
-  environment:
-    no_proxy: '{{ item }}'
-  loop: '{{ consul_clients|flatten(levels=1) }}'
-  register: register_status
-  until: register_status.status == 200
-  retries: 10
-  delay: 3
-  no_log: true
-
-- name: Register thanos query exporter service with an http health check
-  uri:
-    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
-    method: 'PUT'
+    status_code: '200'
     headers:
-      X-Consul-Token: '{{ consul_exporter_token }}'
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
       X-Requested-By: '{{ ansible_default_ipv4.address }}'
       cache-control: 'no-cache'
+  environment:
+    no_proxy: '{{ item }}'
+  loop: '{{ consul_public_clients|flatten(levels=1) }}'
+  when: consul_public_register
+  register: register_status
+  until: register_status.status == 200
+  retries: 3
+  delay: 3
+  no_log: true
+  changed_when: false
+  failed_when: false
+
+- name: Register exporter service with an http health check
+  uri:
+    url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'PUT'
     body: '{"ID":"{{ inventory_hostname | upper }}_thanos-query_exporter","name":"thanos-query_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.query_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.query_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
     body_format: 'json'
-  environment:
-    no_proxy: '{{ item }}'
-  loop: '{{ consul_clients|flatten(levels=1) }}'
-  register: register_status
-  until: register_status.status == 200
-  retries: 10
-  delay: 3
-  no_log: true
-
-- name: Register thanos store exporter service with an http health check
-  uri:
-    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
-    method: 'PUT'
+    status_code: '200'
     headers:
-      X-Consul-Token: '{{ consul_exporter_token }}'
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
       X-Requested-By: '{{ ansible_default_ipv4.address }}'
       cache-control: 'no-cache'
-    body: '{"ID":"{{ inventory_hostname | upper }}_thanos-store_exporter","name":"thanos-store_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.store_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.store_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
-    body_format: 'json'
   environment:
     no_proxy: '{{ item }}'
-  loop: '{{ consul_clients|flatten(levels=1) }}'
+  loop: '{{ consul_public_clients|flatten(levels=1) }}'
+  when: consul_public_register
   register: register_status
   until: register_status.status == 200
-  retries: 10
+  retries: 3
   delay: 3
   no_log: true
+  changed_when: false
+  failed_when: false
+
+- name: Register exporter service with an http health check
+  uri:
+    url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    body: '{"ID":"{{ inventory_hostname | upper }}_thanos-store_exporter","name":"thanos-store_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.store_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.store_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
+    body_format: 'json'
+    status_code: '200'
+    headers:
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
+  environment:
+    no_proxy: '{{ item }}'
+  loop: '{{ consul_public_clients|flatten(levels=1) }}'
+  register: register_status
+  until: register_status.status == 200
+  retries: 3
+  delay: 3
+  no_log: true
+  changed_when: false
+  failed_when: false
   when:
+    - consul_public_register
     - thanos_bucket_is_used
     - consul_is_register
 
-- name: Register thanos compact exporter service with an http health check
+- name: Register exporter service with an http health check
   uri:
-    url: 'http://{{ item }}:{{ consul_http_port }}/v1/agent/service/register'
+    url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
-    headers:
-      X-Consul-Token: '{{ consul_exporter_token }}'
-      X-Requested-By: '{{ ansible_default_ipv4.address }}'
-      cache-control: 'no-cache'
     body: '{"ID":"{{ inventory_hostname | upper }}_thanos-compact_exporter","name":"thanos-compact_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.compact_http }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.compact_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"5s"}]}'
     body_format: 'json'
+    status_code: '200'
+    headers:
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
   environment:
     no_proxy: '{{ item }}'
-  loop: '{{ consul_clients|flatten(levels=1) }}'
+  loop: '{{ consul_public_clients|flatten(levels=1) }}'
   register: register_status
   until: register_status.status == 200
-  retries: 10
+  retries: 3
   delay: 3
   no_log: true
-  when: 
+  changed_when: false
+  failed_when: false
+  when:
+    - consul_public_register
     - thanos_bucket_is_used
     - consul_is_register
     - prometheus_server[0] in ansible_default_ipv4.address
