@@ -3,6 +3,11 @@
   set_fact:
     ip_sequence: "{{ ip_sequence | default([]) + [item[-1] | int] }}"
   with_sequence: start={{ prometheus_server.index(ansible_default_ipv4.address) }} end={{ prometheus_server | length * 4 }} stride=2
+  args:
+    warn: false
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
 
 - name: Creating prometheus configure folder
   file:
