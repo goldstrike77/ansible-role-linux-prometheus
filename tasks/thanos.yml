@@ -194,7 +194,6 @@
   when:
     - consul_public_register
     - thanos_bucket_is_used
-    - consul_is_register
 
 - name: Register exporter service with an http health check
   uri:
@@ -220,5 +219,4 @@
   when:
     - consul_public_register
     - thanos_bucket_is_used
-    - consul_is_register
     - prometheus_server[0] in ansible_default_ipv4.address
