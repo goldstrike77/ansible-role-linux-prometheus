@@ -17,7 +17,6 @@ __Table of Contents__
   * [Prometheus versions](#Prometheus-versions)
   * [Distributed mode](#Distributed-mode)
 - [ Role variables](#Role-variables)
-  * [Minimal Configuration](#minimal-configuration)
   * [Main Configuration](#Main-parameters)
   * [Other Configuration](#Other-parameters)
 - [Dependencies](#dependencies)
@@ -115,17 +114,10 @@ for example:
                   action: drop
 
 ## Role variables
-### Minimal configuration
-
-In order to get the Prometheus running, you'll have to define the following properties before executing the role:
-
-* `prometheus_is_install`: a boolean value, whether install the prometheus.
-
 ### Main parameters #
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `prometheus_is_install`: A boolean value, whether install the Prometheus.
 * `thanos_is_install`: A boolean value, whether install the Thanos.
 * `trickster_is_install`: A boolean value, whether install the Trickster.
 * `thanos_bucket_is_used`: A boolean value, whether use object storage.
