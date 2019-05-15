@@ -32,9 +32,9 @@ receivers:
     wechat_configs:
       - send_resolved: true
         to_user: '{{ alertmanager_arg.wechat_to_user }}'
-        agent_id: '{{ alertmanager_arg.wechat_agent_id }}'
-        corp_id: '{{ alertmanager_wechat_api_corp_id }}'
-        api_secret: '{{ alertmanager_wechat_api_secret }}'
+        agent_id: '{{ alertmanager_arg.wechat_api_agentid }}'
+        corp_id: '{{ alertmanager_arg.wechat_api_corpid }}'
+        api_secret: '{{ alertmanager_arg.wechat_api_secret }}'
   - name: 'team-infra-mails'
     email_configs:
       - send_resolved: true

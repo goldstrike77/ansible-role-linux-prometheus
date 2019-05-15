@@ -125,8 +125,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
 * `prometheus_consul_server`: The consul address and port.
 * `prometheus_consul_token`: The consul acl token.
-* `alertmanager_wechat_api_corp_id`:  The corp id for authentication.
-* `alertmanager_wechat_api_secret`: The API key to use when talking to the WeChat API.
 * `thanos_cluster_secret_key`: Initial secret key to encrypt cluster gossip.
 
 ##### Service Mesh
@@ -191,9 +189,11 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.smtp_from`: The sender address.
 * `alertmanager_arg.smtp_require_tls`: The SMTP TLS requirement.
 * `alertmanager_arg.smtp_smarthost`: The SMTP host through which emails are sent.
-* `alertmanager_arg.wechat_agent_id`: The wechat agent ID.
+* `alertmanager_arg.wechat_api_agentid`: The wechat agent ID.
 * `alertmanager_arg.wechat_api_url`: The WeChat API URL.
 * `alertmanager_arg.wechat_to_user`: The WeChat user to send notifications to.
+* `alertmanager_arg.wechat_api_corpid`:  The corp id for authentication.
+* `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
 
 ##### Alertmanager rules
 * `prometheus_alert_rules`: Defining alerting rules.
@@ -275,8 +275,6 @@ You can also use the group_vars or the host_vars files for setting the variables
     thanos_bucket_is_used: true
     prometheus_consul_server: '127.0.0.1:8500'
     prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
-    alertmanager_wechat_api_corp_id: 'wxe787605fxxxxxxxx'
-    alertmanager_wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
     thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870'
     prometheus_port: 
       alertmanager: '9093'
@@ -334,9 +332,11 @@ You can also use the group_vars or the host_vars files for setting the variables
       smtp_from: 'do-not-reply@somebody.com'
       smtp_require_tls: 'false'
       smtp_smarthost: '127.0.0.1:25'
-      wechat_agent_id: '0'
+      wechat_api_agentid: '0'
       wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
       wechat_to_user: 'xxxxxxx'
+      wechat_api_corpid: 'wxe787605fxxxxxxxx'
+      wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
     prometheus_alert_rules:
       - 'Consul'
       - 'ElasticSearch'
