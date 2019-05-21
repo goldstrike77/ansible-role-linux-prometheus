@@ -1,0 +1,11 @@
+- name: ansible-role-linux-prometheus
+  src: git+https://github.com/goldstrike77/ansible-role-linux-prometheus
+  version: origin/master
+
+- name: ansible-role-linux-grafana
+  src: git+https://github.com/goldstrike77/ansible-role-linux-grafana
+  version: origin/master
+
+- name: ansible-role-linux-nginx
+  src: git+https://github.com/goldstrike77/ansible-role-linux-nginx
+  version: origin/master
