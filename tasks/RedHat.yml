@@ -5,10 +5,13 @@
     description: '{{ prometheus_repo_name }} YUM repository'
     file: '{{ prometheus_repo_name }}'
     baseurl: '{{ prometheus_repo_url }}'
-    gpgcheck: no
+    gpgcheck: 'no'
+    timeout: '60'
 
 - name: Install the prometheus
   yum:
     name: '{{ ",".join(vars["prometheus_software"]) }}'
     state: present
+    validate_certs: 'no'
+    disable_gpg_check: 'yes'
   register: soft_updated
