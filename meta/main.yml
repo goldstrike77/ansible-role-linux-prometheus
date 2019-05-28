@@ -58,6 +58,9 @@ dependencies:
   - role: 'ansible-role-linux-grafana'
     vars:
       grafana_ngx_dept: '{{ prometheus_grafana_ngx_dept | bool | to_json }}'
+      grafana_ldap_enabled: '{{ prometheus_grafana_ldap_enabled | bool | to_json }}'
+      grafana_ldap_allow_sign_up: '{{ prometheus_grafana_ldap_allow_sign_up | bool | to_json }}'
+      grafana_ldap_arg: '{{ prometheus_grafana_ldap_arg }}'
       grafana_path: '{{ prometheus_grafana_path }}'
       grafana_version: '{{ prometheus_grafana_version }}'
       grafana_admin_user: '{{ prometheus_grafana_admin_user }}'
