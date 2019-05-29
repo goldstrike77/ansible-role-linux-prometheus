@@ -158,11 +158,16 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
 * `prometheus_grafana_admin_password`: The password of the default Grafana admin.
 * `prometheus_grafana_port`: Grafana instance listen port.
-* `prometheus_grafana_ngx_dept`: A boolean value, whether proxy Grafana web interface using NGinx.
+* `prometheus_grafana_ngx_dept`: A boolean value, whether proxy Grafana web interface using.
+* `prometheus_grafana_ngx_block_agents`: Enables or disables block unsafe User Agents.
+* `prometheus_grafana_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
+* `prometheus_grafana_ngx_compress`: Enables or disables compression.
 * `prometheus_grafana_ngx_domain`: Defines domain name.
-* `prometheus_grafana_ngx_version`: extras or standard
+* `prometheus_grafana_ngx_pagespeed`: Enables or disables pagespeed modules.
 * `prometheus_grafana_ngx_port_http`: NGinx HTTP listen port.
 * `prometheus_grafana_ngx_port_https`: NGinx HTTPs listen port.
+* `prometheus_grafana_ngx_ssl_protocols`: intermediate or modern, defines SSL protocol profile.
+* `prometheus_grafana_ngx_version`: extras or standard
 
 ##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
@@ -301,10 +306,15 @@ You can also use the group_vars or the host_vars files for setting the variables
     prometheus_grafana_admin_password: 'password'
     prometheus_grafana_port: '3000'
     prometheus_grafana_ngx_dept: false
+    prometheus_grafana_ngx_block_agents: false
+    prometheus_grafana_ngx_block_string: false
+    prometheus_grafana_ngx_compress: false
     prometheus_grafana_ngx_domain: 'visual.example.com'
-    prometheus_grafana_ngx_version: 'standard'
+    prometheus_grafana_ngx_pagespeed: false
     prometheus_grafana_ngx_port_http: '80'
     prometheus_grafana_ngx_port_https: '443'
+    prometheus_grafana_ngx_ssl_protocols: 'modern'
+    prometheus_grafana_ngx_version: 'extras'
     prometheus_arg:
       evaluation_interval: '30s'
       query_max_concurrency: '256'

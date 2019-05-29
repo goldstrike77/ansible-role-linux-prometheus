@@ -45,10 +45,15 @@ prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin u
 prometheus_grafana_admin_password: 'password' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
 prometheus_grafana_ngx_dept: false # A boolean value, whether proxy Grafana web interface using NGinx.
+prometheus_grafana_ngx_block_agents: false # Enables or disables block unsafe User Agents.
+prometheus_grafana_ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
+prometheus_grafana_ngx_compress: false # Enables or disables compression.
 prometheus_grafana_ngx_domain: 'visual.example.com' # Defines domain name.
-prometheus_grafana_ngx_version: 'standard' # extras or standard
+prometheus_grafana_ngx_pagespeed: false # Enables or disables pagespeed modules.
 prometheus_grafana_ngx_port_http: '80' # NGinx HTTP listen port.
 prometheus_grafana_ngx_port_https: '443' # NGinx HTTPs listen port.
+prometheus_grafana_ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
+prometheus_grafana_ngx_version: 'extras' # extras or standard
 prometheus_grafana_ldap_enabled: false
 prometheus_grafana_ldap_allow_sign_up: false
 prometheus_grafana_ldap_arg:

@@ -71,9 +71,15 @@ dependencies:
           settings:
             - server: '127.0.0.1'
               port: '{% if trickster_is_install %}{{ trickster_port.proxy_server }}{% elif thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
-      grafana_ngx_version: '{{ prometheus_grafana_ngx_version }}'
+      grafana_ngx_block_agents: '{{ prometheus_grafana_ngx_block_agents }}'
+      grafana_ngx_block_string: '{{ prometheus_grafana_ngx_block_string }}'
+      grafana_ngx_compress: '{{ prometheus_grafana_ngx_compress }}'
+      grafana_ngx_domain: '{{ prometheus_grafana_ngx_domain }}'
+      grafana_ngx_pagespeed: '{{ prometheus_grafana_ngx_pagespeed }}'
       grafana_ngx_port_http: '{{ prometheus_grafana_ngx_port_http }}'
-      grafana_ngx_port_https: '{{prometheus_grafana_ngx_port_https }}'
+      grafana_ngx_port_https: '{{ prometheus_grafana_ngx_port_https }}'
+      grafana_ngx_ssl_protocols: '{{ prometheus_grafana_ngx_ssl_protocols }}'
+      grafana_ngx_version: '{{ prometheus_grafana_ngx_version }}'
       grafana_ngx_site:
         - domain: '{{ prometheus_grafana_ngx_domain }}'
           syntax:
