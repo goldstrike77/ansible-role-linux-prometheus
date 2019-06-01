@@ -158,6 +158,12 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
 * `prometheus_grafana_admin_password`: The password of the default Grafana admin.
 * `prometheus_grafana_port`: Grafana instance listen port.
+* `prometheus_grafana_redis_dept`: A boolean value, whether installs Redis.
+* `prometheus_grafana_redis_path`: Specify the Redis data directory.
+* `prometheus_grafana_redis_requirepass`: Authorization clients password.
+* `prometheus_grafana_redis_maxmemory`: A memory usage limit to the specified amount in MB.
+* `prometheus_grafana_redis_hosts`: Redis hosts address.
+* `prometheus_grafana_redis_port`: Redis listen port.
 * `prometheus_grafana_ngx_dept`: A boolean value, whether proxy Grafana web interface using.
 * `prometheus_grafana_ngx_block_agents`: Enables or disables block unsafe User Agents.
 * `prometheus_grafana_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
@@ -251,6 +257,7 @@ There are some variables in vars/main.yml:
 - Ansible versions > 2.6 are supported.
 - [Grafana](https://github.com/goldstrike77/ansible-role-linux-grafana.git)
 - [NGinx](https://github.com/goldstrike77/ansible-role-linux-nginx.git)
+- [Redis](https://github.com/goldstrike77/ansible-role-linux-redis.git)
 
 ## Example
 
@@ -305,6 +312,12 @@ You can also use the group_vars or the host_vars files for setting the variables
     prometheus_grafana_admin_user: 'admin'
     prometheus_grafana_admin_password: 'password'
     prometheus_grafana_port: '3000'
+    prometheus_grafana_redis_dept: false
+    prometheus_grafana_redis_path: '{{ prometheus_data_path }}'
+    prometheus_grafana_redis_requirepass: 'password'
+    prometheus_grafana_redis_maxmemory: '1'
+    prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}'
+    prometheus_grafana_redis_port: '6379'
     prometheus_grafana_ngx_dept: false
     prometheus_grafana_ngx_block_agents: false
     prometheus_grafana_ngx_block_string: false
