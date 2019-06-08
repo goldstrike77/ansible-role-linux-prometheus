@@ -60,6 +60,7 @@ unauthenticate_target_services:
   - 'consul_exporter'
   - 'docker_exporter'
   - 'elastic_exporter'
+  - 'gitlab_exporter'
   - 'grafana_exporter'
   - 'jmx_exporter'
   - 'minio_exporter'
