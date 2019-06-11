@@ -125,7 +125,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
 * `prometheus_consul_server`: The consul address and port.
 * `prometheus_consul_token`: The consul acl token.
-* `thanos_cluster_secret_key`: Initial secret key to encrypt cluster gossip.
 
 ##### Service Mesh
 * `environments`: Define the service environment.
@@ -139,13 +138,10 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_port.cluster`:  alertmanager cluster listen port.
 * `prometheus_port.prometheus`: Prometheus instance listen port.
 * `thanos_port.compact_http`: Port for compact HTTP endpoints.
-* `thanos_port.query_cluster`: Port for query gossip cluster.
 * `thanos_port.query_grpc`: Port for query gRPC endpoints.
 * `thanos_port.query_http`: Port for query HTTP endpoints.
-* `thanos_port.sidecar_cluster`: Port for sidecar gossip cluster.
 * `thanos_port.sidecar_grpc`: Port for sidecar gRPC endpoints.
 * `thanos_port.sidecar_http`: Port for sidecar  HTTP endpoints.
-* `thanos_port.store_cluster`: Port for store gossip cluster.
 * `thanos_port.store_grpc`: Port for store gRPC endpoints.
 * `thanos_port.store_http`: Port for store HTTP endpoints.
 * `trickster_port.proxy_server`: Defines the port on which Trickster's Proxy server listens.
@@ -211,9 +207,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### Thanos System Variables
 * `thanos_arg.chunk_pool_size`: Maximum size of concurrently allocatable bytes for chunks.
-* `thanos_arg.cluster_gossip_interval`: Between sending gossip messages.
-* `thanos_arg.cluster_pushpull_interval`: Between gossip state syncs
-* `thanos_arg.cluster_refresh_interval`: Membership to refresh.
 * `thanos_arg.index_cache_size`: Maximum size of items held in the index cache.
 * `thanos_arg.log_format`: Log format.
 * `thanos_arg.log_level`: Log level.
@@ -287,20 +280,16 @@ You can also use the group_vars or the host_vars files for setting the variables
     thanos_bucket_is_used: true
     prometheus_consul_server: '127.0.0.1:8500'
     prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
-    thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870'
     prometheus_port: 
       alertmanager: '9093'
       cluster: '9094'
       prometheus: '9090'
     thanos_port:
       compact_http: '19194'
-      query_cluster: '19292'
       query_grpc: '19092'
       query_http: '19192'
-      sidecar_cluster: '19291'
       sidecar_grpc: '19091'
       sidecar_http: '19191'
-      store_cluster: '19293'
       store_grpc: '19093'
       store_http: '19193'
     trickster_port:
@@ -365,9 +354,6 @@ You can also use the group_vars or the host_vars files for setting the variables
       - 'ElasticSearch'
     thanos_arg:
       chunk_pool_size: '2GB'
-      cluster_gossip_interval: '10s'
-      cluster_pushpull_interval: '10s'
-      cluster_refresh_interval: '1m'
       index_cache_size: '1GB'
       log_format: 'logfmt'
       log_level: 'info'

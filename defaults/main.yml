@@ -6,7 +6,6 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
 prometheus_data_path: '/data'
 prometheus_is_install: false
 thanos_bucket_is_used: false
-thanos_cluster_secret_key: '7A25432A462D4A614E645267556B5870' # Secret key to encrypt cluster gossip
 thanos_is_install: false
 trickster_is_install: false
 
@@ -24,13 +23,10 @@ prometheus_port:
   prometheus: '9090'
 thanos_port:
   compact_http: '19194'
-  query_cluster: '19292'
   query_grpc: '19092'
   query_http: '19192'
-  sidecar_cluster: '19291'
   sidecar_grpc: '19091'
   sidecar_http: '19191'
-  store_cluster: '19293'
   store_grpc: '19093'
   store_http: '19193'
 trickster_port:
@@ -154,9 +150,6 @@ prometheus_alert_rules: # Defining alerting rules.
 # Thanos System Variables #
 thanos_arg:
   chunk_pool_size: '2GB' # Maximum size of concurrently allocatable bytes for chunks
-  cluster_gossip_interval: '10s' # Between sending gossip messages
-  cluster_pushpull_interval: '10s' # Between gossip state syncs
-  cluster_refresh_interval: '1m' # membership to refresh
   index_cache_size: '1GB' # Maximum size of items held in the index cache
   log_format: 'logfmt'
   log_level: 'info'
@@ -167,7 +160,7 @@ thanos_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '0.3.2'
+  version: '0.5.0'
 
 # Thanos objstore Variables #
 thanos_obj_arg:
