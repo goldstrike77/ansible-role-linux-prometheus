@@ -134,6 +134,7 @@ alertmanager_arg:
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
   - 'Alertmanager'
+  - 'Blackbox'
   - 'Consul'
   - 'ElasticSearch'
   - 'OS'
