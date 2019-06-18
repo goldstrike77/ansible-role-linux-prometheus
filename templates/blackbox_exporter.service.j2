@@ -1,0 +1,24 @@
+# -*- mode: conf -*-
+
+[Unit]
+Description=Blackbox prober exporter
+Documentation=https://github.com/prometheus/blackbox_exporter
+After=network.target
+
+[Service]
+{% if ansible_processor_vcpus > 1 %}
+Environment=GOMAXPROCS={{ (ansible_processor_vcpus * 0.5 + 1)|int }}
+{% else %}
+Environment=GOMAXPROCS=1
+{% endif %}
+EnvironmentFile=-/etc/default/blackbox_exporter
+User=prometheus
+LimitNOFILE={{ prometheus_arg.ulimit_nofile }}
+LimitNPROC={{ prometheus_arg.ulimit_nproc }}
+LimitCORE={{ prometheus_arg.ulimit_core }}
+LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
+ExecStart=/usr/bin/blackbox_exporter $BLACKBOX_EXPORTER_OPTS
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

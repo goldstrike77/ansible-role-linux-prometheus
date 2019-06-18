@@ -9,6 +9,16 @@
   loop: '{{ prometheus_prober_exporters }}'
   register: prober_config
 
+- name: Prober exporters systemd file transfer
+  template:
+    src: '{{ item }}.service.j2'
+    dest: '/lib/systemd/system/{{ item }}.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  loop: '{{ prometheus_prober_exporters }}'
+  register: prober_system
+
 - name: Register exporter service with an http health check
   uri:
     url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'

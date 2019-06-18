@@ -21,7 +21,6 @@ rule_files:
 
 # Scrape configuration
 scrape_configs:
-  # Instance service discovery configuration
   - job_name: 'unAuthenticate Instance'
 {% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
     consul_sd_configs:
@@ -38,8 +37,6 @@ scrape_configs:
         target_label: 'group'
       - source_labels: [__meta_consul_service_metadata_environment]
         target_label: 'environment'
-      - source_labels: [__meta_consul_service]
-        target_label: 'service'
       - source_labels: [__meta_consul_service]
         regex: 'minio_exporter'
         target_label: __metrics_path__
@@ -78,8 +75,6 @@ scrape_configs:
       - source_labels: [__meta_consul_service_metadata_environment]
         target_label: 'environment'
       - source_labels: [__meta_consul_service]
-        target_label: 'service'
-      - source_labels: [__meta_consul_service]
         regex: 'graylog_exporter'
         target_label: __metrics_path__
         replacement: '/api/plugins/org.graylog.plugins.metrics.prometheus/metrics'
@@ -106,21 +101,15 @@ scrape_configs:
         refresh_interval: {{ prometheus_arg.refresh_interval }}
         services: ['{{ "_prober', '".join(vars["prometheus_prober_exporters"]) }}_prober']
     relabel_configs:
-      - source_labels: [__meta_consul_service_address]
-        target_label: 'ipaddress'
-      - source_labels: [__meta_consul_service_metadata_instance]
-        target_label: 'instance'
       - source_labels: [__meta_consul_service_metadata_group]
         target_label: 'group'
       - source_labels: [__meta_consul_service_metadata_environment]
         target_label: 'environment'
-      - source_labels: [__meta_consul_service]
-        target_label: 'service'
-      - source_labels: [__meta_consul_service_metadata_targets]
+      - source_labels: [__meta_consul_service_metadata_target]
         target_label: '__param_target'
-      - source_labels: [__meta_consul_service_metadata_targets]
+      - source_labels: [__meta_consul_service_metadata_target]
         target_label: 'target'
-      - source_labels: ['__meta_consul_service_metadata_module']
+      - source_labels: [__meta_consul_service_metadata_module]
         target_label: '__param_module'
       - source_labels: [__meta_consul_service]
         regex: 'blackbox_exporter_prober'
