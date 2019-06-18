@@ -15,3 +15,12 @@
     validate_certs: 'no'
     disable_gpg_check: 'yes'
   register: soft_updated
+
+- name: Install the prober exporters
+  yum:
+    name: '{{ ",".join(vars["prometheus_prober_exporters"]) }}'
+    state: present
+    validate_certs: 'no'
+    disable_gpg_check: 'yes'
+  when: prometheus_prober_exporters is defined
+  register: prober_soft_updated

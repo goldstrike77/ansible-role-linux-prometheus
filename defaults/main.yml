@@ -19,8 +19,10 @@ consul_public_http_port: '8500' # The consul HTTP API port.
 # Listen port #
 prometheus_port: 
   alertmanager: '9093'
+  blackbox: '9115'
   cluster: '9094'
   prometheus: '9090'
+  snmp: '9116'
 thanos_port:
   compact_http: '19194'
   query_grpc: '19092'

@@ -96,3 +96,46 @@ scrape_configs:
 {% endif %}
 {% else %}
 {% endif %}
+
+{% if prometheus_prober_exporters is defined %}
+  - job_name: 'Prober Instance'
+{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
+    consul_sd_configs:
+      - server: '{{ prometheus_consul_server }}'
+        token: {{ prometheus_consul_token }}
+        refresh_interval: {{ prometheus_arg.refresh_interval }}
+        services: ['{{ "_prober', '".join(vars["prometheus_prober_exporters"]) }}_prober']
+    relabel_configs:
+      - source_labels: [__meta_consul_service_address]
+        target_label: 'ipaddress'
+      - source_labels: [__meta_consul_service_metadata_instance]
+        target_label: 'instance'
+      - source_labels: [__meta_consul_service_metadata_group]
+        target_label: 'group'
+      - source_labels: [__meta_consul_service_metadata_environment]
+        target_label: 'environment'
+      - source_labels: [__meta_consul_service]
+        target_label: 'service'
+      - source_labels: [__meta_consul_service_metadata_targets]
+        target_label: '__param_target'
+      - source_labels: ['__meta_consul_service_metadata_module']
+        target_label: '__param_module'
+      - source_labels: [__meta_consul_service]
+        regex: 'blackbox_exporter_prober'
+        target_label: __metrics_path__
+        replacement: '/probe'
+      - source_labels: [__meta_consul_service]
+        regex: 'blackbox_exporter_prober'
+        target_label: __address__
+        replacement: {{ ansible_default_ipv4.address }}:{{ prometheus_port.blackbox }}
+      - source_labels: [__meta_consul_service]
+        regex: 'snmp_exporter_prober'
+        target_label: __metrics_path__
+        replacement: '/snmp'
+      - source_labels: [__meta_consul_service]
+        regex: 'snmp_exporter_prober'
+        target_label: __address__
+        replacement: {{ ansible_default_ipv4.address }}:{{ prometheus_port.snmp }}
+{% else %}
+{% endif %}
+{% endif %}

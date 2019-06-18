@@ -3,7 +3,5 @@ prometheus_repo_name: "prometheus"
 prometheus_repo_url: "http://cache.omygods.com/prometheus-rpm/release/el/{{ansible_distribution_version.split('.')[0]}}/$basearch"
 prometheus_software:
   - 'alertmanager'
-  - 'blackbox_exporter'
   - 'prometheus2'
   - 'pushgateway'
-  - 'snmp_exporter'

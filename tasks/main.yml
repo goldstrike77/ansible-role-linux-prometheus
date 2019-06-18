@@ -11,10 +11,21 @@
 - name: Include prometheus tasks
   include: 'prometheus.yml'
 
+- name: Include prober exporter tasks
+  include: 'exporter.yml'
+  when:
+    - prometheus_prober_exporters is defined
+    - prober_soft_updated is changed
+
 - name: Restart the prometheus service
   shell: echo ''
   notify: 'Restart prometheus service'
   when: soft_updated is changed or soft_config is changed
+
+- name: Restart the prober exporter service
+  shell: echo ''
+  notify: 'Restart prober exporter service'
+  when: prober_config is changed
 
 - name: Include consul-template tasks
   include: 'consul-template.yml'

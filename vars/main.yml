@@ -57,6 +57,7 @@ consul_template_ctmpl:
 
 unauthenticate_target_services:
   - 'alertmanager_exporter'
+  - 'blackbox_exporter'
   - 'consul_exporter'
   - 'docker_exporter'
   - 'elastic_exporter'
@@ -72,6 +73,7 @@ unauthenticate_target_services:
   - 'postgres_exporter'
   - 'prometheus_exporter'
   - 'redis_exporter'
+  - 'snmp_exporter'
   - 'thanos-compact_exporter'
   - 'thanos-query_exporter'
   - 'thanos-sidecar_exporter'
@@ -82,3 +84,7 @@ unauthenticate_target_services:
 
 authenticate_target_services:
   - 'graylog_exporter'
+
+prometheus_prober_exporters:
+  - 'snmp_exporter'
+  - 'blackbox_exporter'
