@@ -118,6 +118,8 @@ scrape_configs:
         target_label: 'service'
       - source_labels: [__meta_consul_service_metadata_targets]
         target_label: '__param_target'
+      - source_labels: [__meta_consul_service_metadata_targets]
+        target_label: 'target'
       - source_labels: ['__meta_consul_service_metadata_module']
         target_label: '__param_module'
       - source_labels: [__meta_consul_service]
