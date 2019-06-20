@@ -9,7 +9,7 @@ prometheus_postgresql_alert_rules:
     annotations:
       description: "Instance has been stoped."
   - alert: PostgreSQL_Rep_Lag
-    expr: 'pg_replication_lag > 10'
+    expr: "pg_replication_lag > 10"
     for: 10m
     labels:
       severity: warning
@@ -29,10 +29,3 @@ prometheus_postgresql_alert_rules:
       severity: warning
     annotations:
       description: "Table has not been analyzed for 24 hours."
-  - alert: PostgreSQL_DeadLocks
-    expr: 'rate(pg_stat_database_deadlocks{pg_stat_database_de}[5m]) > 0'
-    for: 60m
-    labels:
-      severity: warning
-    annotations:
-      description: "PostgreSQL has dead-locks."
