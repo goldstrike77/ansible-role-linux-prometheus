@@ -7,4 +7,32 @@ prometheus_postgresql_alert_rules:
     labels:
       severity: critical
     annotations:
-      description: "Instance has been stoped"
+      description: "Instance has been stoped."
+  - alert: PostgreSQL_Rep_Lag
+    expr: 'pg_replication_lag > 10'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "The replication has fallen behind and is not recovering."
+  - alert: PostgreSQL_TableNotVaccumed
+    expr: 'time() - pg_stat_user_tables_last_autovacuum > 60 * 60 * 24'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Table has not been vaccum for 24 hours."
+  - alert: PostgreSQL_TableNotAnalyzed
+    expr: 'time() - pg_stat_user_tables_last_autoanalyze > 60 * 60 * 24'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Table has not been analyzed for 24 hours."
+  - alert: PostgreSQL_DeadLocks
+    expr: 'rate(pg_stat_database_deadlocks{pg_stat_database_de}[5m]) > 0'
+    for: 60m
+    labels:
+      severity: warning
+    annotations:
+      description: "PostgreSQL has dead-locks."

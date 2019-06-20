@@ -7,11 +7,11 @@ prometheus_tomcat_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: 'Heap memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%'
+      description: 'Heap memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
   - alert: Tomcat_JVM_oldGC_Time
     expr: "increase(jvm_gc_collection_seconds_sum{gc='PS MarkSweep'}[5m]) > 5 * 60 * 0.8"
     for: 5m
     labels:
       severity: warning
     annotations:
-      description: 'Old GC time > 80% running time with a value of {{ $value }}%'
+      description: 'Old GC time > 80% running time with a value of {{ $value }}%.'

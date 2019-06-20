@@ -7,53 +7,81 @@ prometheus_elasticsearch_alert_rules:
     labels:
       severity: critical
     annotations:
-      description: "ElasticSearch node has been stoped"
+      description: "ElasticSearch node has been stoped."
   - alert: Elastic_Heap_Usage
     expr: "elasticsearch_jvm_memory_used_bytes{area='heap'} / elasticsearch_jvm_memory_max_bytes{area='heap'} > 0.9"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: 'ElasticSearch node heap usage is over 90% with a value of {{ $value | printf "%.2f" }}%'
+      description: 'ElasticSearch node heap usage is over 90% with a value of {{ $value | printf "%.2f" }}%.'
   - alert: Elastic_Cluster_Downgrade
     expr: "elasticsearch_cluster_health_number_of_nodes < 3"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "ElasticSearch cluster running on less than 3 nodes"
+      description: "ElasticSearch cluster running on less than 3 nodes."
   - alert: Elastic_Cluster_Health
     expr: "(elasticsearch_cluster_health_status{color='red'}==1) or (elasticsearch_cluster_health_status{color='yellow'}==1)"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "Not all primary and replica shards are allocated in cluster"
+      description: "Not all primary and replica shards are allocated in cluster."
   - alert: Elastic_JVM_GC_Runs
     expr: "rate(elasticsearch_jvm_gc_collection_seconds_count{}[5m])>5"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "JVM GC per seconds has a value of {{ $value }}"
+      description: "JVM GC per seconds has a value of {{ $value }}."
   - alert: Elastic_JVM_GC_Run_Time
     expr: "rate(elasticsearch_jvm_gc_collection_seconds_sum[5m])>0.5"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "JVM GC run time in seconds has a value of {{ $value }}"
+      description: "JVM GC run time in seconds has a value of {{ $value }}."
   - alert: Elastic_json_parse_failures
     expr: "elasticsearch_cluster_health_json_parse_failures>0"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "JSON parse failures has a value of {{ $value }}"
+      description: "JSON parse failures has a value of {{ $value }}."
   - alert: Elastic_breakers_tripped
     expr: "rate(elasticsearch_breakers_tripped{}[5m])>0"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "Breakers tripped has a value of {{ $value }}"
+      description: "Breakers tripped has a value of {{ $value }}."
+  - alert: Elastic_relocation_shards
+    expr: "elasticsearch_cluster_health_relocating_shards > 0"
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      description: "Number of relocation shards for 20 minutes."
+  - alert: Elastic_initializing_shards
+    expr: "elasticsearch_cluster_health_initializing_shards > 0"
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      description: "Number of initializing shards for 20 minutes."
+  - alert: Elastic_unassigned_shards
+    expr: "elasticsearch_cluster_health_unassigned_shards > 0"
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      description: "Number of unassigned shards for 20 minutes."
+  - alert: Elastic_pending_tasks
+    expr: elasticsearch_cluster_health_number_of_pending_tasks > 0"
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      description: "Number of pending tasks for 20 minutes."

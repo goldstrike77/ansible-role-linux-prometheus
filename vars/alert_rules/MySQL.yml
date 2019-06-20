@@ -7,14 +7,14 @@ prometheus_mysql_alert_rules:
     labels:
       severity: critical
     annotations:
-      description: "Instance has been stoped"
+      description: "Instance has been stoped."
   - alert: MySQL_Rep
     expr: "mysql_slave_status_slave_io_running == 0 or mysql_slave_status_slave_sql_running == 0"
     for: 10m
     labels:
       severity: critical
     annotations:
-      description: "Slave replication (IO or SQL) has been stoped"
+      description: "Slave replication (IO or SQL) has been stoped."
   - alert: MySQL_Rep_Lag
     expr: "(mysql_slave_lag_seconds > 30) and on(instance) (predict_linear(mysql_slave_lag_seconds[5m],60 * 2) > 0)"
     for: 10m
@@ -35,4 +35,4 @@ prometheus_mysql_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: "The innodb logs are waiting for disk at a rate of {{$value}} second"
+      description: "The innodb logs are waiting for disk at a rate of {{$value}} second."

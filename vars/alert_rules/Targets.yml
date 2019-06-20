@@ -7,4 +7,4 @@ prometheus_targets_alert_rules:
     labels:
       severity: critical
     annotations:
-      description: "Endpoint has been unreachable"
+      description: "Endpoint has been unreachable."

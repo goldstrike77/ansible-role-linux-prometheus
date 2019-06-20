@@ -7,11 +7,11 @@ prometheus_blackbox_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: "SSL certificate expires in 35 days"
+      description: "SSL certificate expires in 35 days."
   - alert: StatusCode
     expr: "probe_http_status_code <= 99 or probe_http_status_code >= 400"
     for: 5m
     labels:
       severity: warning
     annotations:
-      description: "HTTP status code is not 1xx-3xx with a value of {{ $value }}"
+      description: "HTTP status code is not 1xx-3xx with a value of {{ $value }}."

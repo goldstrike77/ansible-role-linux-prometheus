@@ -7,11 +7,11 @@ prometheus_consul_alert_rules:
     labels:
       severity: critical
     annotations:
-      description: "Consul node has been stoped"
+      description: "Consul node has been stoped."
   - alert: Consul_Service
     expr: "sum by (node, service_name)(consul_catalog_service_node_healthy == 0)"
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: "Consul services are failing"
+      description: "Consul services are failing."

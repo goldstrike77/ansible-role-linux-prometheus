@@ -7,4 +7,4 @@ prometheus_mongodb_alert_rules:
     labels:
       severity: critical
     annotations:
-      description: "Instance has been stoped"
+      description: "Instance has been stoped."

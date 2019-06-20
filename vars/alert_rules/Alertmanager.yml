@@ -7,4 +7,4 @@ prometheus_alertmanager_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: "Alertmanager is seeing errors for integration {{$labels.integration}}"
+      description: "Alertmanager is seeing errors for integration {{$labels.integration}}."
