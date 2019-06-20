@@ -15,13 +15,6 @@ prometheus_redis_alert_rules:
       severity: warning
     annotations:
       description: "Redis has not been backuped for 24 hours."
-  - alert: Redis_Connections
-    expr: "redis_connected_clients < 5"
-    for: 60m
-    labels:
-      severity: warning
-    annotations:
-      description: "Redis instance should have more connections."
   - alert: Redis_Rejected
     expr: "increase(redis_rejected_connections_total[1m]) > 0"
     for: 60m
