@@ -22,3 +22,17 @@ prometheus_redis_alert_rules:
       severity: warning
     annotations:
       description: "Some connections to Redis has been rejected."
+  - alert: Redis_RAM_Usage
+    expr: "redis_memory_used_bytes / redis_total_system_memory_bytes * 100 > 90"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Redis Memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
+  - alert: Redis_Rep
+    expr: "delta(redis_connected_slaves[1m]) < 0"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: 'Redis instance lost a slave.'
