@@ -43,6 +43,10 @@ scrape_configs:
         regex: 'minio_exporter'
         target_label: __metrics_path__
         replacement: '/minio/prometheus/metrics'
+      - source_labels: [__meta_consul_service]
+        regex: 'kibana_exporter'
+        target_label: __metrics_path__
+        replacement: '/_prometheus/metrics'
       - source_labels: [__meta_consul_service_metadata_tenant]
         target_label: 'tenant'
       - source_labels: [__meta_consul_service_metadata_cluster]

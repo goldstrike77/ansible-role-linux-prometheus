@@ -64,6 +64,7 @@ unauthenticate_target_services:
   - 'gitlab_exporter'
   - 'grafana_exporter'
   - 'jmx_exporter'
+  - 'kibana_exporter'
   - 'minio_exporter'
   - 'mongodb_exporter'
   - 'mysqld_exporter'
