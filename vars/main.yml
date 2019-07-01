@@ -57,6 +57,7 @@ consul_template_ctmpl:
 
 unauthenticate_target_services:
   - 'alertmanager_exporter'
+  - 'beat_exporter'
   - 'blackbox_exporter'
   - 'consul_exporter'
   - 'docker_exporter'
