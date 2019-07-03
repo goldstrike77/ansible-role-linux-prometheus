@@ -15,13 +15,13 @@ prometheus_elasticsearch_alert_rules:
       severity: warning
     annotations:
       description: 'ElasticSearch node heap usage is over 90% with a value of {{ $value | printf "%.2f" }}%.'
-  - alert: Elastic_Cluster_Downgrade
-    expr: "elasticsearch_cluster_health_number_of_nodes < 3"
-    for: 10m
-    labels:
-      severity: warning
-    annotations:
-      description: "ElasticSearch cluster running on less than 3 nodes."
+#  - alert: Elastic_Cluster_Downgrade
+#    expr: "elasticsearch_cluster_health_number_of_nodes < 3"
+#    for: 10m
+#    labels:
+#      severity: warning
+#    annotations:
+#      description: "ElasticSearch cluster running on less than 3 nodes."
   - alert: Elastic_Cluster_Health
     expr: "(elasticsearch_cluster_health_status{color='red'}==1) or (elasticsearch_cluster_health_status{color='yellow'}==1)"
     for: 10m
@@ -71,13 +71,13 @@ prometheus_elasticsearch_alert_rules:
       severity: warning
     annotations:
       description: "Number of initializing shards for 20 minutes."
-  - alert: Elastic_unassigned_shards
-    expr: "elasticsearch_cluster_health_unassigned_shards > 0"
-    for: 30m
-    labels:
-      severity: warning
-    annotations:
-      description: "Number of unassigned shards for 20 minutes."
+#  - alert: Elastic_unassigned_shards
+#    expr: "elasticsearch_cluster_health_unassigned_shards > 0"
+#    for: 30m
+#    labels:
+#      severity: warning
+#    annotations:
+#      description: "Number of unassigned shards for 20 minutes."
   - alert: Elastic_pending_tasks
     expr: "elasticsearch_cluster_health_number_of_pending_tasks > 0"
     for: 30m
