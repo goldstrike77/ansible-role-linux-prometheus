@@ -27,7 +27,7 @@ scrape_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
-        services: ['{{ "', '".join(vars["unauthenticate_target_services"]) }}']
+        services: ['{{ "_exporter', '".join(vars["unauthenticate_target_services"]) }}_exporter']
     relabel_configs:
       - source_labels: [__meta_consul_service_address]
         target_label: 'ipaddress'
@@ -70,7 +70,7 @@ scrape_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
-        services: ['{{ "', '".join(vars["authenticate_target_services"]) }}']
+        services: ['{{ "_exporter', '".join(vars["authenticate_target_services"]) }}_exporter']
     relabel_configs:
       - source_labels: [__meta_consul_service_address]
         target_label: 'ipaddress'
@@ -107,7 +107,7 @@ scrape_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
-        services: ['{{ "_prober', '".join(vars["prometheus_prober_exporters"]) }}_prober']
+        services: ['{{ "_exporter_prober', '".join(vars["prometheus_prober_exporters"]) }}_exporter_prober']
     relabel_configs:
       - source_labels: [__meta_consul_service_metadata_group]
         target_label: 'group'
