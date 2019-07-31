@@ -1,4 +1,7 @@
 ---
+- name: Include OS-specific variables
+  include_vars: '{{ ansible_os_family }}.yml'
+
 - name: Add prometheus YUM repositories
   yum_repository:
     name: '{{ prometheus_repo_name }}'

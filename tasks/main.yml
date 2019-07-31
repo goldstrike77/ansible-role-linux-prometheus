@@ -1,9 +1,9 @@
 ---
-- name: Include OS-specific variables
-  include_vars: '{{ ansible_os_family }}.yml'
-
 - name: Include tasks for specific OS
   include: '{{ ansible_os_family }}.yml'
+
+- name: Straight to getenforce selinux status
+  include: 'selinux.yml'
 
 - name: Configure the prometheus firewall
   include: 'firewall.yml'

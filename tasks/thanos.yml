@@ -138,7 +138,9 @@
   environment:
     no_proxy: '{{ item }}'
   loop: '{{ consul_public_clients|flatten(levels=1) }}'
-  when: consul_public_register
+  when:
+    - exporter_is_install
+    - consul_public_register
   register: register_status
   until: register_status.status == 200
   retries: 3
@@ -161,7 +163,9 @@
   environment:
     no_proxy: '{{ item }}'
   loop: '{{ consul_public_clients|flatten(levels=1) }}'
-  when: consul_public_register
+  when:
+    - exporter_is_install
+    - consul_public_register
   register: register_status
   until: register_status.status == 200
   retries: 3
@@ -192,6 +196,7 @@
   changed_when: false
   failed_when: false
   when:
+    - exporter_is_install
     - consul_public_register
     - thanos_bucket_is_used
 
@@ -217,6 +222,7 @@
   changed_when: false
   failed_when: false
   when:
+    - exporter_is_install
     - consul_public_register
     - thanos_bucket_is_used
     - prometheus_server[0] in ansible_default_ipv4.address
