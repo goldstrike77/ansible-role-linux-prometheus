@@ -3,6 +3,7 @@
   template:
     src: '{{ item }}_exporter.j2'
     dest: '/etc/default/{{ item }}'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'

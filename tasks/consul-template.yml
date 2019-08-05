@@ -17,7 +17,7 @@
     state: directory
     owner: '{{ consul_template_arg.user }}'
     group: '{{ consul_template_arg.user }}'
-    mode: 0755
+    mode: '0755'
   with_items:
     - 'conf.d'
     - 'ctmpl'
@@ -56,7 +56,7 @@
     dest: '{{ consul_template_arg.conf_path }}/server/consul-template.conf'
     owner: '{{ consul_template_arg.user }}'
     group: '{{ consul_template_arg.user }}'
-    mode: 0644
+    mode: '0644'
   with_items:
     - '{{ consul_template_ctmpl }}'
   register: consul_template_config_update
@@ -67,7 +67,7 @@
     dest: '{{ consul_template_arg.conf_path }}/ctmpl/{{ item }}.ctmpl'
     owner: '{{ consul_template_arg.user }}'
     group: '{{ consul_template_arg.user }}'
-    mode: 0644
+    mode: '0644'
   with_items:
     - '{{ consul_template_ctmpl }}'
   register: consul_template_ctmpl_update
@@ -78,5 +78,5 @@
     dest: '/lib/systemd/system/consul-template.service'
     owner: 'root'
     group: 'root'
-    mode: 0644
+    mode: '0644'
   register: consul_template_systemd_update

@@ -18,6 +18,9 @@
     validate_certs: 'no'
     disable_gpg_check: 'yes'
   register: soft_updated
+  until: soft_updated is succeeded
+  retries: 3
+  delay: 5
 
 - name: Install the prober exporters
   yum:
@@ -27,3 +30,6 @@
     disable_gpg_check: 'yes'
   when: prometheus_prober_exporters is defined
   register: prober_soft_updated
+  until: prober_soft_updated is succeeded
+  retries: 3
+  delay: 5

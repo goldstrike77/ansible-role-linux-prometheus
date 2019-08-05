@@ -42,6 +42,7 @@
   template:
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'
@@ -54,13 +55,14 @@
     state: 'directory'
     owner: 'prometheus'
     group: 'prometheus'
-    mode: 0755
+    mode: '0755'
   when: thanos_bucket_is_used
 
 - name: Thanos objstore config file transfer
   template:
     src: 'bucket.yml.j2'
     dest: '{{ prometheus_data_path }}/thanos/bucket.yml'
+    backup: 'yes'
     owner: 'prometheus'
     group: 'prometheus'
     mode: '0644'
@@ -71,6 +73,7 @@
   template:
     src: 'thanos-{{ item }}.service.j2'
     dest: '/lib/systemd/system/thanos-{{ item }}.service'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'
@@ -82,6 +85,7 @@
   template:
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'
@@ -116,6 +120,7 @@
   template:
     src: 'thanos-compact.default.j2'
     dest: '/etc/default/thanos-compact'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'

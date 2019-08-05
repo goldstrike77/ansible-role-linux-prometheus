@@ -54,6 +54,7 @@
   template:
     src: 'trickster.conf.j2'
     dest: '/etc/trickster.conf'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'

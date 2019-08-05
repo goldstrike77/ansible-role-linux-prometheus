@@ -12,10 +12,10 @@
 - name: Creating prometheus configure folder
   file:
     dest: '{{ item }}'
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
+    state: 'directory'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
   with_items:
     - '{{ prometheus_conf_path }}/rules'
     - '{{ prometheus_conf_path }}/templates'
@@ -24,9 +24,9 @@
 - name: Creating prometheus data folder
   file:
     dest: '{{ item }}'
-    state: directory
-    owner: prometheus
-    group: prometheus
+    state: 'directory'
+    owner: 'prometheus'
+    group: 'prometheus'
     mode: 0755
   with_items:
     - '{{ prometheus_data_path }}/prometheus'
@@ -36,9 +36,10 @@
   template:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
+    backup: 'yes'
     owner: 'root'
     group: 'root'
-    mode: 0644
+    mode: '0644'
   with_items:
     - '{{ prometheus_conf_files }}'
   register: soft_config
@@ -55,18 +56,20 @@
   copy:
     src: "default.tmpl"
     dest: "{{ prometheus_conf_path }}/templates/default.tmpl"
-    owner: root
-    group: root
-    mode: 0644
+    backup: 'yes'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
   notify: 'Reload prometheus service'
 
 - name: Prometheus alerting rules file transfer
   template:
     src: "alert.rules.j2"
     dest: "{{ prometheus_conf_path }}/rules/alert_{{ item }}.rules"
-    owner: root
-    group: root
-    mode: 0644
+    backup: 'yes'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
     validate: "/bin/promtool check rules %s"
   with_items:
     - '{{ prometheus_alert_rules }}'
