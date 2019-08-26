@@ -27,4 +27,4 @@
     - '{{ prometheus_port|dict2items }}'
     - '{{ thanos_port|dict2items }}'
     - '{{ trickster_port|dict2items }}'
-  when: prometheus_selinux
+  when: prometheus_selinux | bool

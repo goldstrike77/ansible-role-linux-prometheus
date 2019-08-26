@@ -1,4 +1,8 @@
 ---
+- name: Gathering service facts
+  service_facts:
+  register: services_state
+
 - name: Allow prometheus service port
   firewalld:
     port: '{{ item.value }}/tcp'
@@ -9,3 +13,4 @@
     - '{{ prometheus_port }}'
     - '{{ thanos_port }}'
     - '{{ trickster_port }}'
+  when: services_state.ansible_facts.services["firewalld.service"].state == 'running'

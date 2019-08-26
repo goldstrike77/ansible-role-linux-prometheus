@@ -105,4 +105,4 @@ dependencies:
           backend_port: '{{ prometheus_grafana_port }}'
           sticky: 'ip_hash'
           keepalive: '32'
-    when: prometheus_grafana_dept or prometheus_grafana_ngx_dept
+    when: prometheus_grafana_dept | bool or prometheus_grafana_ngx_dept
