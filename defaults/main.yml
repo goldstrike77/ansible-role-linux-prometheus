@@ -42,11 +42,11 @@ prometheus_grafana_dept: false # A boolean value, whether install the Grafana fo
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
 prometheus_grafana_version: '6.2' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
-prometheus_grafana_admin_password: 'password' # The password of the default Grafana admin.
+prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
 prometheus_grafana_redis_dept: false # A boolean value, whether installs Redis.
 prometheus_grafana_redis_path: '{{ prometheus_data_path }}' # Specify the Redis data directory.
-prometheus_grafana_redis_requirepass: 'password' # Authorization clients password.
+prometheus_grafana_redis_requirepass: 'changeme' # Authorization clients password.
 prometheus_grafana_redis_maxmemory: '64' # A memory usage limit to the specified amount in MB.
 prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}' # Redis hosts address.
 prometheus_grafana_redis_port: '6379' # Redis listen port.
@@ -70,7 +70,7 @@ prometheus_grafana_ldap_arg:
     start_tls: false
     ssl_skip_verify: true
     bind_dn: 'cn=admin,dc=example,dc=com'
-    bind_password: grafana
+    bind_password: changeme
     search_filter: '(cn=%s)'
     search_base_dns:
       - 'dc=example,dc=com'
@@ -124,7 +124,7 @@ alertmanager_arg:
   group_wait: '60s'
   group_interval: '60s'
   repeat_interval: '2h'
-  smtp_auth_password: 'password'
+  smtp_auth_password: 'changeme'
   smtp_auth_username: 'user'
   smtp_from: 'do-not-reply@somebody.com'
   smtp_require_tls: 'false'
