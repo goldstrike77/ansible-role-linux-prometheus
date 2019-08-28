@@ -24,7 +24,7 @@
   uri:
     url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
-    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_blackbox_exporter","name":"blackbox_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.blackbox }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.blackbox }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
+    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_blackbox_exporter","name":"blackbox_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.blackbox }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}","subscription":"{{ subscription | upper }}","region":"{{ region | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.blackbox }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
     body_format: 'json'
     status_code: '200'
     headers:
@@ -47,7 +47,7 @@
   uri:
     url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
-    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_snmp_exporter","name":"snmp_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.snmp }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.snmp }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
+    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_snmp_exporter","name":"snmp_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.snmp }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}","subscription":"{{ subscription | upper }}","region":"{{ region | upper }}"},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.snmp }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
     body_format: 'json'
     status_code: '200'
     headers:

@@ -9,7 +9,7 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Processor load has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
   - alert: Instance_CPU_Load
-    expr: '((100 * (1 - avg by(environment,group,instance,service)(irate(node_cpu{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(environment,group,instance,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)'
+    expr: '((100 * (1 - avg by(subscription,region,environment,group,instance,service)(irate(node_cpu{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(subscription,region,environment,group,instance,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)'
     for: 10m
     labels:
       severity: warning
@@ -79,14 +79,14 @@ prometheus_os_alert_rules:
     annotations:
       description: "Service has been stoped."
   - alert: Instance_Disc_Read
-    expr: '(sum by (environment,group,instance,service) (irate(node_disk_bytes_read{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (environment,group,instance,service) (irate(wmi_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
+    expr: '(sum by (subscription,region,environment,group,instance,service) (irate(node_disk_bytes_read{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (subscription,region,environment,group,instance,service) (irate(wmi_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
     for: 10m
     labels:
       severity: warning
     annotations:
       description: 'Disk is probably reading too much data with a value of {{ $value | printf "%.0f" }}.'
   - alert: Instance_Disc_Write
-    expr: '(sum by (environment,group,instance,service) (irate(node_disk_bytes_written{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (environment,group,instance,service) (irate(wmi_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
+    expr: '(sum by (subscription,region,environment,group,instance,service) (irate(node_disk_bytes_written{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (subscription,region,environment,group,instance,service) (irate(wmi_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
     for: 10m
     labels:
       severity: warning

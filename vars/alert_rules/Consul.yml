@@ -9,7 +9,7 @@ prometheus_consul_alert_rules:
     annotations:
       description: "Consul node has been stoped."
   - alert: Consul_Service
-    expr: "sum by (node, service_name)(consul_catalog_service_node_healthy == 0)"
+    expr: "sum by (subscription,region,node,service_name)(consul_catalog_service_node_healthy == 0)"
     for: 10m
     labels:
       severity: warning

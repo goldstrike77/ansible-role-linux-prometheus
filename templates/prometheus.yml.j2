@@ -37,6 +37,10 @@ scrape_configs:
         target_label: 'group'
       - source_labels: [__meta_consul_service_metadata_environment]
         target_label: 'environment'
+      - source_labels: [__meta_consul_service_metadata_subscription]
+        target_label: 'subscription'
+      - source_labels: [__meta_consul_service_metadata_region]
+        target_label: 'region'
       - source_labels: [__meta_consul_service]
         target_label: 'service'
       - source_labels: [__meta_consul_service]
@@ -80,6 +84,10 @@ scrape_configs:
         target_label: 'group'
       - source_labels: [__meta_consul_service_metadata_environment]
         target_label: 'environment'
+      - source_labels: [__meta_consul_service_metadata_subscription]
+        target_label: 'subscription'
+      - source_labels: [__meta_consul_service_metadata_region]
+        target_label: 'region'
       - source_labels: [__meta_consul_service]
         target_label: 'service'
       - source_labels: [__meta_consul_service]
@@ -113,6 +121,10 @@ scrape_configs:
         target_label: 'group'
       - source_labels: [__meta_consul_service_metadata_environment]
         target_label: 'environment'
+      - source_labels: [__meta_consul_service_metadata_subscription]
+        target_label: 'subscription'
+      - source_labels: [__meta_consul_service_metadata_region]
+        target_label: 'region'
       - source_labels: [__meta_consul_service_metadata_target]
         target_label: '__param_target'
       - source_labels: [__meta_consul_service_metadata_target]
