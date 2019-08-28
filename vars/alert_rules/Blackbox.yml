@@ -1,15 +1,22 @@
 ---
 prometheus_blackbox_alert_rules:
 # Blackbox
+  - alert: WebSite
+    expr: "avg by (environment,group,target) (probe_success == 0)"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: 'Endpoint has been unreachable.'
   - alert: SSLCertExpiringSoon
-    expr: "(avg by (environment,group,target) (probe_ssl_earliest_cert_expiry - time() < 86400 * 35))"
+    expr: "avg by (environment,group,target) ((probe_ssl_earliest_cert_expiry - time()) / 86400 < 35)"
     for: 60m
     labels:
       severity: warning
     annotations:
-      description: "SSL certificate expires in 35 days."
+      description: 'SSL certificate expires in {{ $value | printf "%.0f" }} days.'
   - alert: StatusCode
-    expr: "(avg by (environment,group,target) (probe_http_status_code <= 99 or probe_http_status_code >= 400))"
+    expr: "avg by (environment,group,target) (probe_http_status_code <= 99 or probe_http_status_code >= 400)"
     for: 5m
     labels:
       severity: warning
