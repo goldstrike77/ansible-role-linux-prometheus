@@ -221,7 +221,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_arg.ulimit_memlock`: The number of memory lock launched by systemd.
 * `thanos_arg.ulimit_nofile`: The number of files launched by systemd.
 * `thanos_arg.ulimit_nproc`: The number of processes launched by systemd.
-* `thanos_arg.version`: Specify the Thanos version.
 
 ##### Thanos objstore Variables
 * `thanos_obj_arg.type`: Objstore service type.
@@ -235,11 +234,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### Trickster System Variables
 * `trickster_arg.cache_type`: Defines what kind of cache Trickster uses.
 * `trickster_arg.compression`: Determines whether the cache should be compressed.
-* `trickster_arg.default_step`: I don't know what it means.
 * `trickster_arg.fast_forward_disable`: Turn off the 'fast forward' feature for any requests proxied.
 * `trickster_arg.ignore_no_cache_header`: Disables a client's ability to send a no-cache to refresh a cached query.
-* `trickster_arg.max_value_age_secs`: Defines the maximum age of specific datapoints in seconds.
-* `trickster_arg.reap_sleep_ms`: Defines how long the cache reaper waits between reap cycles.
+* `trickster_arg.timeseries_retention_factor`: Defines the maximum number of recent timestamps to cache for a given query.
 * `trickster_arg.record_ttl_secs`: Defines the relative expiration of cached queries.
 * `trickster_arg.ulimit_core`: The number of coredump launched by systemd.
 * `trickster_arg.ulimit_memlock`:  The number of memory lock launched by systemd.
@@ -251,7 +248,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 There are some variables in vars/main.yml:
 
 ## Dependencies
-- Ansible versions > 2.6 are supported.
+- Ansible versions > 2.8 are supported.
 - [Grafana](https://github.com/goldstrike77/ansible-role-linux-grafana.git)
 - [NGinx](https://github.com/goldstrike77/ansible-role-linux-nginx.git)
 - [Redis](https://github.com/goldstrike77/ansible-role-linux-redis.git)
@@ -302,7 +299,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       metrics: '8082'
     prometheus_grafana_dept: false
     prometheus_grafana_path: '/data'
-    prometheus_grafana_version: '5'
+    prometheus_grafana_version: '6.3'
     prometheus_grafana_admin_user: 'admin'
     prometheus_grafana_admin_password: 'password'
     prometheus_grafana_port: '3000'
@@ -347,7 +344,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       smtp_auth_password: 'password'
       smtp_auth_username: 'user'
       smtp_from: 'do-not-reply@somebody.com'
-      smtp_require_tls: 'false'
+      smtp_require_tls: false
       smtp_smarthost: '127.0.0.1:25'
       wechat_api_agentid: '0'
       wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
@@ -369,29 +366,26 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
-      version: '0.3.2'
     thanos_obj_arg:
       type: 'S3'
       bucket: 'thanos'
       endpoint: '127.0.0.1:9001'
-      insecure: 'true'
-      signature_version2: 'false'
+      insecure: true
+      signature_version2: false
       access_key: 'QTNTQZZP1NOBNCL5LPRX'
       secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
     trickster_arg:
       cache_type: 'memory'
-      compression: 'true'
-      default_step: '300'
-      fast_forward_disable: 'false'
-      ignore_no_cache_header:
-      max_value_age_secs:
-      reap_sleep_ms: '1000'
+      compression: true
+      fast_forward_disable: false
+      timeseries_retention_factor: '1024'
+      ignore_no_cache_header: false
       record_ttl_secs: '43200'
       ulimit_core: 'infinity'
       ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
-      version: '0.1.7'
+      version: '0.1.10'
     subscription: 'default'
     region: 'default'
     environments: 'SIT'

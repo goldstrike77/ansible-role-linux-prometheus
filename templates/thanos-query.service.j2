@@ -18,7 +18,7 @@ EnvironmentFile=-/etc/default/thanos-query
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=thanos-query
-ExecStart=/usr/local/bin/thanos query $THANOS_QUERY_OPTS
+ExecStart=/usr/bin/thanos query $THANOS_QUERY_OPTS
 Restart=on-failure
 RestartSec=10s
 

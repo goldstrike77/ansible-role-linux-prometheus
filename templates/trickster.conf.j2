@@ -4,20 +4,37 @@ instance_id = 1
 [proxy_server]
 listen_port = {{ trickster_port.proxy_server }}
 
-[cache]
-cache_type = '{{ trickster_arg.cache_type }}'
-record_ttl_secs = {{ trickster_arg.record_ttl_secs }}
-reap_sleep_ms = {{ trickster_arg.reap_sleep_ms }}
-compression = {{ trickster_arg.compression }}
-
+[caches]
+    [caches.default]
+    type = '{{ trickster_arg.cache_type }}'
+    compression = {{ trickster_arg.compression | bool | to_json }}
+    timeseries_ttl_secs = {{ trickster_arg.record_ttl_secs }}
+    fastforward_ttl_secs = 15
+    object_ttl_secs = 60
+        [caches.default.index]
+        reap_interval_secs = 3
+        flush_interval_secs = 5
+        max_size_bytes = {{ ( ansible_memtotal_mb * 0.25 * 1024 * 1024 ) | int }}
+        max_size_backoff_bytes = 16777216
+        max_size_objects = 0
+        max_size_backoff_objects = 100
 [origins]
     [origins.default]
-    origin_url = 'http://127.0.0.1:{% if thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
+    is_default = true
+    type = 'prometheus'
+    cache_name = 'default'
+    scheme = 'http'
+    host = 'http://127.0.0.1:{% if thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
+    path_prefix = ''
+    timeout_secs = 180
+    keep_alive_timeout_secs = 300
+    max_idle_conns = 20
     api_path = '/api/v1'
-    default_step = {{ trickster_arg.default_step }}
-    ignore_no_cache_header = {{ trickster_arg.ignore_no_cache_header }}
-    max_value_age_secs = {{ trickster_arg.max_value_age_secs }}
-    fast_forward_disable = {{ trickster_arg.fast_forward_disable }}
+    ignore_no_cache_header = {{ trickster_arg.ignore_no_cache_header | bool | to_json }}
+    timeseries_retention_factor = {{ trickster_arg.timeseries_retention_factor }}
+    timeseries_eviction_method = 'oldest'
+    fast_forward_disable = {{ trickster_arg.fast_forward_disable | bool | to_json }}
+    backfill_tolerance_secs = 0
 
 [metrics]
 listen_port = {{ trickster_port.metrics }}

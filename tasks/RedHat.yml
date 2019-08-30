@@ -13,7 +13,7 @@
 
 - name: Install the prometheus
   yum:
-    name: '{{ ",".join(vars["prometheus_software"]) }}'
+    name: '{{ prometheus_software }}'
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
@@ -33,3 +33,15 @@
   until: prober_soft_updated is succeeded
   retries: 3
   delay: 5
+
+- name: Install the thanos
+  yum:
+    name: 'thanos'
+    state: 'present'
+    validate_certs: 'no'
+    disable_gpg_check: 'yes'
+  register: thanos_upgrade
+  until: thanos_upgrade is succeeded
+  retries: 3
+  delay: 5
+  when: thanos_is_install | bool

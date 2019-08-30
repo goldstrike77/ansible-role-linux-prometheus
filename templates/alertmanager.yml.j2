@@ -1,7 +1,7 @@
 global:
   smtp_smarthost: '{{ alertmanager_arg.smtp_smarthost }}'
   smtp_from: '{{ alertmanager_arg.smtp_from }}'
-  smtp_require_tls: {{ alertmanager_arg.smtp_require_tls }}
+  smtp_require_tls: {{ alertmanager_arg.smtp_require_tls | bool | to_json }}
   smtp_auth_username: '{{ alertmanager_arg.smtp_auth_username }}'
   smtp_auth_password: '{{ alertmanager_arg.smtp_auth_password }}'
   wechat_api_url: '{{ alertmanager_arg.wechat_api_url }}'

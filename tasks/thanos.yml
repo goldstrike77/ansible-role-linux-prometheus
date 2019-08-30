@@ -1,33 +1,4 @@
 ---
-- name: Check current thanos version
-  command: '/usr/local/bin/thanos --version'
-  register: thanos_current_version
-  changed_when: false
-  failed_when: false
-
-- name: Delete existing thanos version if different
-  file:
-    path: '/usr/local/bin/thanos'
-    state: absent
-  when:
-    - thanos_current_version.stderr is defined
-    - thanos_arg.version not in thanos_current_version.stderr
-
-- name: Install thanos
-  unarchive:
-    src: '{{ thanos_soft_url }}/v{{ thanos_arg.version }}/thanos-{{ thanos_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.tar.gz'
-    dest: '/usr/local/bin'
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
-    extra_opts: [--strip-components=1]
-    remote_src: yes
-    validate_certs: 'no'
-  register: thanos_upgrade
-  when:
-    - thanos_current_version.rc == 2 or thanos_arg.version not in thanos_current_version.stderr
-  ignore_errors: true
-
 - name: Thanos base components systemd service file transfer
   template:
     src: 'thanos-{{ item }}.service.j2'
@@ -56,7 +27,7 @@
     owner: 'prometheus'
     group: 'prometheus'
     mode: '0755'
-  when: thanos_bucket_is_used
+  when: thanos_bucket_is_used | bool
 
 - name: Thanos objstore config file transfer
   template:
@@ -66,7 +37,7 @@
     owner: 'prometheus'
     group: 'prometheus'
     mode: '0644'
-  when: thanos_bucket_is_used
+  when: thanos_bucket_is_used | bool
   register: thanos_bucket
 
 - name: Thanos optional components systemd service file transfer
@@ -78,7 +49,7 @@
     group: 'root'
     mode: '0644'
   with_items: '{{ thanos_opti_components }}'
-  when: thanos_bucket_is_used
+  when: thanos_bucket_is_used | bool
   register: thanos_opti_systemd
 
 - name: Thanos optional components default file transfer
@@ -90,7 +61,7 @@
     group: 'root'
     mode: '0644'
   with_items: '{{ thanos_opti_components }}'
-  when: thanos_bucket_is_used
+  when: thanos_bucket_is_used | bool
   register: thanos_opti_default
 
 - name: Creating thanos compact process folder
@@ -99,9 +70,9 @@
     state: 'directory'
     owner: 'prometheus'
     group: 'prometheus'
-    mode: 0755
+    mode: '0755'
   when:
-    - thanos_bucket_is_used
+    - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
 
 - name: Thanos compact systemd service file transfer
@@ -112,7 +83,7 @@
     group: 'root'
     mode: '0644'
   when:
-    - thanos_bucket_is_used
+    - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_systemd
 
@@ -125,7 +96,7 @@
     group: 'root'
     mode: '0644'
   when:
-    - thanos_bucket_is_used
+    - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_compact_default
 
@@ -144,8 +115,8 @@
     no_proxy: '{{ item }}'
   loop: '{{ consul_public_clients|flatten(levels=1) }}'
   when:
-    - exporter_is_install
-    - consul_public_register
+    - exporter_is_install | bool
+    - consul_public_register | bool
   register: register_status
   until: register_status.status == 200
   retries: 3
@@ -169,8 +140,8 @@
     no_proxy: '{{ item }}'
   loop: '{{ consul_public_clients|flatten(levels=1) }}'
   when:
-    - exporter_is_install
-    - consul_public_register
+    - exporter_is_install | bool
+    - consul_public_register | bool
   register: register_status
   until: register_status.status == 200
   retries: 3
@@ -201,9 +172,9 @@
   changed_when: false
   failed_when: false
   when:
-    - exporter_is_install
-    - consul_public_register
-    - thanos_bucket_is_used
+    - exporter_is_install | bool
+    - consul_public_register | bool
+    - thanos_bucket_is_used | bool
 
 - name: Register exporter service with an http health check
   uri:
@@ -227,7 +198,7 @@
   changed_when: false
   failed_when: false
   when:
-    - exporter_is_install
-    - consul_public_register
-    - thanos_bucket_is_used
+    - exporter_is_install | bool
+    - consul_public_register | bool
+    - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address

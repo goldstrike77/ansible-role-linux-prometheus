@@ -18,7 +18,7 @@ EnvironmentFile=-/etc/default/thanos-compact
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=thanos-compact
-ExecStart=/usr/local/bin/thanos compact $THANOS_COMPACT_OPTS
+ExecStart=/usr/bin/thanos compact $THANOS_COMPACT_OPTS
 Restart=on-failure
 RestartSec=10s
 

@@ -1,12 +1,12 @@
 log_level = "{{ consul_template_arg.log_level }}"
 syslog {
-  enabled = {{ consul_template_arg.enable_syslog }}
+  enabled = {{ consul_template_arg.enable_syslog | bool | to_json }}
 }
 
 consul {
   address = "{{ consul_template_arg.consul_server }}:{{ consul_template_arg.consul_port }}"
   retry {
-    enabled = {{ consul_template_arg.retry_enabled }}
+    enabled = {{ consul_template_arg.retry_enabled | bool | to_json }}
     attempts = {{ consul_template_arg.retry_attempts }}
     backoff = "{{ consul_template_arg.retry_backoff }}"
     max_backoff = "{{ consul_template_arg.retry_max_backoff }}"
@@ -18,7 +18,7 @@ template {
   destination = "{{ consul_template_arg.conf_path }}/conf.d/{{ item }}.json"
   command = ""
   command_timeout = "{{ consul_template_arg.template_command_timeout }}"
-  backup = {{ consul_template_arg.template_backup }}
+  backup = {{ consul_template_arg.template_backup | bool | to_json }}
   left_delimiter = "{$"
   right_delimiter = "$}"
   wait {

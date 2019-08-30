@@ -42,7 +42,7 @@ trickster_port:
 # Grafana parameters #
 prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
-prometheus_grafana_version: '6.2' # Specify the Grafana version.
+prometheus_grafana_version: '6.3' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
@@ -129,7 +129,7 @@ alertmanager_arg:
   smtp_auth_password: 'changeme'
   smtp_auth_username: 'user'
   smtp_from: 'do-not-reply@somebody.com'
-  smtp_require_tls: 'false'
+  smtp_require_tls: false
   smtp_smarthost: '127.0.0.1:25'
   wechat_api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
   wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
@@ -167,33 +167,30 @@ thanos_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '0.5.0'
 
 # Thanos objstore Variables #
 thanos_obj_arg:
   type: 'S3'
   bucket: 'thanos'
   endpoint: '127.0.0.1:9001'
-  insecure: 'true'
-  signature_version2: 'false'
+  insecure: true
+  signature_version2: false
   access_key: '0GTXRMXD4FDFWURPABCG'
   secret_key: 'ODaHlToJWUkbzWI1TNkbZX43SiFPLRLoZeASP0Z8'
 
 # Trickster System Variables #
 trickster_arg:
   cache_type: 'memory' # Defines what kind of cache Trickster uses
-  compression: 'true' # Determines whether the cache should be compressed
-  default_step: '300' # Defines the step in seconds of a query_range request if not provided by the client
-  fast_forward_disable: 'false' # Turn off the 'fast forward' feature for any requests proxied
-  ignore_no_cache_header: 'false' # Disable a client's ability to send a no-cache to refresh a cached query
-  max_value_age_secs: '86400' # Defines the maximum age of specific datapoints in seconds
-  reap_sleep_ms: '1000' # Defines how long the cache reaper waits between reap cycles in millisecond
+  compression: true # Determines whether the cache should be compressed
+  fast_forward_disable: false # Turn off the 'fast forward' feature for any requests proxied
+  ignore_no_cache_header: false # Disable a client's ability to send a no-cache to refresh a cached query
+  timeseries_retention_factor: '1024' # Defines the maximum number of recent timestamps to cache for a given query.
   record_ttl_secs: '43200' # Defines the relative expiration of cached queries in seconds
   ulimit_core: 'infinity' # The number of coredump launched by systemd
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '0.1.7'
+  version: '1.09-beta9'
 
 # Consul templatee Variables #
 consul_template_version: '0.20.0'
@@ -201,13 +198,13 @@ consul_template_arg:
   conf_path: '/etc/consul-template.d'
   consul_port: '8500'
   consul_server: '127.0.0.1'
-  enable_syslog: 'true'
+  enable_syslog: true
   log_level: 'info'
   retry_attempts: '12'
   retry_backoff: '250ms'
-  retry_enabled: 'true'
+  retry_enabled: true
   retry_max_backoff: '3m'
-  template_backup: 'true'
+  template_backup: true
   template_command_timeout: '60s'
   uid: '2011'
   ulimit_nofile: '8192'

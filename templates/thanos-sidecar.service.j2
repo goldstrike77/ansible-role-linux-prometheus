@@ -18,7 +18,7 @@ EnvironmentFile=-/etc/default/thanos-sidecar
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=thanos-sidecar
-ExecStart=/usr/local/bin/thanos sidecar $THANOS_SIDECAR_OPTS
+ExecStart=/usr/bin/thanos sidecar $THANOS_SIDECAR_OPTS
 Restart=on-failure
 RestartSec=10s
 
