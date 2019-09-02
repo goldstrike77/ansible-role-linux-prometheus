@@ -2,7 +2,7 @@
 prometheus_postgresql_alert_rules:
 # PostgreSQL database
   - alert: PostgreSQL_Instance
-    expr: 'pg_static{service="postgres_exporter"} < 1'
+    expr: 'pg_up == 0'
     for: 5m
     labels:
       severity: critical
