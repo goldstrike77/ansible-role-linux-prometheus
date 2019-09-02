@@ -171,7 +171,7 @@ thanos_arg:
 # Thanos objstore Variables #
 thanos_obj_arg:
   type: 'S3'
-  bucket: 'thanos'
+  bucket: 'public'
   endpoint: '127.0.0.1:9001'
   insecure: true
   signature_version2: false

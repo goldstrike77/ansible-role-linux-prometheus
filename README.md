@@ -368,7 +368,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_nproc: '262144'
     thanos_obj_arg:
       type: 'S3'
-      bucket: 'thanos'
+      bucket: 'public'
       endpoint: '127.0.0.1:9001'
       insecure: true
       signature_version2: false
