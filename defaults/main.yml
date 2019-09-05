@@ -11,9 +11,13 @@ thanos_is_install: false
 trickster_is_install: false
 
 # Service Mesh #
-subscription: 'default' # Define the service subscription.
-region: 'default' # Define the service region.
 environments: 'SIT' # Define the service environment.
+#tags: # Define the service custom label.
+#  subscription: 'default'
+#  owner: 'nobody'
+#  department: 'Infrastructure'
+#  organization: 'The Company'
+#  region: 'IDC01'
 exporter_is_install: false # Whether to install prometheus exporter.
 consul_public_register: false # Whether register a exporter service with public consul client.
 consul_public_exporter_token: '00000000-0000-0000-0000-000000000000' # Public Consul client ACL token.
