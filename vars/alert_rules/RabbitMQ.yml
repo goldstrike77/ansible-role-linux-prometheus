@@ -1,0 +1,10 @@
+---
+prometheus_rabbitmq_alert_rules:
+# RabbitMQ message broker
+  - alert: RabbitMQ_Instance
+    expr: 'rabbitmq_up == 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Instance has been stoped."

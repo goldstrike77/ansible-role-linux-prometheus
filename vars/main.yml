@@ -74,6 +74,7 @@ unauthenticate_target_services:
   - 'php-fpm'
   - 'postgres'
   - 'prometheus'
+  - 'rabbitmq'
   - 'redis'
   - 'snmp'
   - 'thanos-compact'

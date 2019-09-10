@@ -153,6 +153,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'MySQL'
   - 'NGinx'
   - 'PostgreSQL'
+  - 'RabbitMQ'
   - 'Redis'
   - 'Targets'
   - 'Thanos'
