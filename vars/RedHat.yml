@@ -5,3 +5,4 @@ prometheus_software:
   - 'alertmanager'
   - 'prometheus2'
   - 'pushgateway'
+  - 'libselinux-utils'

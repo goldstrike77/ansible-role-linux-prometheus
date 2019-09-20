@@ -13,7 +13,6 @@
 
 - name: Include prober exporter tasks
   include: 'exporter.yml'
-  when: prometheus_prober_exporters is defined
 
 - name: Restart the prometheus service
   shell: echo ''
@@ -69,3 +68,9 @@
     name: 'postfix.service'
     enabled: 'yes'
     state: 'started'
+
+- name: Registered with HashiCorp Consul
+  include: 'register.yml'
+  when:
+    - exporter_is_install | bool
+    - consul_public_register | bool

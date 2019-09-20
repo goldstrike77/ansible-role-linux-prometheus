@@ -1,3 +1,7 @@
+<!--
+The StartsAt and EndsAt not exactly reliable.
+-->
+
 {{ define "__subject" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }} {{ if gt (len .CommonLabels) (len .GroupLabels) }}({{ with .CommonLabels.Remove .GroupLabels.Names }}{{ .Values | join " " }}{{ end }}){{ end }}{{ end }}
 {{ define "__description" }}{{ end }}
 
@@ -14,7 +18,6 @@ End:   {{ .EndsAt.Format "Mon, 02 Jan 2006 15:04:05 MST" }}
 {{ end }}{{ range .Annotations.SortedPairs }}{{ .Name | title }}: {{ .Value }}{{ end }}
 {{ end }}{{ end }}
 
-
 {{ define "wechat.default.message" }}{{ if gt (len .Alerts.Firing) 0 -}}
 WARNING ☢
 {{ template "__text_alert_firing_list" .Alerts.Firing }}
@@ -29,13 +32,11 @@ RESOLVED ❀
 {{ define "wechat.default.to_tag" }}{{ end }}
 {{ define "wechat.default.agent_id" }}{{ end }}
 
-
 {{ define "email.default.subject" }}{{ template "__subject" . }}{{ end }}
 {{ define "email.default.html" }}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 Style and HTML derived from https://github.com/mailgun/transactional-email-templates
-
 
 The MIT License (MIT)
 

@@ -59,28 +59,3 @@
     group: 'root'
     mode: '0644'
   register: trickster_config
-
-- name: Register exporter service with an http health check
-  uri:
-    url: 'http://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
-    method: 'PUT'
-    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_trickster_exporter","name":"trickster_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ trickster_port.metrics }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ trickster_port.metrics }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
-    body_format: 'json'
-    status_code: '200'
-    headers:
-      X-Consul-Token: '{{ consul_public_exporter_token }}'
-      X-Requested-By: '{{ ansible_default_ipv4.address }}'
-      cache-control: 'no-cache'
-  environment:
-    no_proxy: '{{ item }}'
-  loop: '{{ consul_public_clients|flatten(levels=1) }}'
-  when:
-    - exporter_is_install | bool
-    - consul_public_register | bool
-  register: register_status
-  until: register_status.status == 200
-  retries: 3
-  delay: 3
-  no_log: true
-  changed_when: false
-  failed_when: false
