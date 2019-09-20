@@ -31,18 +31,8 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__meta_consul_service_address]
         target_label: 'ipaddress'
-      - source_labels: [__meta_consul_service_metadata_instance]
-        target_label: 'instance'
-      - source_labels: [__meta_consul_service_metadata_group]
-        target_label: 'group'
-      - source_labels: [__meta_consul_service_metadata_environment]
-        target_label: 'environment'
-{% if tags is defined %}
-{% for item in tags %}
-      - source_labels: [__meta_consul_service_metadata_{{ item }}]
-        target_label: '{{ item }}'
-{% endfor %}
-{% endif %}
+      - regex: __meta_consul_service_metadata_(.+)
+        action: labelmap
       - source_labels: [__meta_consul_service]
         target_label: 'service'
       - source_labels: [__meta_consul_service]
@@ -53,12 +43,6 @@ scrape_configs:
         regex: 'kibana_exporter'
         target_label: __metrics_path__
         replacement: '/_prometheus/metrics'
-      - source_labels: [__meta_consul_service_metadata_tenant]
-        target_label: 'tenant'
-      - source_labels: [__meta_consul_service_metadata_cluster]
-        target_label: 'cluster'
-      - source_labels: [__meta_consul_service_metadata_replicaset]
-        target_label: 'replicaset'
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
@@ -80,30 +64,14 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__meta_consul_service_address]
         target_label: 'ipaddress'
-      - source_labels: [__meta_consul_service_metadata_instance]
-        target_label: 'instance'
-      - source_labels: [__meta_consul_service_metadata_group]
-        target_label: 'group'
-      - source_labels: [__meta_consul_service_metadata_environment]
-        target_label: 'environment'
-{% if tags is defined %}
-{% for item in tags %}
-      - source_labels: [__meta_consul_service_metadata_{{ item }}]
-        target_label: '{{ item }}'
-{% endfor %}
-{% endif %}
+      - regex: __meta_consul_service_metadata_(.+)
+        action: labelmap
       - source_labels: [__meta_consul_service]
         target_label: 'service'
       - source_labels: [__meta_consul_service]
         regex: 'graylog_exporter'
         target_label: __metrics_path__
         replacement: '/api/plugins/org.graylog.plugins.metrics.prometheus/metrics'
-      - source_labels: [__meta_consul_service_metadata_tenant]
-        target_label: 'tenant'
-      - source_labels: [__meta_consul_service_metadata_cluster]
-        target_label: 'cluster'
-      - source_labels: [__meta_consul_service_metadata_replicaset]
-        target_label: 'replicaset'
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
@@ -121,20 +89,10 @@ scrape_configs:
         refresh_interval: {{ prometheus_arg.refresh_interval }}
         services: ['{{ "_exporter_prober', '".join(vars["prometheus_prober_exporters"]) }}_exporter_prober']
     relabel_configs:
-      - source_labels: [__meta_consul_service_metadata_group]
-        target_label: 'group'
-      - source_labels: [__meta_consul_service_metadata_environment]
-        target_label: 'environment'
-{% if tags is defined %}
-{% for item in tags %}
-      - source_labels: [__meta_consul_service_metadata_{{ item }}]
-        target_label: '{{ item }}'
-{% endfor %}
-{% endif %}
+      - regex: __meta_consul_service_metadata_(.+)
+        action: labelmap
       - source_labels: [__meta_consul_service_metadata_target]
         target_label: '__param_target'
-      - source_labels: [__meta_consul_service_metadata_target]
-        target_label: 'target'
       - source_labels: [__meta_consul_service_metadata_module]
         target_label: '__param_module'
       - source_labels: [__meta_consul_service]
