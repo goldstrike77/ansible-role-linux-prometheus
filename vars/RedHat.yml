@@ -6,3 +6,4 @@ prometheus_software:
   - 'prometheus2'
   - 'pushgateway'
   - 'libselinux-utils'
+  - 'policycoreutils-python'
