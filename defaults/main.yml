@@ -1,7 +1,6 @@
 ---
 # General parameters #
 prometheus_conf_path: '/etc/prometheus'
-prometheus_selinux: false
 prometheus_consul_server: '127.0.0.1:8500'
 prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
 prometheus_data_path: '/data'

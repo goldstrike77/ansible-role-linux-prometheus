@@ -121,7 +121,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_is_install`: A boolean value, whether install the Thanos.
 * `trickster_is_install`: A boolean value, whether install the Trickster.
 * `thanos_bucket_is_used`: A boolean value, whether use object storage.
-* `prometheus_selinux`: SELinux security policy.
 * `prometheus_conf_path`: Specify the Prometheus data directory.
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
 * `prometheus_consul_server`: The consul address and port.
@@ -275,7 +274,6 @@ You can also use the group_vars or the host_vars files for setting the variables
 
     prometheus_conf_path: '/etc/prometheus'
     prometheus_data_path: '/data'
-    prometheus_selinux: false
     thanos_is_install: true
     trickster_is_install: true
     thanos_bucket_is_used: true
