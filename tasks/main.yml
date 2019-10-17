@@ -24,13 +24,13 @@
   notify: 'Restart prober exporter service'
   when: prober_soft_updated is changed or prober_config is changed or prober_system is changed
 
-- name: Include consul-template tasks
-  include: 'consul-template.yml'
+#- name: Include consul-template tasks
+#  include: 'consul-template.yml'
 
-- name: Restart the consul-template service
-  shell: echo ''
-  notify: 'Restart consul-template service'
-  when: consul_template_config_update is changed or consul_template_ctmpl_update is changed or consul_template_systemd_update is changed
+#- name: Restart the consul-template service
+#  shell: echo ''
+#  notify: 'Restart consul-template service'
+#  when: consul_template_config_update is changed or consul_template_ctmpl_update is changed or consul_template_systemd_update is changed
 
 - name: Include thanos tasks
   include: 'thanos.yml'
