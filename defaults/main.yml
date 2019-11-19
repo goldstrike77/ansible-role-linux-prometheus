@@ -64,7 +64,7 @@ prometheus_grafana_ngx_pagespeed: false # Enables or disables pagespeed modules.
 prometheus_grafana_ngx_port_http: '80' # NGinx HTTP listen port.
 prometheus_grafana_ngx_port_https: '443' # NGinx HTTPs listen port.
 prometheus_grafana_ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
-prometheus_grafana_ngx_version: 'extras' # extras or standard
+prometheus_grafana_ngx_version: 'standard' # extras or standard
 prometheus_grafana_ldap_enabled: false
 prometheus_grafana_ldap_allow_sign_up: false
 prometheus_grafana_ldap_arg:
