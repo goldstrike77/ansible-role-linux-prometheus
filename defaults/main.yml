@@ -146,17 +146,17 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Blackbox'
   - 'Consul'
   - 'ElasticSearch'
-  - 'OS'
+  - 'JMX'
   - 'Minio'
   - 'MongoDB'
   - 'MySQL'
   - 'NGinx'
+  - 'OS'
   - 'PostgreSQL'
   - 'RabbitMQ'
   - 'Redis'
   - 'Targets'
   - 'Thanos'
-  - 'Tomcat'
 
 # Thanos System Variables #
 thanos_arg:
