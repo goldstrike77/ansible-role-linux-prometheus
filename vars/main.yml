@@ -85,6 +85,7 @@ unauthenticate_target_services:
   - 'trickster'
   - 'vmware'
   - 'wmi'
+  - 'zookeeper'
 
 authenticate_target_services:
   - 'graylog'
