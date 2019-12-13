@@ -147,6 +147,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Consul'
   - 'ElasticSearch'
   - 'JMX'
+  - 'Kafka'
   - 'Minio'
   - 'MongoDB'
   - 'MySQL'

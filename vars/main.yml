@@ -65,6 +65,7 @@ unauthenticate_target_services:
   - 'gitlab'
   - 'grafana'
   - 'jmx'
+  - 'kafka'
   - 'kibana'
   - 'minio'
   - 'mongodb'
