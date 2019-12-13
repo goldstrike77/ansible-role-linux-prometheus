@@ -1,3 +1,4 @@
+---
 prometheus_kafka_alert_rules:
 # Kafka
   - alert: Kafka_Topics
