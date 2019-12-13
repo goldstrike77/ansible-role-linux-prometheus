@@ -45,7 +45,7 @@ trickster_port:
 # Grafana parameters #
 prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
-prometheus_grafana_version: '6.3' # Specify the Grafana version.
+prometheus_grafana_version: '6.4' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
