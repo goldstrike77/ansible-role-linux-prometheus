@@ -75,27 +75,30 @@
     - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
 
-- name: Thanos compact systemd service file transfer
+- name: Thanos stand alone components systemd service file transfer
   template:
-    src: 'thanos-compact.service.j2'
-    dest: '/lib/systemd/system/thanos-compact.service'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
-  when:
-    - thanos_bucket_is_used | bool
-    - prometheus_server[0] in ansible_default_ipv4.address
-  register: thanos_compact_systemd
-
-- name: Thanos compact default file transfer
-  template:
-    src: 'thanos-compact.default.j2'
-    dest: '/etc/default/thanos-compact'
+    src: 'thanos-{{ item }}.service.j2'
+    dest: '/lib/systemd/system/thanos-{{ item }}.service'
     backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'
+  loop: '{{ thanos_stand_components }}'
   when:
     - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
-  register: thanos_compact_default
+  register: thanos_stand_systemd
+
+- name: Thanos stand alone components default file transfer
+  template:
+    src: 'thanos-{{ item }}.default.j2'
+    dest: '/etc/default/thanos-{{ item }}'
+    backup: 'yes'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  loop: '{{ thanos_stand_components }}'
+  when:
+    - thanos_bucket_is_used | bool
+    - prometheus_server[0] in ansible_default_ipv4.address
+  register: thanos_stand_default

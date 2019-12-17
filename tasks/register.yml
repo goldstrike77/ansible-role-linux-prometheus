@@ -201,6 +201,7 @@
     - item.status == 405
     - thanos_is_install | bool
     - thanos_bucket_is_used | bool
+    - prometheus_server[0] in ansible_default_ipv4.address
   register: register_status
   until: register_status.status == 200
   retries: 2

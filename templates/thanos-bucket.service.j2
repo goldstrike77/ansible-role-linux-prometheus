@@ -18,7 +18,7 @@ EnvironmentFile=-/etc/default/thanos-bucket
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=thanos-bucket
-ExecStart=/usr/bin/thanos bucket $THANOS_BUCKET_OPTS
+ExecStart=/usr/bin/thanos bucket web $THANOS_BUCKET_OPTS
 Restart=on-failure
 RestartSec=30s
 

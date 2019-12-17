@@ -46,10 +46,10 @@
   notify: 'Restart thanos optional components service'
   when: thanos_upgrade is changed or thanos_opti_systemd is changed or thanos_opti_default is changed or thanos_bucket is changed
 
-- name: Restart thanos compact service
+- name: Restart thanos stand alone components service
   shell: echo ''
-  notify: 'Restart thanos compact service'
-  when: (thanos_compact_systemd is changed or thanos_compact_default is changed or thanos_bucket is changed) and prometheus_server[0] in ansible_default_ipv4.address
+  notify: 'Restart thanos stand alone components service'
+  when: (thanos_stand_systemd is changed or thanos_stand_default is changed or thanos_bucket is changed) and prometheus_server[0] in ansible_default_ipv4.address
 
 - name: Include trickster tasks
   include: 'trickster.yml'

@@ -42,6 +42,9 @@ thanos_base_components:
 
 thanos_opti_components:
   - 'store'
+
+thanos_stand_components:
+  - 'compact'
   - 'bucket'
 
 architecture:

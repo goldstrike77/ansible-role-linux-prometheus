@@ -44,12 +44,13 @@
     daemon_reload: 'yes'
   loop: '{{ thanos_opti_components }}'
 
-- name: Restart thanos compact service
+- name: Restart thanos stand alone components service
   systemd:
-    name: 'thanos-compact.service'
+    name: 'thanos-{{ item }}.service'
     enabled: 'yes'
     state: 'restarted'
     daemon_reload: 'yes'
+  loop: '{{ thanos_stand_components }}'
 
 - name: Restart trickster service
   systemd:

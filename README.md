@@ -49,9 +49,9 @@ __Table of Contents__
                       │  Consul  │   └┬──────────────┘|   └┬──────────────┘|
                       └───────┬──┘    └─ ─ ─ ┬ ─ ─ ─ ─┘    └─ ─ ─ ┬ ─ ─ ─ ─┘
                               ↑              ↓                    ↓
-        ┌──────────────┐    ┌─┴──────────┬───┴─────┐    ┌─────────┴─────┐
-        │ Alertmanager ├┬─<─┤ Prometheus < Sidecar ├┬─>─┤       S3      │
-        └┬─────────────┘|   └┬───────────┴┬────────┘|   └───────┬───────┘
+        ┌──────────────┐    ┌─┴──────────┬───┴─────┐    ┌─────────┴─────┐   ┌───────────────┐
+        │ Alertmanager ├┬─<─┤ Prometheus < Sidecar ├┬─>─┤ Object Storage├─<─┤     Bucket    │
+        └┬─────────────┘|   └┬───────────┴┬────────┘|   └───────┬───────┘   └───────────────┘
          └─ ─ ─ ─ ─ ─ ─ ┘    └─ ─ ─ ─ ─ ─ ┴ ─ ─ ─ ─ ┘           ↑
                                                         ┌───────┴───────┐
                                                         │    Compact    │
@@ -66,6 +66,8 @@ The Query component is stateless and horizontally scalable and can be deployed w
 Sidecar is to backup Prometheus data into an Object Storage bucket, and giving other Thanos components access to the Prometheus instance the Sidecar is attached to.
 ### Thanos Store (optional)
 As the sidecar backs up data into the object storage of your choice, you can decrease Prometheus retention and store less locally. It can find in your object storage bucket.
+### Thanos Bucket (optional)
+The bucket component of Thanos is a set of commands to inspect data in object storage buckets.
 ### Thanos Compact (optional)
 The compact component simple scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
 ### Prometheus
@@ -74,8 +76,8 @@ Monitoring system and time series database.
 Handles alerts sent by Prometheus server.
 ### Consul
 Targets service discovery.
-### S3 (optional)
-Object storage service.
+### Object Storage (optional)
+Object storage service, support Google Cloud Storage / AWS S3 / Azure Storage Account / [etc](https://thanos.io/storage.md).
 
 ## Overview
 This Ansible role installs standalone or distributed prometheus v2 server on linux operating system, including establishing a filesystem structure and server configuration with some common operational features.
