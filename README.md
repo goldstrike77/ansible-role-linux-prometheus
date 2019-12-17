@@ -139,6 +139,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_port.alertmanager`: alertmanager instance listen port.
 * `prometheus_port.cluster`:  alertmanager cluster listen port.
 * `prometheus_port.prometheus`: Prometheus instance listen port.
+* `thanos_port.bucket_http`: Port for bucket HTTP endpoints.
 * `thanos_port.compact_http`: Port for compact HTTP endpoints.
 * `thanos_port.query_grpc`: Port for query gRPC endpoints.
 * `thanos_port.query_http`: Port for query HTTP endpoints.
@@ -284,6 +285,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       cluster: '9094'
       prometheus: '9090'
     thanos_port:
+      bucket_http: '19195'
       compact_http: '19194'
       query_grpc: '19092'
       query_http: '19192'
