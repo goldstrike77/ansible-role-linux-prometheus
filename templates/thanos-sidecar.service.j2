@@ -20,7 +20,7 @@ StandardError=syslog
 SyslogIdentifier=thanos-sidecar
 ExecStart=/usr/bin/thanos sidecar $THANOS_SIDECAR_OPTS
 Restart=on-failure
-RestartSec=10s
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target

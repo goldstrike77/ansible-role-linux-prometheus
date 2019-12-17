@@ -16,7 +16,7 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
-  with_items:
+  loop:
     - '{{ prometheus_conf_path }}/rules'
     - '{{ prometheus_conf_path }}/templates'
     - '{{ prometheus_conf_path }}/conf.d'
@@ -28,7 +28,7 @@
     owner: 'prometheus'
     group: 'prometheus'
     mode: '0755'
-  with_items:
+  loop:
     - '{{ prometheus_data_path }}/prometheus'
     - '{{ prometheus_data_path }}/alertmanager'
 
@@ -40,15 +40,13 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  with_items:
-    - '{{ prometheus_conf_files }}'
+  loop: '{{ prometheus_conf_files }}'
   register: soft_config
 
 - name: Include rules for alertmanager
   include_vars:
     file: 'alert_rules/{{ item }}.yml'
-  with_items:
-    - '{{ prometheus_alert_rules }}'
+  loop: '{{ prometheus_alert_rules }}'
   when:
     - prometheus_alert_rules != []
 
@@ -71,8 +69,7 @@
     group: 'root'
     mode: '0644'
     validate: "/bin/promtool check rules %s"
-  with_items:
-    - '{{ prometheus_alert_rules }}'
+  loop: '{{ prometheus_alert_rules }}'
   when:
     - prometheus_alert_rules != []
   notify: 'Reload prometheus service'

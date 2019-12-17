@@ -20,7 +20,7 @@ StandardError=syslog
 SyslogIdentifier=thanos-compact
 ExecStart=/usr/bin/thanos compact $THANOS_COMPACT_OPTS
 Restart=on-failure
-RestartSec=10s
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target

@@ -42,6 +42,7 @@ thanos_base_components:
 
 thanos_opti_components:
   - 'store'
+  - 'bucket'
 
 architecture:
   amd64: 'amd64'
@@ -79,6 +80,7 @@ unauthenticate_target_services:
   - 'redis'
   - 'snmp'
   - 'statsd'
+  - 'thanos-bucket'
   - 'thanos-compact'
   - 'thanos-query'
   - 'thanos-sidecar'

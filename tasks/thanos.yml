@@ -6,7 +6,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  with_items: '{{ thanos_base_components }}'
+  loop: '{{ thanos_base_components }}'
   register: thanos_base_systemd
 
 - name: Thanos base components default file transfer
@@ -17,7 +17,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  with_items: '{{ thanos_base_components }}'
+  loop: '{{ thanos_base_components }}'
   register: thanos_base_default
 
 - name: Creating thanos data folder
@@ -48,7 +48,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  with_items: '{{ thanos_opti_components }}'
+  loop: '{{ thanos_opti_components }}'
   when: thanos_bucket_is_used | bool
   register: thanos_opti_systemd
 
@@ -60,7 +60,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  with_items: '{{ thanos_opti_components }}'
+  loop: '{{ thanos_opti_components }}'
   when: thanos_bucket_is_used | bool
   register: thanos_opti_default
 

@@ -18,7 +18,7 @@
     owner: '{{ consul_template_arg.user }}'
     group: '{{ consul_template_arg.user }}'
     mode: '0755'
-  with_items:
+  loop:
     - 'conf.d'
     - 'ctmpl'
     - 'server'
@@ -57,8 +57,7 @@
     owner: '{{ consul_template_arg.user }}'
     group: '{{ consul_template_arg.user }}'
     mode: '0644'
-  with_items:
-    - '{{ consul_template_ctmpl }}'
+  loop: '{{ consul_template_ctmpl }}'
   register: consul_template_config_update
 
 - name: Consul-template template file transfer
@@ -68,8 +67,7 @@
     owner: '{{ consul_template_arg.user }}'
     group: '{{ consul_template_arg.user }}'
     mode: '0644'
-  with_items:
-    - '{{ consul_template_ctmpl }}'
+  loop: '{{ consul_template_ctmpl }}'
   register: consul_template_ctmpl_update
 
 - name: Consul-template systemd service file transfer

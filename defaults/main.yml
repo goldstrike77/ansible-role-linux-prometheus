@@ -31,6 +31,7 @@ prometheus_port:
   prometheus: '9090'
   snmp: '9116'
 thanos_port:
+  bucket_http: '19195'
   compact_http: '19194'
   query_grpc: '19092'
   query_http: '19192'

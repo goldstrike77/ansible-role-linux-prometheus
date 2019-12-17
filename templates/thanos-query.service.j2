@@ -20,7 +20,7 @@ StandardError=syslog
 SyslogIdentifier=thanos-query
 ExecStart=/usr/bin/thanos query $THANOS_QUERY_OPTS
 Restart=on-failure
-RestartSec=10s
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target

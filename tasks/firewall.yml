@@ -9,10 +9,10 @@
     permanent: 'true'
     immediate: 'true'
     state: 'enabled'
-  with_dict:
-    - '{{ prometheus_port }}'
-    - '{{ thanos_port }}'
-    - '{{ trickster_port }}'
+  loop:
+    - '{{ prometheus_port | dict2items }}'
+    - '{{ thanos_port | dict2items }}'
+    - '{{ trickster_port | dict2items }}'
   when:
     - services_state.ansible_facts.services["firewalld.service"] is defined
     - services_state.ansible_facts.services["firewalld.service"].state == 'running'
