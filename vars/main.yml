@@ -71,6 +71,7 @@ unauthenticate_target_services:
   - 'jmx'
   - 'kafka'
   - 'kibana'
+  - 'logstash'
   - 'minio'
   - 'mongodb'
   - 'mysqld'
