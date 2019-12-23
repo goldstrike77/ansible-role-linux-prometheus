@@ -21,6 +21,7 @@ ExecStart=/usr/bin/alertmanager \
           --config.file={{ prometheus_conf_path }}/alertmanager.yml \
           --storage.path={{ prometheus_data_path }}/alertmanager \
           --cluster.listen-address=0.0.0.0:{{ prometheus_port.cluster }} \
+          --cluster.advertise-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }} \
 {% if prometheus_server[0] not in ansible_default_ipv4.address %}
           --cluster.peer={{ prometheus_server[0] }}:{{ prometheus_port.cluster }} \
 {% endif %}
