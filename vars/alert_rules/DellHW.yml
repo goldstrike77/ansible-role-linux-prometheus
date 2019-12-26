@@ -1,0 +1,108 @@
+---
+prometheus_dellhw_alert_rules:
+# Dell Hardware
+  - alert: Batteries
+    expr: 'dell_hw_chassis_status{component="Batteries"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "System Board CMOS Battery has been failured."
+  - alert: Cooling
+    expr: 'dell_hw_chassis_status{component="Fans"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "System Cooling component has been failured."
+  - alert: Intrusion
+    expr: 'dell_hw_chassis_status{component="Intrusion"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "System Board Intrusion has been failured."
+  - alert: Memory
+    expr: 'dell_hw_chassis_status{component="Memory"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "System Board Memory has been failured."
+  - alert: Power_Supplies
+    expr: 'dell_hw_chassis_status{component="Power_Supplies"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Power Supplies has been failured."
+  - alert: Processors
+    expr: 'dell_hw_chassis_status{component="Processors"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "CPU/GPU has been failured."
+  - alert: Temperatures
+    expr: 'dell_hw_chassis_status{component="Temperatures"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Temperature Probes has been failured."
+  - alert: Voltages
+    expr: 'dell_hw_chassis_status{component="Voltages"} != 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "System Board Voltages has been failured."
+  - alert: Storage_battery
+    expr: "dell_hw_storage_battery_status != 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Storage Controller Battery has been failured."
+  - alert: Storage_Controller
+    expr: "dell_hw_storage_controller_status != 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Storage Controller has been failured."
+  - alert: Storage_Enclosure
+    expr: "dell_hw_storage_enclosure_status != 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Storage Enclosure has been failured."
+  - alert: Storage_Pdisk
+    expr: "dell_hw_storage_pdisk_status != 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Physical disks has been failured."
+  - alert: Storage_Vdisk
+    expr: "dell_hw_storage_vdisk_status != 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Virtual disks has been failured."
+  - alert: Inlet_Temperature
+    expr: 'dell_hw_chassis_temps_reading{component="System_Board_Inlet_Temp"} >= dell_hw_chassis_temps_max_warning{component="System_Board_Inlet_Temp"}'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Temperatures has exceeded the threshold."
+#  - alert: Ethernet
+#    expr: "dell_hw_nic_status != 0"
+#    for: 5m
+#    labels:
+#      severity: critical
+#    annotations:
+#      description: "Connection status of network cards has been failured."

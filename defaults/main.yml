@@ -146,6 +146,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Alertmanager'
   - 'Blackbox'
   - 'Consul'
+  - 'DellHW'
   - 'ElasticSearch'
   - 'JMX'
   - 'Kafka'
