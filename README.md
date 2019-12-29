@@ -29,33 +29,7 @@ __Table of Contents__
 - [Contributors](#Contributors)
 
 ## Architecture
-
-                                     ┌───────────────┐
-                                     │ Load Balancer │
-                                     └───────┬───────┘
-                                             ↓
-                                     ┌───────┴───────┐
-                                     │ Visualization ├┐
-                                     └┬──────────────┘|
-                                      └─ ─ ─ ┬ ─ ─ ─ ─┘
-                                             ↓
-                                     ┌───────┴───────┐
-                                     │   Trickster   ├┐
-                                     └┬──────────────┘|
-                                      └─ ─ ─ ┬ ─ ─ ─ ─┘
-                                             ↓
-                                     ┌───────┴───────┐    ┌───────────────┐
-                      ┌──────────┐   │     Query     ├┬─>─┤     Store     ├┐
-                      │  Consul  │   └┬──────────────┘|   └┬──────────────┘|
-                      └───────┬──┘    └─ ─ ─ ┬ ─ ─ ─ ─┘    └─ ─ ─ ┬ ─ ─ ─ ─┘
-                              ↑              ↓                    ↓
-        ┌──────────────┐    ┌─┴──────────┬───┴─────┐    ┌─────────┴─────┐   ┌───────────────┐
-        │ Alertmanager ├┬─<─┤ Prometheus < Sidecar ├┬─>─┤ Object Storage├─<─┤     Bucket    │
-        └┬─────────────┘|   └┬───────────┴┬────────┘|   └───────┬───────┘   └───────────────┘
-         └─ ─ ─ ─ ─ ─ ─ ┘    └─ ─ ─ ─ ─ ─ ┴ ─ ─ ─ ─ ┘           ↑
-                                                        ┌───────┴───────┐
-                                                        │    Compact    │
-                                                        └───────────────┘
+<p><img src="https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-prometheus/master/files/thanos.webp" /></p>
                                                         
 ## Components
 ### Trickster
