@@ -69,6 +69,7 @@ unauthenticate_target_services:
   - 'elastic'
   - 'gitlab'
   - 'grafana'
+  - 'haproxy'
   - 'jmx'
   - 'kafka'
   - 'kibana'
