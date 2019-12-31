@@ -8,6 +8,13 @@ prometheus_redis_alert_rules:
       severity: critical
     annotations:
       description: "Redis has been stoped."
+  - alert: Redis_Sentinel
+    expr: "redis_sentinel_exporter_last_scrape_error == 1"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Redis Sentinel has been stoped."
 #  - alert: Redis_Backup
 #    expr: "time() - redis_rdb_last_save_timestamp_seconds > 60 * 60 * 24"
 #    for: 60m
