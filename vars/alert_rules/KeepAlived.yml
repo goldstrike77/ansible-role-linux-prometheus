@@ -1,0 +1,9 @@
+prometheus_keepalived_alert_rules:
+# KeepAlived
+  - alert: KeepAlived_Instance
+    expr: 'keepalived_up == 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Instance has been stoped."

@@ -1,0 +1,9 @@
+prometheus_haproxy_alert_rules:
+# HaProxy
+  - alert: HaProxy_Instance
+    expr: 'haproxy_up == 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Instance has been stoped."

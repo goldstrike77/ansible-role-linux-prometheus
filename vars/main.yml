@@ -72,6 +72,7 @@ unauthenticate_target_services:
   - 'haproxy'
   - 'jmx'
   - 'kafka'
+  - 'keepalived'
   - 'kibana'
   - 'logstash'
   - 'minio'
