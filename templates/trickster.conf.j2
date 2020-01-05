@@ -14,7 +14,7 @@ listen_port = {{ trickster_port.proxy_server }}
         [caches.default.index]
         reap_interval_secs = 3
         flush_interval_secs = 5
-        max_size_bytes = {{ ( ansible_memtotal_mb * 0.25 * 1024 * 1024 ) | int }}
+        max_size_bytes = {{ trickster_arg.max_size_bytes }}
         max_size_backoff_bytes = 16777216
         max_size_objects = 0
         max_size_backoff_objects = 100
