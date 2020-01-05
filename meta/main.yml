@@ -57,6 +57,7 @@ dependencies:
   # if you add dependencies to this list.
   - role: 'ansible-role-linux-grafana'
     vars:
+      grafana_proxy: '{{ prometheus_grafana_proxy | bool | to_json }}'
       grafana_redis_dept: '{{ prometheus_grafana_redis_dept | bool | to_json }}'
       grafana_redis_path: '{{ prometheus_grafana_redis_path }}'
       grafana_redis_requirepass: '{{ prometheus_grafana_redis_requirepass }}'

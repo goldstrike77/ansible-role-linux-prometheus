@@ -133,6 +133,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
 * `prometheus_grafana_admin_password`: The password of the default Grafana admin.
 * `prometheus_grafana_port`: Grafana instance listen port.
+* `prometheus_grafana_proxy`: Whether running behind a HaProxy.
 * `prometheus_grafana_redis_dept`: A boolean value, whether installs Redis.
 * `prometheus_grafana_redis_path`: Specify the Redis data directory.
 * `prometheus_grafana_redis_requirepass`: Authorization clients password.
@@ -278,6 +279,7 @@ You can also use the group_vars or the host_vars files for setting the variables
     prometheus_grafana_admin_user: 'admin'
     prometheus_grafana_admin_password: 'password'
     prometheus_grafana_port: '3000'
+    prometheus_grafana_proxy: false
     prometheus_grafana_redis_dept: false
     prometheus_grafana_redis_path: '{{ prometheus_data_path }}'
     prometheus_grafana_redis_requirepass: 'password'
