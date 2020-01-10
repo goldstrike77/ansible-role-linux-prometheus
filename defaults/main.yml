@@ -1,13 +1,19 @@
 ---
 # General parameters #
 prometheus_conf_path: '/etc/prometheus'
-prometheus_consul_server: '127.0.0.1:8500'
-prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
 prometheus_data_path: '/data'
 prometheus_is_install: false
 thanos_bucket_is_used: false
 thanos_is_install: false
 trickster_is_install: false
+
+# Consul SD configurations #
+prometheus_consul_server: '127.0.0.1:8500'
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
+
+# Kubernetes SD configurations #
+#prometheus_k8s_api: '127.0.0.1:6443'
+#prometheus_k8s_token: 'xxxxx'
 
 # Listen port #
 prometheus_port: 

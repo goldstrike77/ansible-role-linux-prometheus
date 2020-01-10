@@ -99,8 +99,14 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_bucket_is_used`: A boolean value, whether use object storage.
 * `prometheus_conf_path`: Specify the Prometheus data directory.
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
+
+##### Consul SD configurations
 * `prometheus_consul_server`: The consul address and port.
 * `prometheus_consul_token`: The consul acl token.
+
+##### Kubernetes SD configurations
+* `prometheus_k8s_api`: The API server addresses.
+* `prometheus_k8s_token`: Authentication token.
 
 ##### Service Mesh
 * `environments`: Define the service environment.
@@ -258,7 +264,9 @@ You can also use the group_vars or the host_vars files for setting the variables
     thanos_bucket_is_used: true
     prometheus_consul_server: '127.0.0.1:8500'
     prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
-    prometheus_port: 
+    prometheus_k8s_api: '127.0.0.1:6443'
+    prometheus_k8s_token: 'xxxxxxxxxxxxxxxxxxxxxxx'
+    prometheus_port:
       alertmanager: '9093'
       cluster: '9094'
       prometheus: '9090'
