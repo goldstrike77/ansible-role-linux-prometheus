@@ -108,15 +108,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_k8s_api`: The API server addresses.
 * `prometheus_k8s_token`: Authentication token.
 
-##### Service Mesh
-* `environments`: Define the service environment.
-* `tags`: Define the service custom label.
-* `exporter_is_install`: Whether to install prometheus exporter.
-* `consul_public_register`: Whether register a exporter service with public consul client.
-* `consul_public_exporter_token`: Public Consul client ACL token.
-* `consul_public_clients`: List of public consul clients.
-* `consul_public_http_port`: The consul HTTP API port.
-
 ##### Listen port
 * `prometheus_port.alertmanager`: alertmanager instance listen port.
 * `prometheus_port.cluster`:  alertmanager cluster listen port.
@@ -205,11 +196,12 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_arg.ulimit_nproc`: The number of processes launched by systemd.
 
 ##### Thanos objstore Variables
+* `thanos_obj_arg.retention`: Days to retain samples in bucket.
 * `thanos_obj_arg.type`: Objstore service type.
 * `thanos_obj_arg.bucket`: Object storage bucket name.
 * `thanos_obj_arg.endpoint`: Objstore service endpoint.
-* `thanos_obj_arg.insecure`: Objstore service 
-* `thanos_obj_arg.signature_version2`: I don't know what that means.
+* `thanos_obj_arg.insecure`: Objstore service. 
+* `thanos_obj_arg.signature_version2`: I real don't know what that means.
 * `thanos_obj_arg.access_key`:  AccessKeyID.
 * `thanos_obj_arg.secret_key`: SecretAccessKey.
 
@@ -226,6 +218,15 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `trickster_arg.ulimit_nofile`: The number of files launched by systemd.
 * `trickster_arg.ulimit_nproc`: The number of processes launched by systemd.
 * `trickster_arg.version`: Specify the Trickster version.
+
+##### Service Mesh
+* `environments`: Define the service environment.
+* `tags`: Define the service custom label.
+* `exporter_is_install`: Whether to install prometheus exporter.
+* `consul_public_register`: Whether register a exporter service with public consul client.
+* `consul_public_exporter_token`: Public Consul client ACL token.
+* `consul_public_clients`: List of public consul clients.
+* `consul_public_http_port`: The consul HTTP API port.
 
 ### Other parameters
 There are some variables in vars/main.yml:
@@ -353,6 +354,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
     thanos_obj_arg:
+      retention: '365'
       type: 'S3'
       bucket: 'public'
       endpoint: '127.0.0.1:9001'
@@ -373,7 +375,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
       version: '0.1.10'
-    environments: 'SIT'
+    environments: 'Development'
     tags:
       subscription: 'default'
       owner: 'nobody'
@@ -383,7 +385,10 @@ You can also use the group_vars or the host_vars files for setting the variables
     exporter_is_install: false
     consul_public_register: false
     consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
-    consul_public_clients: 'localhost'
+    consul_public_clients:
+      - '172.16.0.10'
+      - '172.16.0.11'
+      - '172.16.0.12'
     consul_public_http_port: '8500'
 
 ## License
