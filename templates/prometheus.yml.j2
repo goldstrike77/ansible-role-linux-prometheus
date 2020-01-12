@@ -40,6 +40,10 @@ scrape_configs:
         target_label: __metrics_path__
         replacement: '/minio/prometheus/metrics'
       - source_labels: [__meta_consul_service]
+        regex: 'netdata_exporter'
+        target_label: __metrics_path__
+        replacement: '/api/v1/allmetrics?format=prometheus&help=yes'
+      - source_labels: [__meta_consul_service]
         regex: 'kibana_exporter'
         target_label: __metrics_path__
         replacement: '/_prometheus/metrics'

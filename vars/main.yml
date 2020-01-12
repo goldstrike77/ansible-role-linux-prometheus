@@ -78,6 +78,7 @@ unauthenticate_target_services:
   - 'minio'
   - 'mongodb'
   - 'mysqld'
+  - 'netdata'
   - 'nginx'
   - 'node'
   - 'php-fpm'
