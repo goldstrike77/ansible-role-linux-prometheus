@@ -107,6 +107,30 @@
   changed_when: false
   failed_when: false
 
+- name: Register smokeping prober service with an http health check
+  uri:
+    url: 'http://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_smokeping_exporter","name":"smokeping_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.smokeping }},"meta":{"instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[0] | upper }}","environment":"{{ environments | upper }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.smokeping }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
+    body_format: 'json'
+    status_code: '200'
+    headers:
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
+  environment:
+    no_proxy: '{{ item.client }}'
+  loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
+  when:
+    - item.status == 405
+  register: register_status
+  until: register_status.status == 200
+  retries: 2
+  delay: 2
+  no_log: true
+  changed_when: false
+  failed_when: false
+
 - name: Register thanos sidecar exporter service with an http health check
   uri:
     url: 'http://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'

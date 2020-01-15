@@ -1,7 +1,7 @@
 ---
 - name: Prober exporters configure file transfer
   template:
-    src: '{{ item }}_exporter.j2'
+    src: '{{ item }}.j2'
     dest: '/etc/default/{{ item }}'
     backup: 'yes'
     owner: 'root'
@@ -12,7 +12,7 @@
 
 - name: Prober exporters systemd file transfer
   template:
-    src: '{{ item }}_exporter.service.j2'
+    src: '{{ item }}.service.j2'
     dest: '/lib/systemd/system/{{ item }}.service'
     owner: 'root'
     group: 'root'

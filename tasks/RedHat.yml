@@ -24,7 +24,7 @@
 
 - name: Install the prober exporters
   yum:
-    name: '{{ "_exporter,".join(vars["prometheus_prober_exporters"]) }}_exporter'
+    name: '{{ prometheus_prober_exporters }}'
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'

@@ -87,6 +87,7 @@ unauthenticate_target_services:
   - 'rabbitmq'
   - 'redis-server'
   - 'redis-sentinel'
+  - 'smokeping'
   - 'snmp'
   - 'statsd'
   - 'thanos-bucket'
@@ -103,5 +104,6 @@ authenticate_target_services:
   - 'graylog'
 
 prometheus_prober_exporters:
-  - 'blackbox'
-  - 'snmp'
+  - 'blackbox_exporter'
+  - 'snmp_exporter'
+  - 'smokeping_prober'

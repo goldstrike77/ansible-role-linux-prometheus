@@ -22,6 +22,7 @@ prometheus_port:
   cluster: '9094'
   prometheus: '9090'
   snmp: '9116'
+  smokeping: '9374'
 thanos_port:
   bucket_http: '19195'
   compact_http: '19194'
@@ -112,6 +113,12 @@ prometheus_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
+
+# Prober Exporter Variables #
+#prometheus_prober_arg:
+#  smokeping_hosts:
+#    - '223.5.5.5'
+#    - '119.29.29.29'
 
 # Alertmanager System Variables #
 alertmanager_arg:

@@ -162,6 +162,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_arg.ulimit_nofile`: The number of files launched by systemd.
 * `prometheus_arg.ulimit_nproc`: The number of processes launched by systemd.
 
+##### Prober Exporter Variables
+* `prometheus_prober_arg`: Prober configuration.
+
 ##### Alertmanager System Variables
 * `alertmanager_arg.mail_to_user`: The email address to send notifications to.
 * `alertmanager_arg.group_by`: They are grouped by alertname.
@@ -319,6 +322,10 @@ You can also use the group_vars or the host_vars files for setting the variables
       ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
+    prometheus_prober_arg:
+      smokeping_hosts:
+        - '223.5.5.5'
+        - '119.29.29.29'
     alertmanager_arg:
       mail_to_user: 'somebody@somebody.com'
       group_by:
