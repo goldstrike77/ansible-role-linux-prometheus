@@ -120,6 +120,26 @@ scrape_configs:
 {% endif %}
 
 {% if prometheus_k8s_api is defined %}
+  - job_name: 'kubernetes-kubelet'
+    scheme: https
+    bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
+    tls_config:
+      insecure_skip_verify: true
+    kubernetes_sd_configs:
+      - role: node
+        api_server: 'https://{{ prometheus_k8s_api }}'
+        bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
+        tls_config:
+          insecure_skip_verify: true
+    relabel_configs:
+    - action: labelmap
+      regex: __meta_kubernetes_node_label_(.+)
+    - target_label: __address__
+      replacement: {{ prometheus_k8s_api }}
+    - source_labels: [__meta_kubernetes_node_name]
+      regex: (.+)
+      target_label: __metrics_path__
+      replacement: /api/v1/nodes/${1}/proxy/metrics
   - job_name: 'kubernetes-cadvisor'
     scheme: https
     bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
