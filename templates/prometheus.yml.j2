@@ -21,8 +21,8 @@ rule_files:
 
 # Scrape configuration
 scrape_configs:
+{% if prometheus_consul_server is defined and prometheus_consul_token is defined %}
   - job_name: 'unAuthenticate Instance'
-{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -52,14 +52,10 @@ scrape_configs:
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
         action: 'drop'
 {% endif %}
-{% else %}
-{% endif %}
-
   - job_name: 'Authenticate Instance'
     basic_auth:
       username: prometheus
       password: password
-{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -81,12 +77,8 @@ scrape_configs:
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
         action: 'drop'
 {% endif %}
-{% else %}
-{% endif %}
-
 {% if prometheus_prober_exporters is defined %}
   - job_name: 'Prober Instance'
-{% if prometheus_arg.sd_conf == 'consul_sd_configs' %}
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -115,11 +107,9 @@ scrape_configs:
         regex: 'snmp_exporter_prober'
         target_label: __address__
         replacement: {{ ansible_default_ipv4.address }}:{{ prometheus_port.snmp }}
-{% else %}
 {% endif %}
 {% endif %}
-
-{% if prometheus_k8s_api is defined %}
+{% if prometheus_k8s_api is defined and prometheus_k8s_token is defined %}
   - job_name: 'kubernetes-kubelet'
     scheme: https
     bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'

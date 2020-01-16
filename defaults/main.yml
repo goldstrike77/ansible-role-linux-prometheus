@@ -1,11 +1,11 @@
 ---
 # General parameters #
+prometheus_is_install: false
+thanos_is_install: false
+thanos_bucket_is_used: false
+trickster_is_install: false
 prometheus_conf_path: '/etc/prometheus'
 prometheus_data_path: '/data'
-prometheus_is_install: false
-thanos_bucket_is_used: false
-thanos_is_install: false
-trickster_is_install: false
 
 # Consul SD configurations #
 prometheus_consul_server: '127.0.0.1:8500'
@@ -39,7 +39,7 @@ trickster_port:
 # Grafana parameters #
 prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
-prometheus_grafana_version: '6.4' # Specify the Grafana version.
+prometheus_grafana_version: '6.5' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
@@ -104,7 +104,6 @@ prometheus_arg:
   evaluation_interval: '30s' # How frequently to evaluate rules
   query_max_concurrency: '256' # Maximum number of queries executed concurrently
   refresh_interval: '60s' # Refresh interval to re-read the instance list
-  sd_conf: 'consul_sd_configs' # Service discovery configurations
   scrape_interval: '60s' # How frequently to scrape targets from this job
   scrape_timeout: '10s' # How long until a scrape request times out
   storage_tsdb_block_duration: '2h' # Must be set to equal values to disable local compaction

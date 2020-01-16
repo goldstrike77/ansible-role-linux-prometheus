@@ -152,7 +152,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
 * `prometheus_arg.query_max_concurrency`: Maximum number of queries executed concurrently.
 * `prometheus_arg.refresh_interval`: Refresh interval to re-read the instance list.
-* `prometheus_arg.sd_conf`: Consul service discovery configurations.
 * `prometheus_arg.scrape_interval`: How frequently to scrape targets from this job.
 * `prometheus_arg.scrape_timeout`: How long until a scrape request times out.
 * `prometheus_arg.storage_tsdb_block_duration`: Must be set to equal values to disable local compaction.
@@ -313,7 +312,6 @@ You can also use the group_vars or the host_vars files for setting the variables
       evaluation_interval: '30s'
       query_max_concurrency: '256'
       refresh_interval: '60s'
-      sd_conf: 'consul_sd_configs'
       scrape_interval: '60s'
       scrape_timeout: '10s'
       storage_tsdb_block_duration: '2h'
