@@ -15,6 +15,11 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
 #prometheus_k8s_api: '127.0.0.1:6443'
 #prometheus_k8s_token: 'xxxxx'
 
+# Role dependencies #
+prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
+prometheus_grafana_redis_dept: false # A boolean value, whether installs Redis.
+prometheus_grafana_ngx_dept: false # A boolean value, whether proxy Grafana web interface using NGinx.
+
 # Listen port #
 prometheus_port: 
   alertmanager: '9093'
@@ -37,20 +42,17 @@ trickster_port:
   metrics: '8082'
 
 # Grafana parameters #
-prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
 prometheus_grafana_version: '6.5' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
 prometheus_grafana_proxy: false # Whether running behind a HaProxy.
-prometheus_grafana_redis_dept: false # A boolean value, whether installs Redis.
 prometheus_grafana_redis_path: '{{ prometheus_data_path }}' # Specify the Redis data directory.
 prometheus_grafana_redis_requirepass: 'changeme' # Authorization clients password.
 prometheus_grafana_redis_maxmemory: '64' # A memory usage limit to the specified amount in MB.
 prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}' # Redis hosts address.
 prometheus_grafana_redis_port: '6379' # Redis listen port.
-prometheus_grafana_ngx_dept: false # A boolean value, whether proxy Grafana web interface using NGinx.
 prometheus_grafana_ngx_block_agents: false # Enables or disables block unsafe User Agents.
 prometheus_grafana_ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 prometheus_grafana_ngx_compress: false # Enables or disables compression.
