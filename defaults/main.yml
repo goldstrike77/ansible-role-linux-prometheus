@@ -234,8 +234,7 @@ environments: 'Development' # Define the service environment.
 exporter_is_install: false # Whether to install prometheus exporter.
 consul_public_register: false # Whether register a exporter service with public consul client.
 consul_public_exporter_token: '00000000-0000-0000-0000-000000000000' # Public Consul client ACL token.
-consul_public_clients: # List of public consul clients.
-  - '172.16.0.10'
-  - '172.16.0.11'
-  - '172.16.0.12'
+consul_public_http_prot: 'https' # The consul Hypertext Transfer Protocol.
 consul_public_http_port: '8500' # The consul HTTP API port.
+consul_public_clients: # List of public consul clients.
+  - '127.0.0.1'

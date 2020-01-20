@@ -23,6 +23,9 @@ rule_files:
 scrape_configs:
 {% if prometheus_consul_server is defined and prometheus_consul_token is defined %}
   - job_name: 'unAuthenticate Instance'
+    scheme: {{ consul_public_http_prot }}
+    tls_config:
+      insecure_skip_verify: true
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -53,6 +56,9 @@ scrape_configs:
         action: 'drop'
 {% endif %}
   - job_name: 'Authenticate Instance'
+    scheme: {{ consul_public_http_prot }}
+    tls_config:
+      insecure_skip_verify: true
     basic_auth:
       username: prometheus
       password: password
@@ -79,6 +85,9 @@ scrape_configs:
 {% endif %}
 {% if prometheus_prober_exporters is defined %}
   - job_name: 'Prober Instance'
+    scheme: {{ consul_public_http_prot }}
+    tls_config:
+      insecure_skip_verify: true
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
