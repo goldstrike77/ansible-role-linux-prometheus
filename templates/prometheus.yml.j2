@@ -23,14 +23,14 @@ rule_files:
 scrape_configs:
 {% if prometheus_consul_server is defined and prometheus_consul_token is defined %}
   - job_name: 'unAuthenticate Instance'
-    scheme: {{ consul_public_http_prot }}
-    tls_config:
-      insecure_skip_verify: true
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
         services: ['{{ "_exporter', '".join(vars["unauthenticate_target_services"]) }}_exporter']
+        scheme: {{ consul_public_http_prot }}
+        tls_config:
+          insecure_skip_verify: true
     relabel_configs:
       - source_labels: [__meta_consul_service_address]
         target_label: 'ipaddress'
@@ -56,9 +56,6 @@ scrape_configs:
         action: 'drop'
 {% endif %}
   - job_name: 'Authenticate Instance'
-    scheme: {{ consul_public_http_prot }}
-    tls_config:
-      insecure_skip_verify: true
     basic_auth:
       username: prometheus
       password: password
@@ -67,6 +64,9 @@ scrape_configs:
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
         services: ['{{ "_exporter', '".join(vars["authenticate_target_services"]) }}_exporter']
+        scheme: {{ consul_public_http_prot }}
+        tls_config:
+          insecure_skip_verify: true
     relabel_configs:
       - source_labels: [__meta_consul_service_address]
         target_label: 'ipaddress'
@@ -85,14 +85,14 @@ scrape_configs:
 {% endif %}
 {% if prometheus_prober_exporters is defined %}
   - job_name: 'Prober Instance'
-    scheme: {{ consul_public_http_prot }}
-    tls_config:
-      insecure_skip_verify: true
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
         services: ['{{ "_exporter_prober', '".join(vars["prometheus_prober_exporters"]) }}_exporter_prober']
+        scheme: {{ consul_public_http_prot }}
+        tls_config:
+          insecure_skip_verify: true
     relabel_configs:
       - regex: __meta_consul_service_metadata_(.+)
         action: labelmap
