@@ -1,0 +1,10 @@
+---
+prometheus_logstash_alert_rules:
+# Logstash
+  - alert: Logstash_Instance
+    expr: 'logstash_node_jvm_threads_count == 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: 'Endpoint has been unreachable.'

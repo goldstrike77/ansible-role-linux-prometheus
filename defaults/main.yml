@@ -153,6 +153,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'JMX'
   - 'Kafka'
   - 'KeepAlived'
+  - 'Logstash'
   - 'Minio'
   - 'MongoDB'
   - 'MySQL'
