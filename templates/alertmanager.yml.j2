@@ -31,7 +31,7 @@ receivers:
   - name: "team-infra-wechat"
     wechat_configs:
       - send_resolved: true
-        to_user: '{{ alertmanager_arg.wechat_to_user }}'
+        to_party: '{{ alertmanager_arg.wechat_to_party }}'
         agent_id: '{{ alertmanager_arg.wechat_api_agentid }}'
         corp_id: '{{ alertmanager_arg.wechat_api_corpid }}'
         api_secret: '{{ alertmanager_arg.wechat_api_secret }}'

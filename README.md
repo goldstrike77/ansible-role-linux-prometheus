@@ -179,7 +179,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.smtp_smarthost`: The SMTP host through which emails are sent.
 * `alertmanager_arg.wechat_api_agentid`: The wechat agent ID.
 * `alertmanager_arg.wechat_api_url`: The WeChat API URL.
-* `alertmanager_arg.wechat_to_user`: The WeChat user to send notifications to.
+* `alertmanager_arg.wechat_to_party`: The WeChat department to send notifications to.
 * `alertmanager_arg.wechat_api_corpid`:  The corp id for authentication.
 * `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
 
@@ -343,7 +343,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       smtp_smarthost: '127.0.0.1:25'
       wechat_api_agentid: '0'
       wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
-      wechat_to_user: 'xxxxxxx'
+      wechat_to_party: '1'
       wechat_api_corpid: 'wxe787605fxxxxxxxx'
       wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
     prometheus_alert_rules:

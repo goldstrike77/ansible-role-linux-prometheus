@@ -140,7 +140,7 @@ alertmanager_arg:
   wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
   wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
   wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
-  wechat_to_user: 'xxxxxxx'
+  wechat_to_party: '1'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
