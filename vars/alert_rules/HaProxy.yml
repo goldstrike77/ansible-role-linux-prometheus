@@ -1,9 +1,30 @@
 prometheus_haproxy_alert_rules:
 # HaProxy
-  - alert: HaProxy_Instance
+  - alert: haproxy_Instance
     expr: 'haproxy_up == 0'
     for: 5m
     labels:
       severity: critical
     annotations:
       description: "Instance has been stoped."
+  - alert: haproxy_Connection_Errors
+    expr: 'rate(haproxy_server_connection_errors_total[5m]) > .1'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "An increase in server connection errors."
+  - alert: haproxy_Response_Errors
+    expr: 'rate(haproxy_server_response_errors_total[5m]) > .1'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "An increase in server response errors."
+  - alert: haproxy_Backend_Errors
+    expr: 'rate(haproxy_backend_connection_errors_total[5m]) > .1'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "An increase in backend connection errors."
