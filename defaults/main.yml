@@ -160,6 +160,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'NGinx'
   - 'OS'
   - 'PostgreSQL'
+  - 'Prometheus'
   - 'RabbitMQ'
   - 'Redis'
   - 'Targets'

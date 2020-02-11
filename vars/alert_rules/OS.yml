@@ -1,6 +1,13 @@
 ---
 prometheus_os_alert_rules:
 # Operating system
+  - alert: node_Reboot
+    expr: "(rate(node_boot_time_seconds[5m]) != 0) or (rate(wmi_system_system_up_time[5m]) != 0)"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: 'Reboots event detected recently.'
   - alert: node_PS_Load
     expr: "(node_load15 / count without (cpu, mode) (node_cpu_seconds_total{mode='system'})) > 5"
     for: 10m

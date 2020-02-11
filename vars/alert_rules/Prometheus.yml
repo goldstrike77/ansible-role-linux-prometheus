@@ -1,0 +1,18 @@
+---
+prometheus_prometheus_alert_rules:
+# Prometheus
+  - alert: prometheus_Configuration_Reload
+    expr: "prometheus_config_last_reload_successful != 1"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Prometheus configuration reload error."
+  - alert: prometheus_Disconnect_Alertmanager
+    expr: "prometheus_notifications_alertmanagers_discovered < 1"
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "Prometheus cannot connect the alertmanager."
+

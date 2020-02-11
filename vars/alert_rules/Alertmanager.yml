@@ -1,10 +1,17 @@
 ---
 prometheus_alertmanager_alert_rules:
 # Alertmanager
-  - alert: Alertmanager
+  - alert: alertmanager_Notifications_Failed
     expr: "rate(alertmanager_notifications_failed_total[5m]) > 0" 
     for: 5m
     labels:
       severity: warning
     annotations:
       description: "Alertmanager is seeing errors for integration {{$labels.integration}}."
+  - alert: alertmanager_Configuration_Reload
+    expr: "alertmanager_config_last_reload_successful != 1"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Alertmanager configuration reload error."
