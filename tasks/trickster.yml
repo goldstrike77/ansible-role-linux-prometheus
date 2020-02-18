@@ -8,7 +8,7 @@
 - name: Delete existing trickster version if different
   file:
     path: '/usr/local/bin/trickster'
-    state: absent
+    state: 'absent'
   when:
     - trickster_current_version.stdout is defined
     - trickster_arg.version not in trickster_current_version.stdout
@@ -16,27 +16,34 @@
 - name: Install trickster
   block:
     - name: Trickster download
-      get_url:
-        url: '{{ trickster_soft_url }}/v{{ trickster_arg.version }}/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz'
-        dest: '/tmp'
-        timeout: '60'
+      unarchive:
+        src: '{{ trickster_soft_url }}/v{{ trickster_arg.version }}/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.tar.gz'
+        dest: '/usr/local/bin'
+        owner: 'prometheus'
+        group: 'prometheus'
+        mode: '0755'
+        remote_src: 'yes'
         validate_certs: 'no'
-      register: result
-    - name: Trickster uncompress
-      shell: 'gunzip -c /tmp/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz > /usr/local/bin/trickster'
-      when: result is succeeded
+      register: trickster_update
+      until: trickster_update is succeeded
+      retries: 3
+      delay: 5
+    - name: Trickster program rename
+      shell: 'mv /usr/local/bin/OPATH/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }} /usr/local/bin/trickster'
+      when: trickster_update is succeeded
+    - name: Trickster uncompress folder destroy
+      file:
+        path: '/usr/local/bin/OPATH'
+        state: 'absent'
+      when: trickster_update is succeeded
     - name: Trickster permission
       file:
         path: '/usr/local/bin/trickster'
-        owner: 'root'
-        group: 'root'
+        owner: 'prometheus'
+        group: 'prometheus'
         mode: '0755'
-      when: result is succeeded
+      when: trickster_update is succeeded
       register: trickster_upgrade
-    - name: Trickster compress file destroy
-      file:
-        path: '/tmp/trickster-{{ trickster_arg.version }}.{{ ansible_system|lower }}-{{ architecture[ansible_architecture] }}.gz'
-        state: 'absent'
   when:
     - trickster_current_version.rc == 2 or trickster_arg.version not in trickster_current_version.stdout
   ignore_errors: true

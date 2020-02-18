@@ -1,16 +1,14 @@
 [main]
 instance_id = 1
 
-[proxy_server]
+[frontend]
 listen_port = {{ trickster_port.proxy_server }}
 
 [caches]
     [caches.default]
-    type = '{{ trickster_arg.cache_type }}'
-    compression = {{ trickster_arg.compression | bool | to_json }}
+    cache_type = '{{ trickster_arg.cache_type }}'
     timeseries_ttl_secs = {{ trickster_arg.record_ttl_secs }}
     fastforward_ttl_secs = 15
-    object_ttl_secs = 60
         [caches.default.index]
         reap_interval_secs = 3
         flush_interval_secs = 5
@@ -21,16 +19,12 @@ listen_port = {{ trickster_port.proxy_server }}
 [origins]
     [origins.default]
     is_default = true
-    type = 'prometheus'
+    origin_type = 'prometheus'
     cache_name = 'default'
-    scheme = 'http'
-    host = 'http://127.0.0.1:{% if thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
-    path_prefix = ''
+    origin_url = 'http://127.0.0.1:{% if thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
     timeout_secs = 180
     keep_alive_timeout_secs = 300
     max_idle_conns = 20
-    api_path = '/api/v1'
-    ignore_no_cache_header = {{ trickster_arg.ignore_no_cache_header | bool | to_json }}
     timeseries_retention_factor = {{ trickster_arg.timeseries_retention_factor }}
     timeseries_eviction_method = 'oldest'
     fast_forward_disable = {{ trickster_arg.fast_forward_disable | bool | to_json }}

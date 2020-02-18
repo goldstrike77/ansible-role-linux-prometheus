@@ -17,7 +17,7 @@ LimitNOFILE={{ trickster_arg.ulimit_nofile }}
 LimitNPROC={{ trickster_arg.ulimit_nproc }}
 LimitCORE={{ trickster_arg.ulimit_core }}
 LimitMEMLOCK={{ trickster_arg.ulimit_memlock }}
-ExecStart=/usr/local/bin/trickster -origin http://127.0.0.1:{% if thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %} -origin-type prometheus -proxy-port {{ trickster_port.proxy_server }} -metrics-port {{ trickster_port.metrics }} -log-level info
+ExecStart=/usr/local/bin/trickster -config /etc/trickster.conf
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 

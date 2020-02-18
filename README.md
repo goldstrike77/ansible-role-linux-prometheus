@@ -211,10 +211,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### Trickster System Variables
 * `trickster_arg.cache_type`: Defines what kind of cache Trickster uses.
-* `trickster_arg.compression`: Determines whether the cache should be compressed.
 * `trickster_arg.fast_forward_disable`: Turn off the 'fast forward' feature for any requests proxied.
 * `trickster_arg.max_size_bytes`: How large the cache can grow in bytes before the Index evicts least-recently-accessed items.
-* `trickster_arg.ignore_no_cache_header`: Disables a client's ability to send a no-cache to refresh a cached query.
 * `trickster_arg.timeseries_retention_factor`: Defines the maximum number of recent timestamps to cache for a given query.
 * `trickster_arg.record_ttl_secs`: Defines the relative expiration of cached queries.
 * `trickster_arg.ulimit_core`: The number of coredump launched by systemd.
@@ -372,17 +370,15 @@ You can also use the group_vars or the host_vars files for setting the variables
       secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
     trickster_arg:
       cache_type: 'memory'
-      compression: true
       fast_forward_disable: false
       timeseries_retention_factor: '1024'
       max_size_bytes: '536870912'
-      ignore_no_cache_header: false
       record_ttl_secs: '43200'
       ulimit_core: 'infinity'
       ulimit_memlock: 'infinity'
       ulimit_nofile: '262144'
       ulimit_nproc: '262144'
-      version: '0.1.10'
+      version: '1.0.1'
     environments: 'Development'
     tags:
       subscription: 'default'

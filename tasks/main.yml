@@ -58,7 +58,7 @@
 - name: Restart trickster service
   shell: echo ''
   notify: 'Restart trickster service'
-  when: trickster_upgrade is changed or trickster_config is changed or trickster_systemd is changed
+  when: trickster_update is changed or trickster_config is changed or trickster_systemd is changed
 
 - name: Force the handler to run immediately
   meta: flush_handlers

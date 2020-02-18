@@ -194,7 +194,6 @@ thanos_obj_arg:
 # Trickster System Variables #
 trickster_arg:
   cache_type: 'memory' # Defines what kind of cache Trickster uses
-  compression: true # Determines whether the cache should be compressed
   max_size_bytes: '536870912' # How large the cache can grow in bytes before the Index evicts least-recently-accessed items.
   fast_forward_disable: false # Turn off the 'fast forward' feature for any requests proxied
   ignore_no_cache_header: false # Disable a client's ability to send a no-cache to refresh a cached query
@@ -204,7 +203,7 @@ trickster_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '1.09-beta9'
+  version: '1.0.1'
 
 # Consul templatee Variables #
 consul_template_version: '0.20.0'
