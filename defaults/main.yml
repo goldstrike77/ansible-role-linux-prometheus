@@ -104,7 +104,7 @@ prometheus_grafana_ldap_arg:
 # Prometheus System Variables #
 prometheus_arg:
   evaluation_interval: '30s' # How frequently to evaluate rules
-  query_max_concurrency: '256' # Maximum number of queries executed concurrently
+  query_max_concurrency: '1024' # Maximum number of queries executed concurrently
   refresh_interval: '60s' # Refresh interval to re-read the instance list
   scrape_interval: '60s' # How frequently to scrape targets from this job
   scrape_timeout: '10s' # How long until a scrape request times out
@@ -173,7 +173,7 @@ thanos_arg:
   log_format: 'logfmt'
   log_level: 'info'
   query_auto_downsampling: false # Enable automatic adjustment source data
-  query_max_concurrent: '200' # Maximum number of queries processed concurrently
+  query_max_concurrent: '1024' # Maximum number of queries processed concurrently
   query_timeout: '1m' # Maximum time to process query
   ulimit_core: 'infinity' # The number of coredump launched by systemd
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd

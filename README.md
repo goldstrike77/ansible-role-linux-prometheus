@@ -313,7 +313,7 @@ You can also use the group_vars or the host_vars files for setting the variables
     prometheus_grafana_ngx_version: 'extras'
     prometheus_arg:
       evaluation_interval: '30s'
-      query_max_concurrency: '256'
+      query_max_concurrency: '1024'
       refresh_interval: '60s'
       scrape_interval: '60s'
       scrape_timeout: '10s'
@@ -355,7 +355,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       log_format: 'logfmt'
       log_level: 'info'
       query_auto_downsampling: false
-      query_max_concurrent: '200'
+      query_max_concurrent: '1024'
       query_timeout: '1m'
       ulimit_core: 'infinity'
       ulimit_memlock: 'infinity'

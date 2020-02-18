@@ -73,7 +73,6 @@ unauthenticate_target_services:
   - 'jmx'
   - 'kafka'
   - 'keepalived'
-  - 'kibana'
   - 'logstash'
   - 'minio'
   - 'mongodb'
@@ -102,6 +101,7 @@ unauthenticate_target_services:
 
 authenticate_target_services:
   - 'graylog'
+  - 'kibana'
 
 prometheus_prober_exporters:
   - 'blackbox_exporter'
