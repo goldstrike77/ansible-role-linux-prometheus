@@ -76,7 +76,7 @@ dependencies:
       grafana_ds_arg:
         - name: 'prometheus'
           settings:
-            - server: '127.0.0.1'
+            - server: '{{ ansible_default_ipv4.address }}'
               port: '{% if trickster_is_install %}{{ trickster_port.proxy_server }}{% elif thanos_is_install %}{{ thanos_port.query_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
       grafana_ngx_block_agents: '{{ prometheus_grafana_ngx_block_agents }}'
       grafana_ngx_block_string: '{{ prometheus_grafana_ngx_block_string }}'

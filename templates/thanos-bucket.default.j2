@@ -1,1 +1,1 @@
-THANOS_BUCKET_OPTS="--log.level {{ thanos_arg.log_level }} --log.format {{ thanos_arg.log_format }} --http-address 0.0.0.0:{{ thanos_port.bucket_http }} --objstore.config-file {{ prometheus_data_path }}/thanos/bucket.yml"
+THANOS_BUCKET_OPTS="--log.level {{ thanos_arg.log_level }} --log.format {{ thanos_arg.log_format }} --http-address {{ ansible_default_ipv4.address }}:{{ thanos_port.bucket_http }} --objstore.config-file {{ prometheus_data_path }}/thanos/bucket.yml"

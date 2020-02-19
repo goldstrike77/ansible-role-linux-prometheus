@@ -18,10 +18,11 @@ LimitNPROC={{ prometheus_arg.ulimit_nproc }}
 LimitCORE={{ prometheus_arg.ulimit_core }}
 LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
 ExecStart=/usr/bin/alertmanager \
+          --web.listen-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }} \
           --config.file={{ prometheus_conf_path }}/alertmanager.yml \
           --storage.path={{ prometheus_data_path }}/alertmanager \
-          --cluster.probe-interval=5s \
-          --cluster.reconnect-interval=5s \
+          --cluster.probe-interval=3s \
+          --cluster.reconnect-interval=3s \
           --cluster.listen-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.cluster }} \
           --cluster.advertise-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }} \
 {% if prometheus_server[0] not in ansible_default_ipv4.address %}
