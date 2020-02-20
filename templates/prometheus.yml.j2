@@ -9,7 +9,7 @@ global:
 # Alertmanager configuration
 alerting:
   alert_relabel_configs:
-    - regex: 'replica|job|ipaddress'
+    - regex: 'replica|job|ipaddress|metrics_path'
       action: labeldrop
   alertmanagers:
     - static_configs:

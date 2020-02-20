@@ -196,7 +196,6 @@ trickster_arg:
   cache_type: 'memory' # Defines what kind of cache Trickster uses
   max_size_bytes: '536870912' # How large the cache can grow in bytes before the Index evicts least-recently-accessed items.
   fast_forward_disable: false # Turn off the 'fast forward' feature for any requests proxied
-  ignore_no_cache_header: false # Disable a client's ability to send a no-cache to refresh a cached query
   timeseries_retention_factor: '1024' # Defines the maximum number of recent timestamps to cache for a given query.
   record_ttl_secs: '43200' # Defines the relative expiration of cached queries in seconds
   ulimit_core: 'infinity' # The number of coredump launched by systemd
