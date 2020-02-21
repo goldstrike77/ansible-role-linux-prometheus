@@ -22,7 +22,7 @@ rule_files:
 # Scrape configuration
 scrape_configs:
 {% if prometheus_consul_server is defined and prometheus_consul_token is defined %}
-  - job_name: 'unAuthenticate Instance'
+  - job_name: 'unAuthenticate exporters'
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -38,20 +38,16 @@ scrape_configs:
         action: labelmap
       - source_labels: [__meta_consul_service]
         target_label: 'service'
-      - source_labels: [__meta_consul_service]
-        regex: 'minio_exporter'
+      - source_labels: [__meta_consul_service_metadata_metrics_path]
+        action: replace
         target_label: __metrics_path__
-        replacement: '/minio/prometheus/metrics'
-      - source_labels: [__meta_consul_service]
-        regex: 'netdata_exporter'
-        target_label: __metrics_path__
-        replacement: '/api/v1/allmetrics?format=prometheus&help=yes'
+        regex: (.+)
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
         regex: '.+[{{ ip_sequence | list | unique | sort | join("") }}]:.+'
         action: 'drop'
 {% endif %}
-  - job_name: 'Authenticate Instance'
+  - job_name: 'Authenticate exporters'
     basic_auth:
       username: prometheus
       password: password
@@ -80,7 +76,7 @@ scrape_configs:
         action: 'drop'
 {% endif %}
 {% if prometheus_prober_exporters is defined %}
-  - job_name: 'Prober Instance'
+  - job_name: 'Probers'
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -96,26 +92,18 @@ scrape_configs:
         target_label: '__param_target'
       - source_labels: [__meta_consul_service_metadata_module]
         target_label: '__param_module'
-      - source_labels: [__meta_consul_service]
-        regex: 'blackbox_exporter_prober'
-        target_label: __metrics_path__
-        replacement: '/probe'
-      - source_labels: [__meta_consul_service]
-        regex: 'blackbox_exporter_prober'
+      - source_labels: [__meta_consul_service_metadata_address]
+        action: replace
         target_label: __address__
-        replacement: {{ ansible_default_ipv4.address }}:{{ prometheus_port.blackbox }}
-      - source_labels: [__meta_consul_service]
-        regex: 'snmp_exporter_prober'
+        regex: (.+)
+      - source_labels: [__meta_consul_service_metadata_metrics_path]
+        action: replace
         target_label: __metrics_path__
-        replacement: '/snmp'
-      - source_labels: [__meta_consul_service]
-        regex: 'snmp_exporter_prober'
-        target_label: __address__
-        replacement: {{ ansible_default_ipv4.address }}:{{ prometheus_port.snmp }}
+        regex: (.+)
 {% endif %}
 {% endif %}
 {% if prometheus_k8s_api is defined and prometheus_k8s_token is defined %}
-  - job_name: 'kubernetes-kubelet'
+  - job_name: 'Kubernetes kubelet'
     scheme: https
     bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
     tls_config:
@@ -135,7 +123,7 @@ scrape_configs:
       regex: (.+)
       target_label: __metrics_path__
       replacement: /api/v1/nodes/${1}/proxy/metrics
-  - job_name: 'kubernetes-cadvisor'
+  - job_name: 'Kubernetes cadvisor'
     scheme: https
     bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
     tls_config:
