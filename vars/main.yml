@@ -104,6 +104,5 @@ authenticate_target_services:
   - 'kibana'
 
 prometheus_prober_exporters:
-  - 'blackbox_exporter'
-  - 'snmp_exporter'
-  - 'smokeping_prober'
+  - 'blackbox'
+  - 'snmp'
