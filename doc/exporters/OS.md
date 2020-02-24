@@ -2,8 +2,8 @@
 
 
 
-Name     | Description | OS
----------|-------------|----
+Name     | Description 
+---------|-------------
 arp | Exposes ARP statistics from `/proc/net/arp`.
 bcache | Exposes bcache statistics from `/sys/fs/bcache/`.
 conntrack | Shows conntrack statistics (does nothing if no `/proc/sys/net/netfilter/` present).
