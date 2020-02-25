@@ -1,3 +1,5 @@
+### MySQL server metrics exposed
+
 #### Related Exporters or Integrations
 - [node_exporter](https://github.com/prometheus/node_exporter)
 - [mysqld_exporter](https://github.com/percona/mysqld_exporter)

@@ -1,3 +1,5 @@
+### Hardware and OS metrics exposed
+
 #### Related Exporters or Integrations
 - [node_exporter](https://github.com/prometheus/node_exporter)
 - [wmi_exporter](https://github.com/martinlindhe/wmi_exporter)
