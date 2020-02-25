@@ -48,98 +48,98 @@ textfile | Read prometheus metrics from a text file.
 
 ### Alert rules
 Name|node_Reboot
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Reboots event detected recently.
 Severity|critical
 Expr|(rate(node_boot_time_seconds[10m]) != 0) or (rate(wmi_system_system_up_time[10m]) != 0)
 
 Name|node_PS_Load
--|- 
+| :---| :---
 OS|Linux
 Description|Processor load has exceeded the threshold.
 Severity|warning
 Expr|(node_load15 / count without (cpu, mode) (node_cpu_seconds_total{mode='system'})) > 5
 
 Name|node_CPU_Load
--|-
+| :---| :---
 OS|Linux,Windows
 Description|CPU usage has exceeded the threshold.
 Severity|warning
 Expr|((100 * (1 - avg by(subscription,region,environment,group,instance,service)(irate(node_cpu_seconds_total{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(subscription,region,environment,group,instance,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)
 
 Rule|node_RAM_Usage
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Memory usage has exceeded the threshold.
 Severity|warning
 Expr|((sum(node_memory_MemTotal_bytes)by(environment,group,instance,service) - sum(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes )by(environment,group,instance,service)) / (sum(node_memory_MemTotal_bytes)by(environment,group,instance,service)) * 100 > 90) or ((sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,service) - sum(wmi_os_physical_memory_free_bytes)by(environment,group,instance,service)) / (sum(wmi_cs_physical_memory_bytes)by(environment,group,instance,service)) * 100 > 90)
 
 Rule|node_FS_Usage
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Filesystem has less than 10%.
 Severity|critical
 Expr|(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)
 
 Rule|node_FS_Usage
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Filesystem has less than 20%.
 Severity|warning
 Expr|(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)
 
 Rule|node_FS_Inodes
--|-
+| :---| :---
 OS|Linux
 Description|Filesystem inodes has less than 10%.
 Severity|warning
-Expr|node_filesystem_files_free{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_files{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} * 100 < 10
+Expr|node_filesystem_files_free{fstype!~"rootfs\|selinuxfs\|autofs\|rpc_pipefs|tmpfs"} / node_filesystem_files{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} * 100 < 10
 
 Rule|node_Disc_Read
--|-
+| :---| :---
 OS|Linux
 Description|Disk read latency > 100ms.
 Severity|warning
 Expr|irate(node_disk_read_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_reads_completed_total{device!~"dm-.+"}[5m]) > 0.1
 
 Rule|node_Disc_Write
--|-
+| :---| :---
 OS|Linux
 Description|Disk write latency > 100ms.
 Severity|warning
 Expr|irate(node_disk_write_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_writes_completed_total{device!~"dm-.+"}[5m]) > 0.1
 
 Rule|node_Disc_Read
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Disk is probably reading too much data.
 Severity|warning
 Expr|(sum by (subscription,region,environment,group,instance,service) (irate(node_disk_read_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (subscription,region,environment,group,instance,service) (irate(wmi_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)
 
 Rule|node_Disc_Write
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Disk is probably writing too much data.
 Severity|warning
 Expr|(sum by (subscription,region,environment,group,instance,service) (irate(node_disk_written_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (subscription,region,environment,group,instance,service) (irate(wmi_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)
 
 Rule|node_NIC_Receive
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Has more than 300M receive.
 Severity|warning
 Expr|(irate(node_network_receive_bytes_total{device!~"lo|docker.*"}[5m]) > 300000000) or (irate(wmi_net_bytes_received_total[5m]) > 300000000)
 
 Rule|node_NIC_Transmit
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Has more than 300M traffic.
 Severity|warning
 Expr|(irate(node_network_transmit_bytes_total{device!~"lo|docker.*"}[5m]) > 30000000) or (irate(wmi_net_bytes_sent_total[5m]) > 30000000)
 
 Rule|node_Service
--|-
+| :---| :---
 OS|Linux,Windows
 Description|Service has been stoped.
 Severity|warning
