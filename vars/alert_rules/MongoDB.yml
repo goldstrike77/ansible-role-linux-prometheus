@@ -8,3 +8,38 @@ prometheus_mongodb_alert_rules:
       severity: critical
     annotations:
       description: "Instance has been stoped."
+  - alert: MongoDB_Rep_Lag
+    expr: 'avg(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg(mongodb_mongod_replset_member_optime_date{state="SECONDARY"}) > 60'
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "Replication lag is more than {{$value}} seconds."
+  - alert: MongoDB_Cursors_Num
+    expr: 'mongodb_mongod_metrics_cursor_open{state="total"} > 10000'
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "Too many cursors opened clients of {{$value}}."
+  - alert: MongoDB_Cursors_Timeout
+    expr: 'increase(mongodb_mongod_metrics_cursor_timed_out_total[10m]) > 100'
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "Too many cursors are timing out of {{$value}}."
+  - alert: MongoDB_Connections
+    expr: 'mongodb_mongod_connections{state="current"} > 5000'
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "Too many connections of {{$value}}."
+  - alert: MongoDB_VirtualMemory_Usage
+    expr: '(sum(mongodb_mongod_memory{type="virtual"}) / sum(mongodb_mongod_memory{type="mapped"})) > 3'
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: "High memory usage of {{$value}}."
