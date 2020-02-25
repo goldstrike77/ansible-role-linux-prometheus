@@ -46,10 +46,10 @@ MySQL_InnoDB_Log_Waits|warning|The innodb logs are waiting for disk.
 - [ansible-role-linux-grafana](https://github.com/goldstrike77/ansible-role-linux-grafana)
 
 #### Recommendation Grafana Dashboards
-- [MySQL InnoDB Metrics](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_InnoDB_Metrics.png)
-- [MySQL MyISAM Aria_Metrics](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_MyISAM_Aria_Metrics.png)
-- [MySQL Overview](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Overview.png)
-- [MySQL Query Response Time](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Query_Response_Time.png)
-- [MySQL Replication](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Replication.png)
-- [MySQL Table Statistics](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Table_Statistics.png)
-- [MySQL User Statistics](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_User_Statistics.png)
+- MySQL InnoDB Metrics | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_InnoDB_Metrics.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_InnoDB_Metrics.png)
+- MySQL MyISAM Aria_Metrics | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_MyISAM_Aria_Metrics.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_MyISAM_Aria_Metrics.png)
+- MySQL Overview | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_Overview.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Overview.png)
+- MySQL Query Response Time | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_Query_Response_Time.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Query_Response_Time.png)
+- MySQL Replication | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_Replication.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Replication.png)
+- MySQL Table Statistics | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_Table_Statistics.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_Table_Statistics.png)
+- MySQL User Statistics | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MySQL_User_Statistics.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MySQL_User_Statistics.png)

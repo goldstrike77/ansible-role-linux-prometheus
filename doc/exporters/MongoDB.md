@@ -28,6 +28,6 @@ MongoDB_VirtualMemory_Usage|warning|High memory usage.
 - [ansible-role-linux-grafana](https://github.com/goldstrike77/ansible-role-linux-grafana)
 
 #### Recommendation Grafana Dashboards
-- [MongoDB Overview](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MongoDB_Overview.png)
-- [MongoDB ReplSet](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MongoDB_ReplSet.png)
-- [MongoDB WiredTiger](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MongoDB_WiredTiger.png)
+- MongoDB Overview | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MongoDB_Overview.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MongoDB_Overview.png)
+- MongoDB ReplSet | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MongoDB_ReplSet.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MongoDB_ReplSet.png)
+- MongoDB WiredTiger | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Databases/MongoDB_WiredTiger.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Databases/MongoDB_WiredTiger.png)

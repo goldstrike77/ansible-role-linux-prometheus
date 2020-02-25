@@ -75,9 +75,9 @@ node_Service|Linux,Windows|warning|Service has been stoped.
 - [ansible-role-linux-grafana](https://github.com/goldstrike77/ansible-role-linux-grafana)
 
 #### Recommendation Grafana Dashboards
-- [Cross Server Graphs](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Universal/Cross_Server_Graphs.png)
-- [Linux Disk Performance](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Disk_Performance.png)
-- [Linux Disk Space](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Disk_Space.png)
-- [Linux Network Overview](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Network_Overview.png)
-- [Linux System Overview](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_System_Overview.png)
-- [Windows System Overview](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Windows_System_Overview.png)
+- Cross Server Graphs | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/Universal/Cross_Server_Graphs.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Universal/Cross_Server_Graphs.png)
+- Linux Disk Performance | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/OperatingSystem/Linux_Disk_Performance.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Disk_Performance.png)
+- Linux Disk Space | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/OperatingSystem/Linux_Disk_Space.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Disk_Space.png)
+- Linux Network Overview | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/OperatingSystem/Linux_Network_Overview.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Network_Overview.png)
+- Linux System Overview | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/OperatingSystem/Linux_System_Overview.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_System_Overview.png)
+- Windows System Overview | [json](https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-grafana/master/files/dashboards/OperatingSystem/Windows_System_Overview.json) | [png](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Windows_System_Overview.png)
