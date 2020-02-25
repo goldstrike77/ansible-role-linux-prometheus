@@ -2,7 +2,7 @@
 prometheus_os_alert_rules:
 # Operating system
   - alert: node_Reboot
-    expr: "(rate(node_boot_time_seconds[5m]) != 0) or (rate(wmi_system_system_up_time[5m]) != 0)"
+    expr: "(rate(node_boot_time_seconds[10m]) != 0) or (rate(wmi_system_system_up_time[10m]) != 0)"
     for: 5m
     labels:
       severity: critical
