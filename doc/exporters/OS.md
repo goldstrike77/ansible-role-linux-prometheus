@@ -48,8 +48,22 @@ textfile | Read prometheus metrics from a text file.
 
 ### Alert rules
 Rule|node_Reboot
--|- 
-OS|Linux,Windows  
+-|-
+OS|Linux,Windows
 Description|Reboots event detected recently.
-Severity|critical  
+Severity|critical
 Expr|(rate(node_boot_time_seconds[10m]) != 0) or (rate(wmi_system_system_up_time[10m]) != 0)
+
+Rule|node_PS_Load
+-|- 
+OS|Linux
+Description|Processor load has exceeded the threshold.
+Severity|warning
+Expr|(node_load15 / count without (cpu, mode) (node_cpu_seconds_total{mode='system'})) > 5
+
+Rule|node_CPU_Load
+-|-
+OS|Linux,Windows
+Description|CPU usage has exceeded the threshold.
+Severity|warning
+Expr|((100 * (1 - avg by(subscription,region,environment,group,instance,service)(irate(node_cpu_seconds_total{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(subscription,region,environment,group,instance,service)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)
