@@ -47,7 +47,8 @@ tcp | TCP connections.
 textfile | Read prometheus metrics from a text file.
 
 ### Alert rules
-Rule|node_Reboot  
+Rule|node_Reboot
+-|- 
 OS|Linux,Windows  
 Description|Reboots event detected recently.
 Severity|critical  
