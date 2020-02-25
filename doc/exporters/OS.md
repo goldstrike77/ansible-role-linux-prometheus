@@ -1,6 +1,10 @@
-### Collectors enabled by default
+#### Related Exporters or Integrations
+- [node_exporter](https://github.com/prometheus/node_exporter)
+- [wmi_exporter](https://github.com/martinlindhe/wmi_exporter)
 
-#### Linux
+#### Exporter collectors enabled by default
+
+##### Linux
 Name     | Description 
 ---------|-------------
 arp | Exposes ARP statistics from `/proc/net/arp`.
@@ -30,7 +34,7 @@ uname | Exposes system information as provided by the uname system call.
 vmstat | Exposes statistics from `/proc/vmstat`.
 systemd | Exposes service and system status from [systemd].
 
-#### Windows
+##### Windows
 Name     | Description 
 ---------|-------------
 cpu | CPU usage.
@@ -46,7 +50,7 @@ system | System calls.
 tcp | TCP connections.
 textfile | Read prometheus metrics from a text file.
 
-### Alert rules
+#### Alert rules
 Name|OS|Severity|Description
 -|-|-|-
 node_Reboot|Linux,Windows|critical|Reboots event detected recently.
@@ -64,13 +68,13 @@ node_NIC_Receive|Linux,Windows|warning|Has more than 300M receive.
 node_NIC_Transmit|Linux,Windows|warning|Has more than 300M traffic.
 node_Service|Linux,Windows|warning|Service has been stoped.
 
-### Reference Ansible role
+#### Reference third-party Ansible role for RHEL/CentOS
 - [ansible-role-OS-bootstrap](https://github.com/goldstrike77/ansible-role-OS-bootstrap)
 - [ansible-role-OS-consul](https://github.com/goldstrike77/ansible-role-OS-consul)
 - [ansible-role-linux-prometheus](https://github.com/goldstrike77/ansible-role-linux-prometheus)
 - [ansible-role-linux-grafana](https://github.com/goldstrike77/ansible-role-linux-grafana)
 
-### Grafana dashboards
+#### Recommendation Grafana Dashboards
 - [Cross Server Graphs](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/Universal/Cross_Server_Graphs.png)
 - [Linux Disk Performance](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Disk_Performance.png)
 - [Linux Disk Space](https://raw.githubusercontent.com/goldstrike77/Screenshots/master/Grafana/OperatingSystem/Linux_Disk_Space.png)
