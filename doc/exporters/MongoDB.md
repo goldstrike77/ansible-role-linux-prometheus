@@ -4,10 +4,10 @@
 #### Exporter collectors enabled by default
 Name|Description 
 -|-
-collection|Collection of Collection metrics
-database|Collection of Database metrics
-indexusage|Collection of per index usage stats
-topmetrics|Collection of table top metrics
+collection|Collection of Collection metrics.
+database|Collection of Database metrics.
+indexusage|Collection of per index usage stats.
+topmetrics|Collection of table top metrics.
 
 
 #### Alert rules
