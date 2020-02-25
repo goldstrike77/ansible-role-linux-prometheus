@@ -48,7 +48,7 @@ textfile | Read prometheus metrics from a text file.
 
 ### Alert rules
 Name|OS|Severity|Description
-| :---| :---
+---------|-------------
 node_Reboot|Linux,Windows|critical|Reboots event detected recently.
 node_PS_Load|Linux|warning|Processor load has exceeded the threshold.
 node_CPU_Load|Linux,Windows|warning|CPU usage has exceeded the threshold.
