@@ -9,7 +9,7 @@ prometheus_mongodb_alert_rules:
     annotations:
       description: "Instance has been stoped."
   - alert: MongoDB_Rep_Lag
-    expr: 'avg(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg(mongodb_mongod_replset_member_optime_date{state="SECONDARY"}) > 60'
+    expr: 'avg by (subscription,region,environment,group,target)(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg(mongodb_mongod_replset_member_optime_date{state="SECONDARY"}) > 60'
     for: 5m
     labels:
       severity: warning
@@ -37,7 +37,7 @@ prometheus_mongodb_alert_rules:
     annotations:
       description: "Too many connections of {{$value}}."
   - alert: MongoDB_VirtualMemory_Usage
-    expr: '(sum(mongodb_mongod_memory{type="virtual"}) / sum(mongodb_mongod_memory{type="mapped"})) > 3'
+    expr: '(sum by (subscription,region,environment,group,target)(mongodb_mongod_memory{type="virtual"}) / sum by (subscription,region,environment,group,target)(mongodb_mongod_memory{type="mapped"})) > 3'
     for: 5m
     labels:
       severity: warning
