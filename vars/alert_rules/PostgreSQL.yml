@@ -9,7 +9,7 @@ prometheus_postgresql_alert_rules:
     annotations:
       description: "Instance has been stoped."
   - alert: PostgreSQL_Rep_Lag
-    expr: "pg_replication_lag > 10"
+    expr: "pg_replication_lag > 60"
     for: 10m
     labels:
       severity: warning
