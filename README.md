@@ -64,6 +64,12 @@ This means that labels represent multiple dimensions of a metric. A combination 
 <p><img src="https://raw.githubusercontent.com/goldstrike77/docs/master/Prometheus/Server/advanced_Diagram.png" /></p>
                                                         
 ## Components
+### Alertmanager
+The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat.The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce pager storms,7 and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
+### Exporters
+An exporter is a piece of software that you deploy right beside the application you want to obtain metrics from. It takes in requests from Prometheus, gathers the required data from the application, transforms them into the correct format, and finally returns them in a response to Prometheus.
+### Dashboards
+It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
 ### Trickster
 Trickster's proxy inspects the time range of a client query to determine what data points are already cached, and requests from Prometheus only the data points still needed to service the client request. This results in dramatically faster chart load times for everyone.
 ### Thanos Query
@@ -78,18 +84,10 @@ The bucket component of Thanos is a set of commands to inspect data in object st
 The compact component simple scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
 ### Thanos Bucket (optional)
 The bucket component is a set of commands to inspect data in object storage buckets. It is normally run as a stand alone command to aid with troubleshooting.
-### Prometheus
-Monitoring system and time series database.
-### Alertmanager
-The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat.The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce pager storms,7 and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
 ### Consul
-Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure.
+Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure. Prometheus has integrations with consul as service discovery mechanisms.
 ### Object Storage (optional)
 Object storage service, support Google Cloud Storage / AWS S3 / Azure Storage Account / [etc](https://thanos.io/storage.md).
-### Exporters
-An exporter is a piece of software that you deploy right beside the application you want to obtain metrics from. It takes in requests from Prometheus, gathers the required data from the application, transforms them into the correct format, and finally returns them in a response to Prometheus.
-### Dashboards
-It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
 
 ## Requirements
 ### Operating systems
