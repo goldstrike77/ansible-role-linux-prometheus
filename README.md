@@ -9,9 +9,11 @@ ___
 
 __Table of Contents__
 
+- [Introduction](#Introduction)
+- [Overview](#overview)
+- [Data Model](#Data-Model)
 - [Architecture](#Architecture)
 - [Components](#Components)
-- [Overview](#overview)
 - [Requirements](#requirements)
   * [Operating systems](#operating-systems)
   * [Prometheus versions](#Prometheus-versions)
@@ -28,8 +30,38 @@ __Table of Contents__
 - [Author Information](#author-information)
 - [Contributors](#Contributors)
 
+
+## Introduction
+#### What Is Monitoring?
+Systems monitoring toolkit wasn’t built to do any of those things. It was built to aid software developers and administrators in the operation of production computer systems, such as the operation system, applications, databases and networks backing popular websites.
+
+#### What is monitoring in that context?
+
+##### Alerting
+Knowing when things are going wrong is usually the most important thing that you want monitoring for. You want the monitoring system to call in a human to take a look.
+
+##### Debugging
+Now that you have called in a human, they need to investigate to determine the root cause and ultimately resolve whatever the issue is.
+
+##### Trending
+Alerting and debugging usually happen on time scales on the order of minutes to hours. While less urgent, the ability to see how your systems are being used and changing over time is also useful. Trending can feed into design decisions and processes such as capacity planning.
+
+##### Plumbing
+When all you have is a hammer, everything starts to look like a nail. At the end of the day all monitoring systems are data processing pipelines. Sometimes it is more convenient to appropriate part of your monitoring system for another purpose, rather than building a bespoke solution. This is not strictly monitoring, but it is common in practice.
+
+## Overview
+Prometheus is an open source time series database that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications. All of the services are unburdened by load on the monitoring system. 
+
+As a metrics-based system, Prometheus is not suitable for storing event logs or individual events. Nor is it the best choice for high cardinality data, such as email address or username. 
+
+Prometheus is designed for operational monitoring, where small inaccuracies and race conditions due to factors like kernel scheduling and failed scrapes are a fact of life. Prometheus makes tradeoffs and prefers giving you data that is 99.9% correct over your monitoring breaking while waiting for perfect data. Thus in applications involving money or billing, Prometheus should be used with caution.
+
+## Data Model
+All of the data is stored as a time series. A measurement with a timestamp. Measurements are known as metrics. Each time series is uniquely identified by a metric name and a set of key-value pairs, a.k.a. labels.
+This means that labels represent multiple dimensions of a metric. A combination of a metric name and a label yields a single metric. In other words, each time you create a new key-value pair on a metric you will get a new timeseries in the database. An observation (they call it a sample!) is a combination of a float64 value and a millisecond precision timestamp.
+
 ## Architecture
-<p><img src="https://raw.githubusercontent.com/goldstrike77/ansible-role-linux-prometheus/master/files/thanos.webp" /></p>
+<p><img src="https://raw.githubusercontent.com/goldstrike77/docs/master/Prometheus/Server/advanced_Diagram.png" /></p>
                                                         
 ## Components
 ### Trickster
@@ -44,23 +76,24 @@ As the sidecar backs up data into the object storage of your choice, you can dec
 The bucket component of Thanos is a set of commands to inspect data in object storage buckets.
 ### Thanos Compact (optional)
 The compact component simple scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
+### Thanos Bucket (optional)
+The bucket component is a set of commands to inspect data in object storage buckets. It is normally run as a stand alone command to aid with troubleshooting.
 ### Prometheus
 Monitoring system and time series database.
 ### Alertmanager
-Handles alerts sent by Prometheus server.
+The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat.The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce pager storms,7 and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
 ### Consul
-Targets service discovery.
+Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure.
 ### Object Storage (optional)
 Object storage service, support Google Cloud Storage / AWS S3 / Azure Storage Account / [etc](https://thanos.io/storage.md).
-
-## Overview
-This Ansible role installs standalone or distributed prometheus v2 server on linux operating system, including establishing a filesystem structure and server configuration with some common operational features.
-
->__Performance is severely affected by remote reading and deduplicating data queries, thanos store components + object storage offers only if need long term storage.__
+### Exporters
+An exporter is a piece of software that you deploy right beside the application you want to obtain metrics from. It takes in requests from Prometheus, gathers the required data from the application, transforms them into the correct format, and finally returns them in a response to Prometheus.
+### Dashboards
+It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
 
 ## Requirements
 ### Operating systems
-This role will work on the following operating systems:
+This Ansible role installs standalone or distributed prometheus v2 server on linux operating system, including establishing a filesystem structure and server configuration with some common operational features. This role will work on the following operating systems:
 
   * CentOS 7
 
@@ -73,6 +106,7 @@ The following list of supported the Prometheus releases:
 ### Distributed mode
 * Targets will be dispersed if greater than 3 prometheus nodes.
 * Use the last digital of the IP Address or host number to spread the load between multiple prometheus nodes.
+>__Performance is severely affected by remote reading and deduplicating data queries, thanos store components + object storage offers only if need long term storage.__
 
 for example:
 
