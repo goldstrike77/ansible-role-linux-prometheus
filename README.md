@@ -50,7 +50,11 @@ Alerting and debugging usually happen on time scales on the order of minutes to 
 When all you have is a hammer, everything starts to look like a nail. At the end of the day all monitoring systems are data processing pipelines. Sometimes it is more convenient to appropriate part of your monitoring system for another purpose, rather than building a bespoke solution. This is not strictly monitoring, but it is common in practice.
 
 ## Overview
-Prometheus is an open source time series database that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications. All of the services are unburdened by load on the monitoring system. 
+Prometheus is an open-source systems monitoring and alerting toolkit that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications. All of the services are unburdened by load on the monitoring system.   
+
+Prometheus is performant and simple to run. A single Prometheus server can ingest millions of samples per second. It is a single statically linked binary with a configuration file. All components of Prometheus can be run in containers, and they avoid doing anything fancy that would get in the way of configuration management tools. It is designed to be integrated into the infrastructure you already have and built on top of, not to be a management platform itself. 
+
+Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user community. It is now a standalone open source project and maintained independently of any company. To emphasize this, and to clarify the project's governance structure, Prometheus joined the Cloud Native Computing Foundation in 2016, the second hosting project after Kubernetes.
 
 As a metrics-based system, Prometheus is not suitable for storing event logs or individual events. Nor is it the best choice for high cardinality data, such as email address or username. 
 
