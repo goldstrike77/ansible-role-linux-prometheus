@@ -91,7 +91,7 @@ The bucket component is a set of commands to inspect data in object storage buck
 ### Consul
 Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure. Prometheus has integrations with consul as service discovery mechanisms.
 ### Object Storage (optional)
-Object storage service, support Google Cloud Storage / AWS S3 / Azure Storage Account / [etc](https://thanos.io/storage.md).
+Offer a clustered storage solution to Long-Term Storage data across multiple machines, support Google Cloud Storage / AWS S3 / Azure Storage Account / [etc](https://thanos.io/storage.md).
 
 ## Requirements
 ### Operating systems
