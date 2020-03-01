@@ -64,6 +64,26 @@ Prometheus is designed for operational monitoring, where small inaccuracies and 
 All of the data is stored as a time series. A measurement with a timestamp. Measurements are known as metrics. Each time series is uniquely identified by a metric name and a set of key-value pairs, a.k.a. labels.
 This means that labels represent multiple dimensions of a metric. A combination of a metric name and a label yields a single metric. In other words, each time you create a new key-value pair on a metric you will get a new timeseries in the database. An observation (they call it a sample!) is a combination of a float64 value and a millisecond precision timestamp.
 
+## Exposition format
+When you look at the exposition format example below, you will notice that the first metric has the name node_cpu_seconds_total, a value 646836.5, and a set of labels inside curly braces {cpu="0",mode="idle"}. Labels can be omitted entirely together with the curly braces. They are separated by a single comma. The label value can be any UTF-8 string. Labels are very useful for compartmentalizing information, doing joins, and other useful stuff that we’ll mention later.
+
+    node_cpu_seconds_total{cpu="0",mode="idle"} 646836.5
+    node_cpu_seconds_total{cpu="0",mode="iowait"} 169.32
+    node_cpu_seconds_total{cpu="0",mode="irq"} 0
+    node_cpu_seconds_total{cpu="0",mode="nice"} 975.52
+    node_cpu_seconds_total{cpu="0",mode="softirq"} 863.66
+    node_cpu_seconds_total{cpu="0",mode="steal"} 0
+    node_cpu_seconds_total{cpu="0",mode="system"} 5581.2
+    node_cpu_seconds_total{cpu="0",mode="user"} 22442.72
+    node_cpu_seconds_total{cpu="1",mode="idle"} 646671.81
+    node_cpu_seconds_total{cpu="1",mode="iowait"} 189.52
+    node_cpu_seconds_total{cpu="1",mode="irq"} 0
+    node_cpu_seconds_total{cpu="1",mode="nice"} 1005.34
+    node_cpu_seconds_total{cpu="1",mode="softirq"} 203.36
+    node_cpu_seconds_total{cpu="1",mode="steal"} 0
+    node_cpu_seconds_total{cpu="1",mode="system"} 5624.65
+    node_cpu_seconds_total{cpu="1",mode="user"} 23025.86
+
 ## Architecture
 <p><img src="https://raw.githubusercontent.com/goldstrike77/docs/master/Prometheus/Server/advanced_Diagram.png" /></p>
                                                         
@@ -92,6 +112,20 @@ The bucket component is a set of commands to inspect data in object storage buck
 Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure. Prometheus has integrations with consul as service discovery mechanisms.
 ### Object Storage (optional)
 Offer a clustered storage solution to Long-Term Storage data across multiple machines, support Google Cloud Storage / AWS S3 / Azure Storage Account / [etc](https://thanos.io/storage.md).
+
+## Basic exporters that we use
+### Node exporter
+Installed on Linux operation machine. Exports statistics about network, I/O, CPU, memory, filesystems for hardware and OS metrics by kernels.
+### WMI exporter
+Using the Windows Management Instrumentation for Windows machines.
+### cAdvisor
+Exposes CPU, memory, network and I/O usage from containers.
+### Various kinds of DataBase exporter
+Collection methods are supported on MySQL/MariaDB, PostgrSQL and MongoDB.
+### JMX exporter
+Export from a wide variety of JVM-based applications, for example Zookeeper and Tomcat.
+### Other monitoring systems
+Some of these exporters are maintained as part of the official Prometheus GitHub organization, those are marked as official, others are externally contributed and maintained.
 
 ## Requirements
 ### Operating systems
