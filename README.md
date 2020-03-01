@@ -84,16 +84,18 @@ When you look at the exposition format example below, you will notice that the f
     node_cpu_seconds_total{cpu="1",mode="system"} 5624.65
     node_cpu_seconds_total{cpu="1",mode="user"} 23025.86
 
+## Alerting
+The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat.The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce pager storms, and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
+
+## Visualization
+It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
+
 ## Architecture
 <p><img src="https://raw.githubusercontent.com/goldstrike77/docs/master/Prometheus/Server/advanced_Diagram.png" /></p>
                                                         
 ## Components
-### Alertmanager
-The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat.The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce pager storms,7 and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
 ### Exporters
 An exporter is a piece of software that you deploy right beside the application you want to obtain metrics from. It takes in requests from Prometheus, gathers the required data from the application, transforms them into the correct format, and finally returns them in a response to Prometheus.
-### Dashboards
-It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
 ### Trickster
 Trickster's proxy inspects the time range of a client query to determine what data points are already cached, and requests from Prometheus only the data points still needed to service the client request. This results in dramatically faster chart load times for everyone.
 ### Thanos Query
