@@ -17,6 +17,7 @@ __Table of Contents__
 - [Visualization](#Visualization)
 - [Architecture](#Architecture)
 - [Components](#Components)
+- [Basic exporters](#Basic-exporters-that-we-use)
 - [Requirements](#requirements)
   * [Operating systems](#operating-systems)
   * [Prometheus versions](#Prometheus-versions)
