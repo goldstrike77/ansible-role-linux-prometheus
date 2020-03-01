@@ -108,8 +108,6 @@ The Query component is stateless and horizontally scalable and can be deployed w
 Sidecar is to backup Prometheus data into an Object Storage bucket, and giving other Thanos components access to the Prometheus instance the Sidecar is attached to.
 ### Thanos Store (optional)
 As the sidecar backs up data into the object storage of your choice, you can decrease Prometheus retention and store less locally. It can find in your object storage bucket.
-### Thanos Bucket (optional)
-The bucket component of Thanos is a set of commands to inspect data in object storage buckets.
 ### Thanos Compact (optional)
 The compact component simple scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
 ### Thanos Bucket (optional)
