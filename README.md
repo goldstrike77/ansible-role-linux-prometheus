@@ -54,9 +54,9 @@ Alerting and debugging usually happen on time scales on the order of minutes to 
 When all you have is a hammer, everything starts to look like a nail. At the end of the day all monitoring systems are data processing pipelines. Sometimes it is more convenient to appropriate part of your monitoring system for another purpose, rather than building a bespoke solution. This is not strictly monitoring, but it is common in practice.
 
 ## Overview
-Prometheus is an open-source systems monitoring and alerting toolkit that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications. All of the services are unburdened by load on the monitoring system.   
+Prometheus is an open-source systems monitoring and alerting toolkit that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications.   
 
-Prometheus is performant and simple to run. A single Prometheus server can ingest millions of samples per second. It is a single statically linked binary with a configuration file. All components of Prometheus can be run in containers, and they avoid doing anything fancy that would get in the way of configuration management tools. It is designed to be integrated into the infrastructure you already have and built on top of, not to be a management platform itself. 
+Prometheus is performant and simple to run, A single Prometheus server can ingest millions of samples per second.  All of the services are unburdened by load on the monitoring system. It is a single statically linked binary with a configuration file. All components of Prometheus can be run in containers, and they avoid doing anything fancy that would get in the way of configuration management tools. It is designed to be integrated into the infrastructure you already have and built on top of, not to be a management platform itself. 
 
 Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user community. It is now a standalone open source project and maintained independently of any company. To emphasize this, and to clarify the project's governance structure, Prometheus joined the Cloud Native Computing Foundation in 2016, the second hosting project after Kubernetes.
 
@@ -79,17 +79,9 @@ When you look at the exposition format example below, you will notice that the f
     node_cpu_seconds_total{cpu="0",mode="steal"} 0
     node_cpu_seconds_total{cpu="0",mode="system"} 5581.2
     node_cpu_seconds_total{cpu="0",mode="user"} 22442.72
-    node_cpu_seconds_total{cpu="1",mode="idle"} 646671.81
-    node_cpu_seconds_total{cpu="1",mode="iowait"} 189.52
-    node_cpu_seconds_total{cpu="1",mode="irq"} 0
-    node_cpu_seconds_total{cpu="1",mode="nice"} 1005.34
-    node_cpu_seconds_total{cpu="1",mode="softirq"} 203.36
-    node_cpu_seconds_total{cpu="1",mode="steal"} 0
-    node_cpu_seconds_total{cpu="1",mode="system"} 5624.65
-    node_cpu_seconds_total{cpu="1",mode="user"} 23025.86
 
 ## Alerting
-The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat.The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce pager storms, and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
+The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat. The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce message storms, and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
 
 ## Visualization
 It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
