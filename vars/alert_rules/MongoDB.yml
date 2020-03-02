@@ -36,10 +36,3 @@ prometheus_mongodb_alert_rules:
       severity: warning
     annotations:
       description: "Too many connections of {{$value}}."
-  - alert: MongoDB_VirtualMemory_Usage
-    expr: '(sum by (subscription,region,environment,group,instance,service)(mongodb_mongod_memory{type="virtual"}) / sum by (subscription,region,environment,group,instance,service)(mongodb_mongod_memory{type="mapped"})) > 3'
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      description: "High memory usage of {{$value}}."
