@@ -1,4 +1,15 @@
 ---
+- name: Prober exporters YAML file transfer
+  copy:
+    src: '{{ item }}.yml'
+    dest: '/etc/prometheus/{{ item }}.yml'
+    backup: 'yes'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  loop: '{{ prometheus_prober_exporters }}'
+  register: prober_yaml
+
 - name: Prober exporters configure file transfer
   template:
     src: '{{ item }}_exporter.j2'

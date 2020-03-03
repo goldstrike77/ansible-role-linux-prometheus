@@ -22,7 +22,7 @@
 - name: Restart the prober exporter service
   shell: echo ''
   notify: 'Restart prober exporter service'
-  when: prober_soft_updated is changed or prober_config is changed or prober_system is changed
+  when: prober_soft_updated is changed or prober_config is changed or prober_system is changed or prober_yaml is changed
 
 #- name: Include consul-template tasks
 #  include: 'consul-template.yml'

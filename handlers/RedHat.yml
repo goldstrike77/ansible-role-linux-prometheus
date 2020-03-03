@@ -3,15 +3,15 @@
   systemd:
     name: '{{ item }}'
     enabled: 'yes'
-    state: restarted
+    state: 'restarted'
     daemon_reload: 'yes'
   loop: '{{ prometheus_service }}'
 
 - name: Restart prober exporter service
   systemd:
-    name: '{{ item }}'
+    name: '{{ item }}_exporter.service'
     enabled: 'yes'
-    state: restarted
+    state: 'restarted'
     daemon_reload: 'yes'
   loop: '{{ prometheus_prober_exporters }}'
 
