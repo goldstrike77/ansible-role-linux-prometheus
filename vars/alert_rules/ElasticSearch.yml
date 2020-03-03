@@ -63,14 +63,14 @@ prometheus_elasticsearch_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: "Number of relocation shards for 20 minutes."
+      description: "Number of relocation shards for 30 minutes."
   - alert: Elastic_initializing_shards
     expr: "elasticsearch_cluster_health_initializing_shards > 0"
     for: 30m
     labels:
       severity: warning
     annotations:
-      description: "Number of initializing shards for 20 minutes."
+      description: "Number of initializing shards for 30 minutes."
 #  - alert: Elastic_unassigned_shards
 #    expr: "elasticsearch_cluster_health_unassigned_shards > 0"
 #    for: 30m
@@ -84,4 +84,4 @@ prometheus_elasticsearch_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: "Number of pending tasks for 20 minutes."
+      description: "Number of pending tasks for 30 minutes."
