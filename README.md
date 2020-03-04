@@ -37,7 +37,7 @@ __Table of Contents__
 
 ## Introduction
 #### What Is Monitoring?
-Systems monitoring toolkit wasn’t built to do any of those things. It was built to aid software developers and administrators in the operation of production computer systems, such as the operation system, applications, databases and networks backing popular websites.
+Systems monitoring toolkit wasn’t built to do any of all things. It was built to aid software developers and administrators in the operation of production computer systems, such as the operation system, applications, databases and networks backing popular websites.
 
 #### What is monitoring in that context?
 
