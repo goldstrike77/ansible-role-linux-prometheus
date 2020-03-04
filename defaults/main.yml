@@ -163,6 +163,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Prometheus'
   - 'RabbitMQ'
   - 'Redis'
+  - 'Smokeping'
   - 'Targets'
   - 'Thanos'
 

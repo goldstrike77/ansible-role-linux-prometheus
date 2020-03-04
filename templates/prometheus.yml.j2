@@ -81,7 +81,7 @@ scrape_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
         refresh_interval: {{ prometheus_arg.refresh_interval }}
-        services: ['{{ "_exporter_prober', '".join(vars["prometheus_prober_exporters"]) }}_exporter_prober']
+        services: ['{{ "_prober', '".join(vars["prometheus_prober_exporters"]) }}_prober']
         scheme: {{ consul_public_http_prot }}
         tls_config:
           insecure_skip_verify: true

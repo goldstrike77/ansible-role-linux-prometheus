@@ -12,8 +12,8 @@
 
 - name: Prober exporters configure file transfer
   template:
-    src: '{{ item }}_exporter.j2'
-    dest: '/etc/default/{{ item }}_exporter'
+    src: '{{ item }}.j2'
+    dest: '/etc/default/{{ item }}'
     backup: 'yes'
     owner: 'root'
     group: 'root'
@@ -23,8 +23,8 @@
 
 - name: Prober exporters systemd file transfer
   template:
-    src: '{{ item }}_exporter.service.j2'
-    dest: '/lib/systemd/system/{{ item }}_exporter.service'
+    src: '{{ item }}.service.j2'
+    dest: '/lib/systemd/system/{{ item }}.service'
     owner: 'root'
     group: 'root'
     mode: '0644'
