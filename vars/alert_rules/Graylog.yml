@@ -1,0 +1,10 @@
+---
+prometheus_graylog_alert_rules:
+# Graylog
+  - alert: graylog_Journal_Utilization
+    expr: "org_graylog2_journal_utilization_ratio * 100 > 90"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: 'The message journal store utilization ratio has more than 90% with a value of {{ $value | printf "%.0f" }}.'

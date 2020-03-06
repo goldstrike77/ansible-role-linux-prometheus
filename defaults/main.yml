@@ -149,6 +149,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Consul'
   - 'DellHW'
   - 'ElasticSearch'
+  - 'Graylog'
   - 'HaProxy'
   - 'JMX'
   - 'Kafka'
