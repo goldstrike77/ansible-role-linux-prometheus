@@ -36,21 +36,21 @@ prometheus_os_alert_rules:
     labels:
       severity: warning
     annotations:
-      description: 'Filesystem {{ $labels.filesystem }} has less than 20% with a value of {{ $value | printf "%.0f" }}.'
+      description: 'Filesystem has less than 20% with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_FS_Usage
     expr: '(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)'
     for: 10m
     labels:
       severity: critical
     annotations:
-      description: 'Filesystem {{ $labels.filesystem }} has less than 10% with a value of {{ $value | printf "%.0f" }}.'
+      description: 'Filesystem has less than 10% with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_FS_Inodes
     expr: 'node_filesystem_files_free{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_files{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} * 100 < 10'
     for: 10m
     labels:
       severity: warning
     annotations:
-      description: 'Filesystem {{ $labels.mountpoint }} inodes has less than 10% with a value of {{ $value | printf "%.0f" }}.'
+      description: 'Filesystem inodes has less than 10% with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_Disc_Read
     expr: 'irate(node_disk_read_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_reads_completed_total{device!~"dm-.+"}[5m]) > 0.1'
     for: 10m
