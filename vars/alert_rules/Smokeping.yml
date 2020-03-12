@@ -2,14 +2,14 @@
 prometheus_smokeping_alert_rules:
 # Smokeping
   - alert: Ping_lost
-    expr: "(increase(smokeping_requests_total[10m]) - increase(smokeping_response_duration_seconds_count[10m])) / increase(smokeping_requests_total[10m]) * 100 > 5"
+    expr: "(increase(smokeping_requests_total[10m]) - increase(smokeping_response_duration_seconds_count[10m])) / increase(smokeping_requests_total[10m]) * 100 > 10"
     for: 10m
     labels:
       severity: critical
     annotations:
       description: 'Ping package loss has more than 10% with a value of {{ $value | printf "%.0f" }}%.'
   - alert: Ping_lost
-    expr: "(increase(smokeping_requests_total[10m]) - increase(smokeping_response_duration_seconds_count[10m])) / increase(smokeping_requests_total[10m]) * 100 > 2"
+    expr: "(increase(smokeping_requests_total[10m]) - increase(smokeping_response_duration_seconds_count[10m])) / increase(smokeping_requests_total[10m]) * 100 > 5"
     for: 10m
     labels:
       severity: warning
