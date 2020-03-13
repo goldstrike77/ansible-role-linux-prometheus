@@ -86,6 +86,12 @@ The Alertmanager receives alerts from Prometheus servers and turns them into not
 ## Visualization
 It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
 
+## Service discovery
+Prometheus offers a variety of service discovery options for discovering scrape targets, including Kubernetes, Consul, Azure VMs, AWS EC2, etc.
+
+## High availability & Distributed
+Even single Prometheus server provides enough scalability, But at a certain cluster scale, problems arise that go beyond the capabilities of a vanilla Prometheus. Prometheus encourages a functional sharding approach, With the help of third party components, Prometheus can achieve High availability, Distributed, Global query and de-duplicated view, Reliable historical data storage, Compaction and Down sampling. also simplifies maintenance, cost and system design.
+
 ## Architecture
 <p><img src="https://raw.githubusercontent.com/goldstrike77/docs/master/Prometheus/Server/advanced_Diagram.png" /></p>
                                                         

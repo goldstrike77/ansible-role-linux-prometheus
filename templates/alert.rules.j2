@@ -3,4 +3,4 @@
 groups:
 - name: 'Alert rules for {{ item }}'
   rules:
-  {{ vars["prometheus_" + item|lower + "_alert_rules"] | to_nice_yaml(indent=2) | indent(2,False) }}
+  {{ vars["prometheus_" + item|lower + "_alert_rules"] | to_nice_yaml(indent=2,width=8192) | indent(2,False) }}
