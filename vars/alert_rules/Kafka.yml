@@ -2,7 +2,7 @@
 prometheus_kafka_alert_rules:
 # Kafka
   - alert: Kafka_Topics
-    expr: "sum(kafka_topic_partition_in_sync_replica) by (environment,group,instance,service,topic<< tags_key | default('') >>) < 3"
+    expr: "sum(kafka_topic_partition_in_sync_replica) by (cluster,environment,group,service,topic<< tags_key | default('') >>) < 3"
     for: 10m
     labels:
       severity: warning
