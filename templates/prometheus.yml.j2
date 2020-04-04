@@ -102,45 +102,47 @@ scrape_configs:
         regex: (.+)
 {% endif %}
 {% endif %}
-{% if prometheus_k8s_api is defined and prometheus_k8s_token is defined %}
-  - job_name: 'Kubernetes kubelet'
+{% if prometheus_kubernetes is defined %}
+{% for host in prometheus_kubernetes %}
+  - job_name: 'Kubernetes kubelet - {{ host.apiserver | default("127.0.0.1") }}'
     scheme: https
-    bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
+    bearer_token: '{{ host.token | default("xxx") }}'
     tls_config:
       insecure_skip_verify: true
     kubernetes_sd_configs:
       - role: node
-        api_server: 'https://{{ prometheus_k8s_api }}'
-        bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
+        api_server: 'https://{{ host.apiserver | default("127.0.0.1") }}'
+        bearer_token: '{{ host.token | default("xxx") }}'
         tls_config:
           insecure_skip_verify: true
     relabel_configs:
     - action: labelmap
       regex: __meta_kubernetes_node_label_(.+)
     - target_label: __address__
-      replacement: {{ prometheus_k8s_api }}
+      replacement: {{ host.apiserver | default("127.0.0.1") }}
     - source_labels: [__meta_kubernetes_node_name]
       regex: (.+)
       target_label: __metrics_path__
       replacement: /api/v1/nodes/${1}/proxy/metrics
-  - job_name: 'Kubernetes cadvisor'
+  - job_name: 'Kubernetes cadvisor - {{ host.apiserver | default("127.0.0.1") }}'
     scheme: https
-    bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
+    bearer_token: '{{ host.token | default("xxx") }}'
     tls_config:
       insecure_skip_verify: true
     kubernetes_sd_configs:
       - role: node
-        api_server: 'https://{{ prometheus_k8s_api }}'
-        bearer_token: '{{ prometheus_k8s_token | default("xxx") }}'
+        api_server: 'https://{{ host.apiserver | default("127.0.0.1") }}'
+        bearer_token: '{{ host.token | default("xxx") }}'
         tls_config:
           insecure_skip_verify: true
     relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
       - target_label: __address__
-        replacement: {{ prometheus_k8s_api }}
+        replacement: {{ host.apiserver | default("127.0.0.1") }}
       - source_labels: [__meta_kubernetes_node_name]
         regex: (.+)
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+{% endfor %}
 {% endif %}

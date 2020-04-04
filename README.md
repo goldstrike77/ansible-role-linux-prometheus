@@ -177,8 +177,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_consul_token`: The consul acl token.
 
 ##### Kubernetes SD configurations
-* `prometheus_k8s_api`: The API server addresses.
-* `prometheus_k8s_token`: Authentication token.
+* `prometheus_kubernetes`: The Kubernetes API server information.
 
 ##### Role dependencies
 * `prometheus_grafana_dept`: A boolean value, whether install the Grafana for metrics visualization.
@@ -340,8 +339,11 @@ You can also use the group_vars or the host_vars files for setting the variables
     thanos_bucket_is_used: true
     prometheus_consul_server: '127.0.0.1:8500'
     prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
-    prometheus_k8s_api: '127.0.0.1:6443'
-    prometheus_k8s_token: 'xxxxxxxxxxxxxxxxxxxxxxx'
+    prometheus_kubernetes:
+      - apiserver: 'Master-PRD-APIServer.service.dc01.local:6443'
+        token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+      - apiserver: 'Master-DEV-APIServer.service.dc01.local:6443'
+        token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     prometheus_grafana_dept: false
     prometheus_grafana_redis_dept: false
     prometheus_grafana_ngx_dept: false
