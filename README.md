@@ -123,7 +123,7 @@ Using the Windows Management Instrumentation for Windows machines.
 ### cAdvisor
 Exposes CPU, memory, network and I/O usage from containers.
 ### Various kinds of DataBase exporter
-Collection methods are supported on MySQL/MariaDB, PostgrSQL and MongoDB.
+Collection methods are supported on MySQL/MariaDB, PostgreSQL and MongoDB.
 ### JMX exporter
 Export from a wide variety of JVM-based applications, for example Zookeeper and Tomcat.
 ### Other monitoring systems
@@ -316,18 +316,16 @@ There are some variables in vars/main.yml:
 ### Hosts inventory file
 See tests/inventory for an example, all host must belong to one child group.
 
-    [demo_mon]
-    node01 ansible_host='192.168.1.10' prometheus_is_install='true'
-    node02 ansible_host='192.168.1.11' prometheus_is_install='true'
-    node03 ansible_host='192.168.1.12' prometheus_is_install='true'
-
-### Vars in role configuration
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: all
-      roles:
-         - role: ansible-role-linux prometheus
-           prometheus_is_install: true
+    [Monitor]
+    node01 ansible_host='192.168.1.10'
+    node02 ansible_host='192.168.1.11'
+    node03 ansible_host='192.168.1.12'
+    
+    [Monitor:vars]
+    thanos_is_install=true
+    trickster_is_install=true
+    prometheus_consul_server='127.0.0.1:8500'
+    prometheus_consul_token='7471828c-d50a-4b25-b6a5-cccc02a03xxx'
 
 ### Combination of group vars and playbook
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
@@ -338,15 +336,15 @@ You can also use the group_vars or the host_vars files for setting the variables
     trickster_is_install: true
     thanos_bucket_is_used: true
     prometheus_consul_server: '127.0.0.1:8500'
-    prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
+    prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
     prometheus_kubernetes:
       - apiserver: 'Master-PRD-APIServer.service.dc01.local:6443'
         token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
       - apiserver: 'Master-DEV-APIServer.service.dc01.local:6443'
         token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    prometheus_grafana_dept: false
+    prometheus_grafana_dept: true
     prometheus_grafana_redis_dept: false
-    prometheus_grafana_ngx_dept: false
+    prometheus_grafana_ngx_dept: true
     prometheus_port:
       alertmanager: '9093'
       cluster: '9094'
@@ -437,7 +435,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       retention: '365'
       type: 'S3'
       bucket: 'public'
-      endpoint: '127.0.0.1:9001'
+      endpoint: 'STORAGE-Production-thanos-minio.service.dc01.local:9001'
       insecure: true
       signature_version2: false
       access_key: 'QTNTQZZP1NOBNCL5LPRX'
@@ -462,7 +460,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       region: 'IDC01'
     exporter_is_install: false
     consul_public_register: false
-    consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
+    consul_public_exporter_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
     consul_public_http_prot: 'https'
     consul_public_http_port: '8500'
     consul_public_clients:
