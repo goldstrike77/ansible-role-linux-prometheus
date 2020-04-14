@@ -8,7 +8,7 @@ prometheus_conf_path: '/etc/prometheus'
 prometheus_data_path: '/data'
 
 # Consul SD configurations #
-prometheus_consul_server: '127.0.0.1:8500'
+prometheus_consul_server: 'consul.service.dc01.local:8500'
 prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
 
 # Kubernetes SD configurations #
@@ -190,7 +190,7 @@ thanos_obj_arg:
   retention: '365' # Days to retain samples in bucket.
   type: 'S3'
   bucket: 'thanos'
-  endpoint: '127.0.0.1:9001'
+  endpoint: 'Storage-Production-thanos-minio.service.dc01.local:9001'
   insecure: true
   signature_version2: false
   access_key: '0GTXRMXD4FDFWURPABCG'
@@ -207,7 +207,7 @@ trickster_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '1.0.1'
+  version: '1.0.2'
 
 # Consul templatee Variables #
 consul_template_version: '0.20.0'

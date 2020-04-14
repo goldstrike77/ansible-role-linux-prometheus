@@ -307,6 +307,7 @@ There are some variables in vars/main.yml:
 
 ## Dependencies
 - Ansible versions >= 2.8 are supported.
+- Python >= 2.7.5
 - [Grafana](https://github.com/goldstrike77/ansible-role-linux-grafana.git)
 - [NGinx](https://github.com/goldstrike77/ansible-role-linux-nginx.git)
 - [Redis](https://github.com/goldstrike77/ansible-role-linux-redis.git)
@@ -335,7 +336,7 @@ You can also use the group_vars or the host_vars files for setting the variables
     thanos_is_install: true
     trickster_is_install: true
     thanos_bucket_is_used: true
-    prometheus_consul_server: '127.0.0.1:8500'
+    prometheus_consul_server: 'consul.service.dc01.local:8500'
     prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
     prometheus_kubernetes:
       - apiserver: 'Master-PRD-APIServer.service.dc01.local:6443'
