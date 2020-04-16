@@ -73,6 +73,7 @@ unauthenticate_target_services:
   - 'jmx'
   - 'kafka'
   - 'keepalived'
+  - 'kube-state-metrics'
   - 'logstash'
   - 'minio'
   - 'mongodb'
