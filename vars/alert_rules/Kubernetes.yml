@@ -1,0 +1,176 @@
+---
+prometheus_kubernetes_alert_rules:
+# Kubernetes container orchestration system
+  - alert: KubePodCrashLooping
+    annotations:
+      description: Pod is restarting {{ printf "%.0f" $value }} times / 5 minutes.
+    expr: "rate(kube_pod_container_status_restarts_total[15m]) * 60 * 5 > 0"
+    for: 60m
+    labels:
+      severity: warning
+
+  - alert: KubeDeploymentReplicasMismatch
+    annotations:
+      description: Deployment has not matched the expected number of replicas for longer than an hour.
+    expr: "kube_deployment_spec_replicas != kube_deployment_status_replicas_available"
+    for: 60m
+    labels:
+      severity: warning
+
+  - alert: KubeDeploymentGenerationMismatch
+    annotations:
+      description: Deployment generation does not match, this indicates that the Deployment has failed but has not been rolled back.
+    expr: "kube_deployment_status_observed_generation != kube_deployment_metadata_generation"
+    for: 15m
+    labels:
+      severity: warning
+
+  - alert: KubeStatefulSetReplicasMismatch
+    annotations:
+      description: StatefulSet has not matched the expected number of replicas for longer than 30 minutes.
+    expr: "kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas"
+    for: 30m
+    labels:
+      severity: warning
+
+  - alert: KubeStatefulSetGenerationMismatch
+    annotations:
+      description: StatefulSet generation does not match, this indicates that the StatefulSet has failed but has not been rolled back.
+    expr: "kube_statefulset_status_observed_generation != kube_statefulset_metadata_generation"
+    for: 30m
+    labels:
+      severity: warning
+  
+  - alert: KubeStatefulSetUpdateNotRolledOut
+    annotations:
+      description: StatefulSet update has not been rolled out.
+    expr: "max without (revision) ( kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision ) * ( kube_statefulset_replicas != kube_statefulset_status_replicas_updated )"
+    for: 30m
+    labels:
+      severity: warning
+  
+  - alert: KubeDaemonSetRolloutStuck
+    annotations:
+      description: Only {{ $value }}% of the desired Pods of DaemonSet are scheduled and ready.
+    expr: "kube_daemonset_status_number_ready / kube_daemonset_status_desired_number_scheduled * 100 < 100"
+    for: 15m
+    labels:
+      severity: warning
+  
+  - alert: KubeDaemonSetNotScheduled
+    annotations:
+      description: '{{ $value }} Pods of DaemonSet are not scheduled.'
+    expr: "kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_current_number_scheduled > 0"
+    for: 10m
+    labels:
+      severity: warning
+  
+  - alert: KubeDaemonSetMisScheduled
+    annotations:
+      description: '{{ $value }} Pods of DaemonSet are running where they are not supposed to run.'
+    expr: "kube_daemonset_status_number_misscheduled > 0"
+    for: 10m
+    labels:
+      severity: warning
+  
+  - alert: KubeCronJobRunning
+    annotations:
+      description: CronJob is taking more than 1h to complete.
+    expr: "time() - kube_cronjob_next_schedule_time > 3600"
+    for: 60m
+    labels:
+      severity: warning
+  
+  - alert: KubeJobCompletion
+    annotations:
+      description: Job is taking more than one hour to complete.
+    expr: "kube_job_spec_completions - kube_job_status_succeeded > 0"
+    for: 60m
+    labels:
+      severity: warning
+  
+  - alert: KubeJobFailed
+    annotations:
+      description: Job failed to complete.
+    expr: "kube_job_status_failed > 0"
+    for: 60m
+    labels:
+      severity: warning
+
+  - alert: KubeNodeNotReady
+    annotations:
+      description: 'Node has been unready for more than an hour.'
+    expr: 'kube_node_status_condition{condition="Ready",status="true"} == 0'
+    for: 30m
+    labels:
+      severity: critical
+  
+  - alert: KubeVersionMismatch
+    annotations:
+      description: There are {{ $value }} different semantic versions of Kubernetes components running.
+    expr: 'count(count by (gitVersion) (label_replace(kubernetes_build_info,"gitVersion","$1","gitVersion","(v[0-9]*.[0-9]*.[0-9]*).*"))) > 1'
+    for: 60m
+    labels:
+      severity: warning
+  
+  - alert: KubeClientErrors
+    annotations:
+      description: Kubernetes API server client is experiencing {{ printf "%0.0f" $value }}% errors.'
+    expr: '(sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (environment,group,instance,service<< tags_key | default("") >>) / sum(rate(rest_client_requests_total[5m])) by (environment,group,instance,service<< tags_key | default("") >>)) * 100 > 1'
+    for: 15m
+    labels:
+      severity: warning
+  
+  - alert: KubeletTooManyPods
+    annotations:
+      description: Kubelet is running {{ $value }} Pods.
+    expr: "kubelet_running_pod_count > 110 * 0.9"
+    for: 15m
+    labels:
+      severity: critical
+  
+  - alert: KubeClientCertificateExpiration
+    annotations:
+      description: A client certificate used to authenticate to the apiserver is expiring in less than 7 days.
+    expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,environment,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 604800"
+    labels:
+      severity: warning
+  
+  - alert: KubeClientCertificateExpiration
+    annotations:
+      description: A client certificate used to authenticate to the apiserver is expiring in less than 24 hours.
+    expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,environment,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 86400"
+    labels:
+      severity: critical
+
+  - alert: KubePersistentVolumeErrors
+    annotations:
+      description: The persistent volume status has fall.
+    expr: 'kube_persistentvolume_status_phase{phase=~"Failed|Pending"} > 0'
+    for: 5m
+    labels:
+      severity: critical
+
+  - alert: HPAScalingAbility
+    annotations:
+      description: 'HPA is suffering from a problem preventing scaling from occurring.'
+    expr: 'kube_hpa_status_condition{condition="false", status="AbleToScale"} == 1'
+    for: 30m
+    labels:
+      severity: critical
+ 
+  - alert: HPAMetricsAvailability
+    annotations:
+      description: 'HPA is not able to collect metrics.'
+    expr: 'kube_hpa_status_condition{condition="false", status="ScalingActive"} == 1'
+    for: 30m
+    labels:
+      severity: critical
+ 
+  - alert: HPAScaleCapability
+    annotations:
+      description: 'HPA has hit the maximum number of desired Pods.'
+    expr: 'sum(kube_hpa_status_desired_replicas) by (hpa,environment,group,instance,service<< tags_key | default("") >>) >= sum(kube_hpa_spec_max_replicas) by (hpa,environment,group,instance,service<< tags_key | default("") >>)'
+    for: 30m
+    labels:
+      severity: critical
