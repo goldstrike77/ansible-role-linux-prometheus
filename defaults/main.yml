@@ -162,6 +162,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Minio'
   - 'MongoDB'
   - 'MySQL'
+  - 'Netdata'
   - 'NGinx'
   - 'OS'
   - 'PostgreSQL'
