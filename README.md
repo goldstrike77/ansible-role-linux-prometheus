@@ -139,7 +139,7 @@ This Ansible role installs standalone or distributed prometheus v2 server on lin
 
 The following list of supported the Prometheus releases:
 
-* Prometheus v2.2.1+ 
+* Prometheus v2 final 
 
 ### Distributed mode
 * Targets will be dispersed if greater than 3 prometheus nodes.
