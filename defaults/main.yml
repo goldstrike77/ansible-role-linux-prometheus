@@ -209,7 +209,7 @@ trickster_arg:
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
   ulimit_nofile: '262144' # The number of files launched by systemd
   ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '1.0.2'
+  version: '1.0.3'
 
 # Consul templatee Variables #
 consul_template_version: '0.20.0'
