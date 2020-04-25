@@ -253,6 +253,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.wechat_to_party`: The WeChat department to send notifications to.
 * `alertmanager_arg.wechat_api_corpid`:  The corp id for authentication.
 * `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
+* `alertmanager_arg.webhook_url`: The endpoint to send HTTP POST requests to.
 
 ##### Alertmanager rules
 * `prometheus_alert_rules`: Defining alerting rules.
@@ -417,6 +418,7 @@ You can also use the group_vars or the host_vars files for setting the variables
       wechat_to_party: '1'
       wechat_api_corpid: 'wxe787605fxxxxxxxx'
       wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
+      webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
     prometheus_alert_rules:
       - 'Consul'
       - 'ElasticSearch'

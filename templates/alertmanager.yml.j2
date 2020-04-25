@@ -9,16 +9,19 @@ global:
 templates:
 - '/etc/prometheus/templates/default.tmpl'
 
+# https://prometheus.io/webtools/alerting/routing-tree-editor
+
 route:
   group_by: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
   group_wait: '{{ alertmanager_arg.group_wait }}'
   group_interval: '{{ alertmanager_arg.group_interval }}'
   repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
-  receiver: team-infra-mails
+  receiver: team-infra-alerta
   routes:
     - match:
         severity: critical
       receiver: team-infra-wechat
+      continue: true
 
 inhibit_rules:
 - source_match:
@@ -28,6 +31,10 @@ inhibit_rules:
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
+  - name: "team-infra-alerta"
+    webhook_configs:
+      - send_resolved: true
+        url: '{{ alertmanager_arg.webhook_url }}'
   - name: "team-infra-wechat"
     wechat_configs:
       - send_resolved: true

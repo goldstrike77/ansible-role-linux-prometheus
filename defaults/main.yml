@@ -144,6 +144,7 @@ alertmanager_arg:
   wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
   wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
   wechat_to_party: '1'
+  webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.

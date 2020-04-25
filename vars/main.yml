@@ -101,6 +101,7 @@ unauthenticate_target_services:
   - 'zookeeper'
 
 authenticate_target_services:
+  - 'alerta'
   - 'graylog'
   - 'kibana'
 

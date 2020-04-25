@@ -62,6 +62,29 @@
   changed_when: false
   failed_when: false
 
+- name: Register Alertmanager service with an http health check.
+  uri:
+    url: '{{ consul_public_http_prot }}://{{ ansible_default_ipv4.address }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    body: '{"tags":["alertmanager"],"ID":"{{ group_names[-1] | upper | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-alertmanager","name":"{{ group_names[-1] | upper | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-alertmanager","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.alertmanager }},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }}","interval":"10s","tls_skip_verify":true,"method":"GET","timeout":"10s"}]}'
+    body_format: 'json'
+    status_code: '200'
+    headers:
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
+    validate_certs: 'no'
+  environment:
+    no_proxy: '{{ ansible_default_ipv4.address }}'
+  when: check_consul_local.status == 405
+  register: register_status
+  until: register_status.status == 200
+  retries: 3
+  delay: 3
+  no_log: true
+  changed_when: false
+  failed_when: false
+
 - name: Register blackbox exporter service with an http health check
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
