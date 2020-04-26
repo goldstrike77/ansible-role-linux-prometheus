@@ -1,13 +1,6 @@
 ---
 prometheus_kafka_alert_rules:
 # Kafka
-  - alert: Kafka_Topics
-    expr: "sum(kafka_topic_partition_in_sync_replica) by (cluster,environment,group,service,topic<< tags_key | default('') >>) < 3"
-    for: 10m
-    labels:
-      severity: warning
-    annotations:
-      description: 'Kafka topic in-sync partition with a value of {{ $value }}.'
   - alert: Kafka_ConsumersGroup
     expr: "sum(kafka_consumergroup_lag) by (environment,group,instance,service,consumergroup<< tags_key | default('') >>) > 50"
     for: 10m
