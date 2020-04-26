@@ -16,11 +16,14 @@ route:
   group_wait: '{{ alertmanager_arg.group_wait }}'
   group_interval: '{{ alertmanager_arg.group_interval }}'
   repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
-  receiver: team-infra-alerta
+  receiver: team-infra-mails
   routes:
     - match:
         severity: critical
       receiver: team-infra-wechat
+      continue: true
+    - match:
+      receiver: team-infra-alerta
       continue: true
 
 inhibit_rules:
