@@ -87,6 +87,7 @@ unauthenticate_target_services:
   - 'rabbitmq'
   - 'redis-server'
   - 'redis-sentinel'
+  - 'skywalking'
   - 'smokeping'
   - 'snmp'
   - 'statsd'
