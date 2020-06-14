@@ -251,7 +251,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.wechat_api_agentid`: The wechat agent ID.
 * `alertmanager_arg.wechat_api_url`: The WeChat API URL.
 * `alertmanager_arg.wechat_to_party`: The WeChat department to send notifications to.
-* `alertmanager_arg.wechat_api_corpid`:  The corp id for authentication.
+* `alertmanager_arg.wechat_api_corpid`: The corp id for authentication.
 * `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
 * `alertmanager_arg.webhook_url`: The endpoint to send HTTP POST requests to.
 
@@ -278,7 +278,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_obj_arg.endpoint`: Objstore service endpoint.
 * `thanos_obj_arg.insecure`: Objstore service. 
 * `thanos_obj_arg.signature_version2`: I real don't know what that means.
-* `thanos_obj_arg.access_key`:  AccessKeyID.
+* `thanos_obj_arg.access_key`: AccessKeyID.
 * `thanos_obj_arg.secret_key`: SecretAccessKey.
 
 ##### Trickster System Variables
@@ -288,7 +288,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `trickster_arg.timeseries_retention_factor`: Defines the maximum number of recent timestamps to cache for a given query.
 * `trickster_arg.record_ttl_secs`: Defines the relative expiration of cached queries.
 * `trickster_arg.ulimit_core`: The number of coredump launched by systemd.
-* `trickster_arg.ulimit_memlock`:  The number of memory lock launched by systemd.
+* `trickster_arg.ulimit_memlock`: The number of memory lock launched by systemd.
 * `trickster_arg.ulimit_nofile`: The number of files launched by systemd.
 * `trickster_arg.ulimit_nproc`: The number of processes launched by systemd.
 * `trickster_arg.version`: Specify the Trickster version.
@@ -318,6 +318,7 @@ There are some variables in vars/main.yml:
 ### Hosts inventory file
 See tests/inventory for an example, all host must belong to one child group.
 
+```yaml
     [Monitor]
     node01 ansible_host='192.168.1.10'
     node02 ansible_host='192.168.1.11'
@@ -328,10 +329,12 @@ See tests/inventory for an example, all host must belong to one child group.
     trickster_is_install=true
     prometheus_consul_server='127.0.0.1:8500'
     prometheus_consul_token='7471828c-d50a-4b25-b6a5-cccc02a03xxx'
+```
 
 ### Combination of group vars and playbook
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
 
+```yaml
     prometheus_conf_path: '/etc/prometheus'
     prometheus_data_path: '/data'
     thanos_is_install: true
@@ -468,6 +471,7 @@ You can also use the group_vars or the host_vars files for setting the variables
     consul_public_http_port: '8500'
     consul_public_clients:
       - '127.0.0.1'
+```
 
 ## License
 
