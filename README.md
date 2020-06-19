@@ -37,7 +37,7 @@ __Table of Contents__
 
 ## Introduction
 #### What Is Monitoring?
-Systems monitoring toolkit wasn’t built to do any of all things. It was built to aid software developers and administrators in the operation of production computer systems, such as the operation system, applications, databases and networks backing popular websites.
+Systems monitoring toolkit wasn’t built to do any of all things. It was built to aid software developers and administrators in the operation of production computer systems, such as the operating system, applications, databases and networks backing popular websites.
 
 #### What is monitoring in that context?
 
@@ -51,12 +51,12 @@ Now that you have called in a human, they need to investigate to determine the r
 Alerting and debugging usually happen on time scales on the order of minutes to hours. While less urgent, the ability to see how your systems are being used and changing over time is also useful. Trending can feed into design decisions and processes such as capacity planning.
 
 ##### Plumbing
-When all you have is a hammer, everything starts to look like a nail. At the end of the day all monitoring systems are data processing pipelines. Sometimes it is more convenient to appropriate part of your monitoring system for another purpose, rather than building a bespoke solution. This is not strictly monitoring, but it is common in practice.
+When all you have is a hammer, everything starts to look like a nail. At the end of the day, all monitoring systems are data processing pipelines. Sometimes it is more convenient to the appropriate part of your monitoring system for another purpose, rather than building a bespoke solution. This is not strictly monitoring, but it is common in practice.
 
 ## Overview
-Prometheus is an open-source systems monitoring and alerting toolkit that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications.   
+Prometheus is an open-source system monitoring and alerting toolkit that focuses on capturing measurements and exposing them via an API. Works very well in a distributed, cloud-native environment, making it ideal for mission-critical microservices applications.    
 
-Prometheus is performant and simple to run, A single Prometheus server can ingest millions of samples per second.  All of the services are unburdened by load on the monitoring system. It is a single statically linked binary with a configuration file. All components of Prometheus can be run in containers, and they avoid doing anything fancy that would get in the way of configuration management tools. It is designed to be integrated into the infrastructure you already have and built on top of, not to be a management platform itself. 
+Prometheus is performant and simple to run, A single Prometheus server can ingest millions of samples per second.  All of the services are unburdened by a load on the monitoring system. It is a single statically linked binary with a configuration file. All components of Prometheus can be run in containers, and they avoid doing anything fancy that would get in the way of configuration management tools. It is designed to be integrated into the infrastructure you already have and built on top of, not to be a management platform itself.
 
 Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user community. It is now a standalone open source project and maintained independently of any company. To emphasize this, and to clarify the project's governance structure, Prometheus joined the Cloud Native Computing Foundation in 2016, the second hosting project after Kubernetes.
 
@@ -65,8 +65,7 @@ As a metrics-based system, Prometheus is not suitable for storing event logs or 
 Prometheus is designed for operational monitoring, where small inaccuracies and race conditions due to factors like kernel scheduling and failed scrapes are a fact of life. Prometheus makes tradeoffs and prefers giving you data that is 99.9% correct over your monitoring breaking while waiting for perfect data. Thus in applications involving money or billing, Prometheus should be used with caution.
 
 ## Data Model
-All of the data is stored as a time series. A measurement with a timestamp. Measurements are known as metrics. Each time series is uniquely identified by a metric name and a set of key-value pairs, a.k.a. labels.
-This means that labels represent multiple dimensions of a metric. A combination of a metric name and a label yields a single metric. In other words, each time you create a new key-value pair on a metric you will get a new timeseries in the database. An observation (they call it a sample!) is a combination of a float64 value and a millisecond precision timestamp.
+All of the data is stored as a time series. A measurement with a timestamp. Measurements are known as metrics. Each time series is uniquely identified by a metric name and a set of key-value pairs, a.k.a. labels. This means that labels represent multiple dimensions of a metric. A combination of a metric name and a label yields a single metric. In other words, each time you create a new key-value pair on a metric you will get a new time-series in the database. An observation (they call it a sample!) is a combination of a float64 value and a millisecond precision timestamp.
 
 ## Exposition format
 When you look at the exposition format example below, you will notice that the first metric has the name node_cpu_seconds_total, a value 646836.5, and a set of labels inside curly braces {cpu="0",mode="idle"}. Labels can be omitted entirely together with the curly braces. They are separated by a single comma. The label value can be any UTF-8 string. Labels are very useful for compartmentalizing information, doing joins, and other useful stuff that we’ll mention later.
@@ -81,7 +80,7 @@ When you look at the exposition format example below, you will notice that the f
     node_cpu_seconds_total{cpu="0",mode="user"} 22442.72
 
 ## Alerting
-The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as Wechat. The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce message storms, and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
+The Alertmanager receives alerts from Prometheus servers and turns them into notifications. Notifications can include email, chat applications such as WeChat. The Alertmanager does more than blindly turn alerts into notifications on a one-to-one basis. Related alerts can be aggregated into one notification, throttled to reduce message storms, and different routing and notification outputs can be configured for each of your different teams. Alerts can also be silenced, perhaps to snooze an issue you are already aware of in advance when you know maintenance is scheduled.
 
 ## Visualization
 It is recommended that you use Grafana for dashboards. It has a wide variety of features, including official support for Prometheus as a data source. It can produce a wide variety of dashboards.
@@ -90,7 +89,7 @@ It is recommended that you use Grafana for dashboards. It has a wide variety of 
 Prometheus offers a variety of service discovery options for discovering scrape targets, including Kubernetes, Consul, Azure VMs, AWS EC2, etc.
 
 ## High availability & Distributed
-Even single Prometheus server provides enough scalability, But at a certain cluster scale, problems arise that go beyond the capabilities of a vanilla Prometheus. Prometheus encourages a functional sharding approach, With the help of third party components, Prometheus can achieve High availability, Distributed, Global query and de-duplicated view, Reliable historical data storage, Compaction and Down sampling. also simplifies maintenance, cost and system design.
+Even a single Prometheus server provides enough scalability, But at a certain cluster scale, problems arise that go beyond the capabilities of a vanilla Prometheus. Prometheus encourages a functional sharding approach, With the help of third party components, Prometheus can achieve High availability, Distributed, Global query and de-duplicated view, Reliable historical data storage, Compaction and Downsampling. also simplifies maintenance, cost and system design.
 
 ## Architecture
 <p><img src="https://raw.githubusercontent.com/goldstrike77/docs/master/Prometheus/Server/advanced_Diagram.png" /></p>
@@ -107,9 +106,9 @@ Sidecar is to backup Prometheus data into an Object Storage bucket, and giving o
 ### Thanos Store (optional)
 As the sidecar backs up data into the object storage of your choice, you can decrease Prometheus retention and store less locally. It can find in your object storage bucket.
 ### Thanos Compact (optional)
-The compact component simple scans the object storage and processes compaction where required. At the same time it is responsible for creating downsampled copies of data to speed up queries.
+The compact component simply scans the object storage and processes compaction where required. At the same time, it is responsible for creating downsampled copies of data to speed up queries.
 ### Thanos Bucket (optional)
-The bucket component is a set of commands to inspect data in object storage buckets. It is normally run as a stand alone command to aid with troubleshooting.
+The bucket component is a set of commands to inspect data in object storage buckets. It is normally run as a stand-alone command to aid with troubleshooting.
 ### Consul
 Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure. Prometheus has integrations with consul as service discovery mechanisms.
 ### Object Storage (optional)
@@ -117,7 +116,7 @@ Offer a clustered storage solution to Long-Term Storage data across multiple mac
 
 ## Basic exporters that we use
 ### Node exporter
-Installed on Linux operation machine. Exports statistics about network, I/O, CPU, memory, filesystems for hardware and OS metrics by kernels.
+Installed on the Linux operation machine. Exports statistics about network, I/O, CPU, memory, filesystems for hardware and OS metrics by kernels.
 ### WMI exporter
 Using the Windows Management Instrumentation for Windows machines.
 ### cAdvisor
@@ -131,7 +130,7 @@ Some of these exporters are maintained as part of the official Prometheus GitHub
 
 ## Requirements
 ### Operating systems
-This Ansible role installs standalone or distributed prometheus v2 server on linux operating system, including establishing a filesystem structure and server configuration with some common operational features. This role will work on the following operating systems:
+This Ansible role installs standalone or distributed Prometheus v2 server on the Linux operating system, including establishing a filesystem structure and server configuration with some common operational features, Will work on the following operating systems:
 
   * CentOS 7
 
@@ -142,9 +141,9 @@ The following list of supported the Prometheus releases:
 * Prometheus v2 final 
 
 ### Distributed mode
-* Targets will be dispersed if greater than 3 prometheus nodes.
-* Use the last digital of the IP Address or host number to spread the load between multiple prometheus nodes.
->__Performance is severely affected by remote reading and deduplicating data queries, thanos store components + object storage offers only if need long term storage.__
+* Targets will be dispersed if greater than 3 Prometheus nodes.
+* Use the last digit of the IP Address or host number to spread the load between multiple Prometheus nodes.
+>__Performance is severely affected by remote reading and deduplicating data queries, Thanos store components + object storage offers only if need long term storage.__
 
 for example:
 
@@ -318,7 +317,6 @@ There are some variables in vars/main.yml:
 ### Hosts inventory file
 See tests/inventory for an example, all host must belong to one child group.
 
-```yaml
     [Monitor]
     node01 ansible_host='192.168.1.10'
     node02 ansible_host='192.168.1.11'
@@ -327,150 +325,149 @@ See tests/inventory for an example, all host must belong to one child group.
     [Monitor:vars]
     thanos_is_install=true
     trickster_is_install=true
-    prometheus_consul_server='127.0.0.1:8500'
+    prometheus_consul_server='consul.service.dc01.local:8500'
     prometheus_consul_token='7471828c-d50a-4b25-b6a5-cccc02a03xxx'
-```
 
 ### Combination of group vars and playbook
-You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
+You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
 ```yaml
-    prometheus_conf_path: '/etc/prometheus'
-    prometheus_data_path: '/data'
-    thanos_is_install: true
-    trickster_is_install: true
-    thanos_bucket_is_used: true
-    prometheus_consul_server: 'consul.service.dc01.local:8500'
-    prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
-    prometheus_kubernetes:
-      - apiserver: 'Master-PRD-APIServer.service.dc01.local:6443'
-        token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-      - apiserver: 'Master-DEV-APIServer.service.dc01.local:6443'
-        token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    prometheus_grafana_dept: true
-    prometheus_grafana_redis_dept: false
-    prometheus_grafana_ngx_dept: true
-    prometheus_port:
-      alertmanager: '9093'
-      cluster: '9094'
-      prometheus: '9090'
-    thanos_port:
-      bucket_http: '19195'
-      compact_http: '19194'
-      query_grpc: '19092'
-      query_http: '19192'
-      sidecar_grpc: '19091'
-      sidecar_http: '19191'
-      store_grpc: '19093'
-      store_http: '19193'
-    trickster_port:
-      proxy_server: '19090'
-      metrics: '8082'
-    prometheus_grafana_path: '/data'
-    prometheus_grafana_version: '6.5'
-    prometheus_grafana_admin_user: 'admin'
-    prometheus_grafana_admin_password: 'password'
-    prometheus_grafana_port: '3000'
-    prometheus_grafana_proxy: false
-    prometheus_grafana_redis_path: '{{ prometheus_data_path }}'
-    prometheus_grafana_redis_requirepass: 'password'
-    prometheus_grafana_redis_maxmemory: '1'
-    prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}'
-    prometheus_grafana_redis_port: '6379'
-    prometheus_grafana_ngx_block_agents: false
-    prometheus_grafana_ngx_block_string: false
-    prometheus_grafana_ngx_compress: false
-    prometheus_grafana_ngx_domain: 'visual.example.com'
-    prometheus_grafana_ngx_pagespeed: false
-    prometheus_grafana_ngx_port_http: '80'
-    prometheus_grafana_ngx_port_https: '443'
-    prometheus_grafana_ngx_ssl_protocols: 'modern'
-    prometheus_grafana_ngx_version: 'extras'
-    prometheus_arg:
-      evaluation_interval: '30s'
-      query_max_concurrency: '1024'
-      refresh_interval: '60s'
-      scrape_interval: '60s'
-      scrape_timeout: '10s'
-      storage_tsdb_block_duration: '2h'
-      storage_tsdb_retention: '30d'
-      ulimit_core: 'infinity'
-      ulimit_memlock: 'infinity'
-      ulimit_nofile: '262144'
-      ulimit_nproc: '262144'
-    prometheus_prober_arg:
-      smokeping_hosts:
-        - '223.5.5.5'
-        - '119.29.29.29'
-    alertmanager_arg:
-      mail_to_user: 'somebody@somebody.com'
-      group_by:
-        - 'alertname'
-        - 'cluster'
-        - 'service'
-      group_wait: '60s'
-      group_interval: '60s'
-      repeat_interval: '2h'
-      smtp_auth_password: 'password'
-      smtp_auth_username: 'user'
-      smtp_from: 'do-not-reply@somebody.com'
-      smtp_require_tls: false
-      smtp_smarthost: '127.0.0.1:25'
-      wechat_api_agentid: '0'
-      wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
-      wechat_to_party: '1'
-      wechat_api_corpid: 'wxe787605fxxxxxxxx'
-      wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-      webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
-    prometheus_alert_rules:
-      - 'Consul'
-      - 'ElasticSearch'
-    thanos_arg:
-      chunk_pool_size: '2GB'
-      index_cache_size: '1GB'
-      log_format: 'logfmt'
-      log_level: 'info'
-      query_auto_downsampling: false
-      query_max_concurrent: '1024'
-      query_timeout: '1m'
-      ulimit_core: 'infinity'
-      ulimit_memlock: 'infinity'
-      ulimit_nofile: '262144'
-      ulimit_nproc: '262144'
-    thanos_obj_arg:
-      retention: '365'
-      type: 'S3'
-      bucket: 'public'
-      endpoint: 'STORAGE-Production-thanos-minio.service.dc01.local:9001'
-      insecure: true
-      signature_version2: false
-      access_key: 'QTNTQZZP1NOBNCL5LPRX'
-      secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
-    trickster_arg:
-      cache_type: 'memory'
-      fast_forward_disable: false
-      timeseries_retention_factor: '1024'
-      max_size_bytes: '536870912'
-      record_ttl_secs: '43200'
-      ulimit_core: 'infinity'
-      ulimit_memlock: 'infinity'
-      ulimit_nofile: '262144'
-      ulimit_nproc: '262144'
-      version: '1.0.1'
-    environments: 'Development'
-    tags:
-      subscription: 'default'
-      owner: 'nobody'
-      department: 'Infrastructure'
-      organization: 'The Company'
-      region: 'IDC01'
-    exporter_is_install: false
-    consul_public_register: false
-    consul_public_exporter_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
-    consul_public_http_prot: 'https'
-    consul_public_http_port: '8500'
-    consul_public_clients:
-      - '127.0.0.1'
+prometheus_conf_path: '/etc/prometheus'
+prometheus_data_path: '/data'
+thanos_is_install: true
+trickster_is_install: true
+thanos_bucket_is_used: true
+prometheus_consul_server: 'consul.service.dc01.local:8500'
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
+prometheus_kubernetes:
+  - apiserver: 'Master-PRD-APIServer.service.dc01.local:6443'
+    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+  - apiserver: 'Master-DEV-APIServer.service.dc01.local:6443'
+    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+prometheus_grafana_dept: true
+prometheus_grafana_redis_dept: false
+prometheus_grafana_ngx_dept: true
+prometheus_port:
+  alertmanager: '9093'
+  cluster: '9094'
+  prometheus: '9090'
+thanos_port:
+  bucket_http: '19195'
+  compact_http: '19194'
+  query_grpc: '19092'
+  query_http: '19192'
+  sidecar_grpc: '19091'
+  sidecar_http: '19191'
+  store_grpc: '19093'
+  store_http: '19193'
+trickster_port:
+  proxy_server: '19090'
+  metrics: '8082'
+prometheus_grafana_path: '/data'
+prometheus_grafana_version: '6.5'
+prometheus_grafana_admin_user: 'admin'
+prometheus_grafana_admin_password: 'password'
+prometheus_grafana_port: '3000'
+prometheus_grafana_proxy: false
+prometheus_grafana_redis_path: '{{ prometheus_data_path }}'
+prometheus_grafana_redis_requirepass: 'password'
+prometheus_grafana_redis_maxmemory: '1'
+prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}'
+prometheus_grafana_redis_port: '6379'
+prometheus_grafana_ngx_block_agents: false
+prometheus_grafana_ngx_block_string: false
+prometheus_grafana_ngx_compress: false
+prometheus_grafana_ngx_domain: 'visual.example.com'
+prometheus_grafana_ngx_pagespeed: false
+prometheus_grafana_ngx_port_http: '80'
+prometheus_grafana_ngx_port_https: '443'
+prometheus_grafana_ngx_ssl_protocols: 'modern'
+prometheus_grafana_ngx_version: 'extras'
+prometheus_arg:
+  evaluation_interval: '30s'
+  query_max_concurrency: '1024'
+  refresh_interval: '60s'
+  scrape_interval: '60s'
+  scrape_timeout: '10s'
+  storage_tsdb_block_duration: '2h'
+  storage_tsdb_retention: '30d'
+  ulimit_core: 'infinity'
+  ulimit_memlock: 'infinity'
+  ulimit_nofile: '262144'
+  ulimit_nproc: '262144'
+prometheus_prober_arg:
+  smokeping_hosts:
+    - '223.5.5.5'
+    - '119.29.29.29'
+alertmanager_arg:
+  mail_to_user: 'somebody@somebody.com'
+  group_by:
+    - 'alertname'
+    - 'cluster'
+    - 'service'
+  group_wait: '60s'
+  group_interval: '60s'
+  repeat_interval: '2h'
+  smtp_auth_password: 'password'
+  smtp_auth_username: 'user'
+  smtp_from: 'do-not-reply@somebody.com'
+  smtp_require_tls: false
+  smtp_smarthost: '127.0.0.1:25'
+  wechat_api_agentid: '0'
+  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+  wechat_to_party: '1'
+  wechat_api_corpid: 'wxe787605fxxxxxxxx'
+  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
+  webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+prometheus_alert_rules:
+  - 'Consul'
+  - 'ElasticSearch'
+thanos_arg:
+  chunk_pool_size: '2GB'
+  index_cache_size: '1GB'
+  log_format: 'logfmt'
+  log_level: 'info'
+  query_auto_downsampling: false
+  query_max_concurrent: '1024'
+  query_timeout: '1m'
+  ulimit_core: 'infinity'
+  ulimit_memlock: 'infinity'
+  ulimit_nofile: '262144'
+  ulimit_nproc: '262144'
+thanos_obj_arg:
+  retention: '365'
+  type: 'S3'
+  bucket: 'public'
+  endpoint: 'STORAGE-Production-thanos-minio.service.dc01.local:9001'
+  insecure: true
+  signature_version2: false
+  access_key: 'QTNTQZZP1NOBNCL5LPRX'
+  secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
+trickster_arg:
+  cache_type: 'memory'
+  fast_forward_disable: false
+  timeseries_retention_factor: '1024'
+  max_size_bytes: '536870912'
+  record_ttl_secs: '43200'
+  ulimit_core: 'infinity'
+  ulimit_memlock: 'infinity'
+  ulimit_nofile: '262144'
+  ulimit_nproc: '262144'
+  version: '1.0.1'
+environments: 'Development'
+tags:
+  subscription: 'default'
+  owner: 'nobody'
+  department: 'Infrastructure'
+  organization: 'The Company'
+  region: 'IDC01'
+exporter_is_install: false
+consul_public_register: false
+consul_public_exporter_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
+consul_public_http_prot: 'https'
+consul_public_http_port: '8500'
+consul_public_clients:
+  - '127.0.0.1'
 ```
 
 ## License

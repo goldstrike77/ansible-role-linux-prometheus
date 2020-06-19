@@ -9,7 +9,7 @@ global:
 # Alertmanager configuration
 alerting:
   alert_relabel_configs:
-    - regex: 'replica|job|ipaddress|metrics_path'
+    - regex: 'replica|job|ipaddress|metrics_path|scheme'
       action: labeldrop
   alertmanagers:
     - static_configs:
@@ -51,6 +51,8 @@ scrape_configs:
     basic_auth:
       username: prometheus
       password: password
+    tls_config:
+      insecure_skip_verify: true
     consul_sd_configs:
       - server: '{{ prometheus_consul_server }}'
         token: {{ prometheus_consul_token }}
@@ -69,6 +71,10 @@ scrape_configs:
       - source_labels: [__meta_consul_service_metadata_metrics_path]
         action: replace
         target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__meta_consul_service_metadata_scheme]
+        action: replace
+        target_label: __scheme__
         regex: (.+)
 {% if prometheus_server | length > 3 %}
       - source_labels: [__address__]
