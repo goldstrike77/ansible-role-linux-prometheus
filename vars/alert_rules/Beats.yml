@@ -1,0 +1,10 @@
+---
+prometheus_beats_alert_rules:
+# Beats
+  - alert: Beats_Unreachable
+    expr: "auditbeat_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Service has been unreachable."

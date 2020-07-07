@@ -203,6 +203,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_version`: Specify the Grafana version.
 * `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
 * `prometheus_grafana_admin_password`: The password of the default Grafana admin.
+* `prometheus_grafana_https`: A boolean value, whether Encrypting HTTP client communications.
 * `prometheus_grafana_port`: Grafana instance listen port.
 * `prometheus_grafana_proxy`: Whether running behind a HaProxy.
 * `prometheus_grafana_redis_path`: Specify the Redis data directory.
@@ -294,6 +295,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### Service Mesh
 * `environments`: Define the service environment.
+* `datacenter`: Define the DataCenter.
+* `domain`: Define the Domain.
 * `tags`: Define the service custom label.
 * `exporter_is_install`: Whether to install prometheus exporter.
 * `consul_public_register`: Whether register a exporter service with public consul client.
@@ -366,11 +369,12 @@ trickster_port:
 prometheus_grafana_path: '/data'
 prometheus_grafana_version: '6.5'
 prometheus_grafana_admin_user: 'admin'
-prometheus_grafana_admin_password: 'password'
+prometheus_grafana_admin_password: 'changeme'
+prometheus_grafana_https: true
 prometheus_grafana_port: '3000'
 prometheus_grafana_proxy: false
 prometheus_grafana_redis_path: '{{ prometheus_data_path }}'
-prometheus_grafana_redis_requirepass: 'password'
+prometheus_grafana_redis_requirepass: 'changeme'
 prometheus_grafana_redis_maxmemory: '1'
 prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}'
 prometheus_grafana_redis_port: '6379'
@@ -408,7 +412,7 @@ alertmanager_arg:
   group_wait: '60s'
   group_interval: '60s'
   repeat_interval: '2h'
-  smtp_auth_password: 'password'
+  smtp_auth_password: 'changeme'
   smtp_auth_username: 'user'
   smtp_from: 'do-not-reply@somebody.com'
   smtp_require_tls: false
@@ -455,12 +459,14 @@ trickster_arg:
   ulimit_nproc: '262144'
   version: '1.0.1'
 environments: 'Development'
+datacenter: 'dc01'
+domain: 'local'
 tags:
   subscription: 'default'
   owner: 'nobody'
   department: 'Infrastructure'
   organization: 'The Company'
-  region: 'IDC01'
+  region: 'China'
 exporter_is_install: false
 consul_public_register: false
 consul_public_exporter_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'

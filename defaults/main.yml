@@ -49,6 +49,7 @@ prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data
 prometheus_grafana_version: '6.5' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
+prometheus_grafana_https: true # A boolean value, whether Encrypting HTTP client communications.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
 prometheus_grafana_proxy: false # Whether running behind a HaProxy.
 prometheus_grafana_redis_path: '{{ prometheus_data_path }}' # Specify the Redis data directory.
@@ -149,6 +150,7 @@ alertmanager_arg:
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
   - 'Alertmanager'
+  - 'Beats'
   - 'Blackbox'
   - 'Consul'
   - 'DellHW'
@@ -233,12 +235,14 @@ consul_template_arg:
 
 # Service Mesh #
 environments: 'Development' # Define the service environment.
+datacenter: 'dc01'
+domain: 'local'
 #tags: # Define the service custom label.
 #  subscription: 'default'
 #  owner: 'nobody'
 #  department: 'Infrastructure'
 #  organization: 'The Company'
-#  region: 'IDC01'
+#  region: 'China'
 exporter_is_install: false # Whether to install prometheus exporter.
 consul_public_register: false # Whether register a exporter service with public consul client.
 consul_public_exporter_token: '00000000-0000-0000-0000-000000000000' # Public Consul client ACL token.
