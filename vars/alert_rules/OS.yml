@@ -31,14 +31,14 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
   - alert: node_FS_Usage
-    expr: '(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)'
+    expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)) * 100'
     for: 10m
     labels:
       severity: warning
     annotations:
       description: 'Filesystem has less than 20% with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_FS_Usage
-    expr: '(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)'
+    expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)) * 100'
     for: 10m
     labels:
       severity: critical
