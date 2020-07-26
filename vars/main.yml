@@ -97,6 +97,7 @@ unauthenticate_target_services:
   - 'thanos-sidecar'
   - 'thanos-store'
   - 'trickster'
+  - 'vault'
   - 'vmware'
   - 'wmi'
   - 'zookeeper'
