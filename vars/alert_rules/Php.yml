@@ -1,0 +1,10 @@
+---
+prometheus_php_alert_rules:
+# Php
+  - alert: php_Unreachable
+    expr: "phpfpm_up == 0"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Endpoint has been unreachable."

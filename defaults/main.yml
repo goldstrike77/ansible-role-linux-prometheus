@@ -168,6 +168,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Netdata'
   - 'NGinx'
   - 'OS'
+  - 'Php'
   - 'PostgreSQL'
   - 'Prometheus'
   - 'RabbitMQ'

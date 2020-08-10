@@ -99,9 +99,9 @@ prometheus_kubernetes_alert_rules:
 
   - alert: KubeNodeNotReady
     annotations:
-      description: 'Node has been unready for more than an hour.'
+      description: 'Node has been unready.'
     expr: 'kube_node_status_condition{condition="Ready",status="true"} == 0'
-    for: 30m
+    for: 10m
     labels:
       severity: critical
   
