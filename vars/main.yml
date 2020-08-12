@@ -34,7 +34,7 @@ consul_soft_url: 'http://releases.hashicorp.com'
 
 thanos_soft_url: 'http://github.com/improbable-eng/thanos/releases/download'
 
-trickster_soft_url: 'http://github.com/Comcast/trickster/releases/download'
+trickster_soft_url: 'http://github.com/tricksterproxy/trickster/releases/download'
 
 thanos_base_components:
   - 'sidecar'

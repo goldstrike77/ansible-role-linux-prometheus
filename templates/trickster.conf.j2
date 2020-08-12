@@ -2,6 +2,7 @@
 instance_id = 1
 
 [frontend]
+listen_address = '{{ ansible_default_ipv4.address }}'
 listen_port = {{ trickster_port.proxy_server }}
 
 [caches]
@@ -31,6 +32,7 @@ listen_port = {{ trickster_port.proxy_server }}
     backfill_tolerance_secs = 0
 
 [metrics]
+listen_address = '{{ ansible_default_ipv4.address }}'
 listen_port = {{ trickster_port.metrics }}
 
 [logging]

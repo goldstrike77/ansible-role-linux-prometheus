@@ -21,12 +21,13 @@ ExecStart=/usr/bin/alertmanager \
           --web.listen-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }} \
           --config.file={{ prometheus_conf_path }}/alertmanager.yml \
           --storage.path={{ prometheus_data_path }}/alertmanager \
-          --cluster.probe-interval=3s \
-          --cluster.reconnect-interval=3s \
+          --cluster.reconnect-interval=5s \
           --cluster.listen-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.cluster }} \
           --cluster.advertise-address={{ ansible_default_ipv4.address }}:{{ prometheus_port.alertmanager }} \
-{% if prometheus_server[0] not in ansible_default_ipv4.address %}
-          --cluster.peer={{ prometheus_server[0] }}:{{ prometheus_port.cluster }} \
+{% if prometheus_server | length > 1 %}
+{% for peer in prometheus_server %}
+          --cluster.peer={{ peer }}:{{ prometheus_port.cluster }} \
+{% endfor %}
 {% endif %}
           $ALERTMANAGER_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
