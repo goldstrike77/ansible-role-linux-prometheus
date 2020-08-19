@@ -1,0 +1,10 @@
+---
+prometheus_openldap_alert_rules:
+# OpenLDAP
+  - alert: OpenLDAP_Failed
+    expr: 'rate(openldap_scrape{result="fail"}[5m]) > 0'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "OpenLDAP service scrapes failing."

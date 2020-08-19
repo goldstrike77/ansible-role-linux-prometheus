@@ -167,6 +167,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'MySQL'
   - 'Netdata'
   - 'NGinx'
+  - 'OpenLDAP'
   - 'OS'
   - 'Php'
   - 'PostgreSQL'
