@@ -30,7 +30,7 @@ prometheus_dellhw_alert_rules:
     annotations:
       description: "System Board Memory has been failured."
   - alert: Power_Supplies
-    expr: 'dell_hw_chassis_status{component="Power_Supplies"} != 0'
+    expr: 'dell_hw_chassis_status{component="Power_Supplies"} != 0 or dell_hw_ps_status != 0'
     for: 5m
     labels:
       severity: critical
