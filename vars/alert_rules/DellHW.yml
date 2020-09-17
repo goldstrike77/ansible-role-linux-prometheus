@@ -2,96 +2,96 @@
 prometheus_dellhw_alert_rules:
 # Dell Hardware
   - alert: Batteries
-    expr: 'dell_hw_chassis_status{component="Batteries"} != 0'
+    expr: 'dell_hw_chassis_status{component="Batteries"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "System Board CMOS Battery has been failured."
+      description: "Board CMOS Battery has potentially failed."
   - alert: Cooling
-    expr: 'dell_hw_chassis_status{component="Fans"} != 0'
+    expr: 'dell_hw_chassis_status{component="Fans"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "System Cooling component has been failured."
+      description: "Cooling component has potentially failed."
   - alert: Intrusion
-    expr: 'dell_hw_chassis_status{component="Intrusion"} != 0'
+    expr: 'dell_hw_chassis_status{component="Intrusion"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "System Board Intrusion has been failured."
+      description: "Board Intrusion has potentially failed."
   - alert: Memory
-    expr: 'dell_hw_chassis_status{component="Memory"} != 0'
+    expr: 'dell_hw_chassis_status{component="Memory"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "System Board Memory has been failured."
+      description: "Board Memory has potentially failed."
   - alert: Power_Supplies
-    expr: 'dell_hw_chassis_status{component="Power_Supplies"} != 0 or dell_hw_ps_status != 0'
+    expr: 'dell_hw_chassis_status{component="Power_Supplies"} == 1 or dell_hw_ps_status == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Power Supplies has been failured."
+      description: "Power Supplies has potentially failed."
   - alert: Processors
-    expr: 'dell_hw_chassis_status{component="Processors"} != 0'
+    expr: 'dell_hw_chassis_status{component="Processors"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "CPU/GPU has been failured."
+      description: "CPU/GPU has potentially failed."
   - alert: Temperatures
-    expr: 'dell_hw_chassis_status{component="Temperatures"} != 0'
+    expr: 'dell_hw_chassis_status{component="Temperatures"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Temperature Probes has been failured."
+      description: "Temperature Probes has potentially failed."
   - alert: Voltages
-    expr: 'dell_hw_chassis_status{component="Voltages"} != 0'
+    expr: 'dell_hw_chassis_status{component="Voltages"} == 1'
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "System Board Voltages has been failured."
+      description: "Board Voltages has potentially failed."
   - alert: Storage_battery
-    expr: "dell_hw_storage_battery_status != 0"
+    expr: "dell_hw_storage_battery_status == 1"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Storage Controller Battery has been failured."
+      description: "Storage Controller Battery has potentially failed."
   - alert: Storage_Controller
-    expr: "dell_hw_storage_controller_status != 0"
+    expr: "dell_hw_storage_controller_status == 1"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Storage Controller has been failured."
+      description: "Storage Controller has potentially failed."
   - alert: Storage_Enclosure
-    expr: "dell_hw_storage_enclosure_status != 0"
+    expr: "dell_hw_storage_enclosure_status == 1"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Storage Enclosure has been failured."
+      description: "Storage Enclosure has potentially failed."
   - alert: Storage_Pdisk
-    expr: "dell_hw_storage_pdisk_status != 0"
+    expr: "dell_hw_storage_pdisk_status == 1"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Physical disks has been failured."
+      description: "Physical disks has potentially failed."
   - alert: Storage_Vdisk
-    expr: "dell_hw_storage_vdisk_status != 0"
+    expr: "dell_hw_storage_vdisk_status == 1"
     for: 5m
     labels:
       severity: critical
     annotations:
-      description: "Virtual disks has been failured."
+      description: "Virtual disks has potentially failed."
   - alert: Inlet_Temperature
     expr: 'dell_hw_chassis_temps_reading{component="System_Board_Inlet_Temp"} >= dell_hw_chassis_temps_max_warning{component="System_Board_Inlet_Temp"}'
     for: 5m
@@ -100,9 +100,100 @@ prometheus_dellhw_alert_rules:
     annotations:
       description: "Temperatures has exceeded the threshold."
 #  - alert: Ethernet
-#    expr: "dell_hw_nic_status != 0"
+#    expr: "dell_hw_nic_status == 1"
 #    for: 5m
 #    labels:
 #      severity: critical
 #    annotations:
-#      description: "Connection status of network cards has been failured."
+#      description: "Connection status of network cards has potentially failed."
+  - alert: Batteries
+    expr: 'dell_hw_chassis_status{component="Batteries"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Board CMOS Battery is not okay."
+  - alert: Cooling
+    expr: 'dell_hw_chassis_status{component="Fans"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Cooling component is not okay."
+  - alert: Intrusion
+    expr: 'dell_hw_chassis_status{component="Intrusion"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Board Intrusion is not okay."
+  - alert: Memory
+    expr: 'dell_hw_chassis_status{component="Memory"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Board Memory is not okay."
+  - alert: Power_Supplies
+    expr: 'dell_hw_chassis_status{component="Power_Supplies"} == 2 or dell_hw_ps_status == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Power Supplies is not okay."
+  - alert: Processors
+    expr: 'dell_hw_chassis_status{component="Processors"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "CPU/GPU is not okay."
+  - alert: Temperatures
+    expr: 'dell_hw_chassis_status{component="Temperatures"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Temperature Probes is not okay."
+  - alert: Voltages
+    expr: 'dell_hw_chassis_status{component="Voltages"} == 2'
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Board Voltages is not okay."
+  - alert: Storage_battery
+    expr: "dell_hw_storage_battery_status == 2"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Storage Controller Battery is not okay."
+  - alert: Storage_Controller
+    expr: "dell_hw_storage_controller_status == 2"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Storage Controller is not okay."
+  - alert: Storage_Enclosure
+    expr: "dell_hw_storage_enclosure_status == 2"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Storage Enclosure is not okay."
+  - alert: Storage_Pdisk
+    expr: "dell_hw_storage_pdisk_status == 2"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Physical disks is not okay."
+  - alert: Storage_Vdisk
+    expr: "dell_hw_storage_vdisk_status == 2"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Virtual disks is not okay."
