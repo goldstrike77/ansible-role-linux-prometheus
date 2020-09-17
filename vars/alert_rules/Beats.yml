@@ -2,7 +2,7 @@
 prometheus_beats_alert_rules:
 # Beats
   - alert: Beats_Unreachable
-    expr: "auditbeat_up == 0"
+    expr: "( auditbeat_up == 0 ) or ( filebeat_up == 0 )"
     for: 5m
     labels:
       severity: critical
