@@ -70,6 +70,7 @@ unauthenticate_target_services:
   - 'gitlab'
   - 'grafana'
   - 'haproxy'
+  - 'ingress-nginx'
   - 'jmx'
   - 'kafka'
   - 'keepalived'

@@ -39,12 +39,12 @@
 - name: Restart the thanos base components service
   shell: echo ''
   notify: 'Restart thanos base components service'
-  when: thanos_upgrade is changed or thanos_base_systemd is changed or thanos_base_default is changed or thanos_bucket is changed
+  when: thanos_base_systemd is changed or thanos_base_default is changed or thanos_bucket is changed
 
 - name: Restart thanos optional components service
   shell: echo ''
   notify: 'Restart thanos optional components service'
-  when: thanos_upgrade is changed or thanos_opti_systemd is changed or thanos_opti_default is changed or thanos_bucket is changed
+  when: thanos_opti_systemd is changed or thanos_opti_default is changed or thanos_bucket is changed
 
 - name: Restart thanos stand alone components service
   shell: echo ''

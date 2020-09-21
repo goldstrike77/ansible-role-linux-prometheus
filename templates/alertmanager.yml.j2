@@ -18,13 +18,17 @@ route:
   repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
   receiver: team-infra-mails
   routes:
+{% if alertmanager_arg.wechat_api_corpid is defined %}
     - match:
         severity: critical
       receiver: team-infra-wechat
       continue: true
+{% endif %}
+{% if alertmanager_arg.webhook_url is defined %}
     - match:
       receiver: team-infra-alerta
       continue: true
+{% endif %}
 
 inhibit_rules:
 - source_match:
@@ -34,10 +38,11 @@ inhibit_rules:
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
-  - name: "team-infra-alerta"
-    webhook_configs:
+  - name: 'team-infra-mails'
+    email_configs:
       - send_resolved: true
-        url: '{{ alertmanager_arg.webhook_url }}'
+        to: '{{ alertmanager_arg.mail_to_user }}'
+{% if alertmanager_arg.wechat_api_corpid is defined %}
   - name: "team-infra-wechat"
     wechat_configs:
       - send_resolved: true
@@ -45,7 +50,10 @@ receivers:
         agent_id: '{{ alertmanager_arg.wechat_api_agentid }}'
         corp_id: '{{ alertmanager_arg.wechat_api_corpid }}'
         api_secret: '{{ alertmanager_arg.wechat_api_secret }}'
-  - name: 'team-infra-mails'
-    email_configs:
+{% endif %}
+{% if alertmanager_arg.webhook_url is defined %}
+  - name: "team-infra-alerta"
+    webhook_configs:
       - send_resolved: true
-        to: '{{ alertmanager_arg.mail_to_user }}'
+        url: '{{ alertmanager_arg.webhook_url }}'
+{% endif %}

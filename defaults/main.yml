@@ -46,7 +46,7 @@ trickster_port:
 
 # Grafana parameters #
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
-prometheus_grafana_version: '6.5' # Specify the Grafana version.
+prometheus_grafana_version: '6.7' # Specify the Grafana version.
 prometheus_grafana_admin_user: 'admin' # The name of the default Grafana admin user.
 prometheus_grafana_admin_password: 'changeme' # The password of the default Grafana admin.
 prometheus_grafana_https: true # A boolean value, whether Encrypting HTTP client communications.
@@ -140,12 +140,12 @@ alertmanager_arg:
   smtp_from: 'do-not-reply@somebody.com'
   smtp_require_tls: false
   smtp_smarthost: '127.0.0.1:25'
-  wechat_api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
-  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
-  wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
-  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
-  wechat_to_party: '1'
-  webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+#  wechat_api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
+#  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
+#  wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
+#  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+#  wechat_to_party: '1'
+#  webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.

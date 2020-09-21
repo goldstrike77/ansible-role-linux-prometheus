@@ -367,7 +367,7 @@ trickster_port:
   proxy_server: '19090'
   metrics: '8082'
 prometheus_grafana_path: '/data'
-prometheus_grafana_version: '6.5'
+prometheus_grafana_version: '6.7'
 prometheus_grafana_admin_user: 'admin'
 prometheus_grafana_admin_password: 'changeme'
 prometheus_grafana_https: true
