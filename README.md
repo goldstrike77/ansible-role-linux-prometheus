@@ -442,8 +442,8 @@ thanos_obj_arg:
   retention: '365'
   type: 'S3'
   bucket: 'public'
-  endpoint: 'STORAGE-Production-thanos-minio.service.dc01.local:9001'
-  insecure: true
+  endpoint: 'storage-production-thanos-minio.service.dc01.local:9001'
+  insecure: false
   signature_version2: false
   access_key: 'QTNTQZZP1NOBNCL5LPRX'
   secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'

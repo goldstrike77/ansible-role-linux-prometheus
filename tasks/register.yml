@@ -239,34 +239,6 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos bucket exporter service with an http health check
-  uri:
-    url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
-    method: 'PUT'
-    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_thanos-bucket_exporter","name":"thanos-bucket_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.bucket_http }},"meta":{"metrics_path":"/metrics","instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[-1] | upper }}","datacenter": "{{ datacenter | lower }}","domain":"{{ domain | lower }}","environment":"{{ environments | upper }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.bucket_http }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
-    body_format: 'json'
-    status_code: '200'
-    headers:
-      X-Consul-Token: '{{ consul_public_exporter_token }}'
-      X-Requested-By: '{{ ansible_default_ipv4.address }}'
-      cache-control: 'no-cache'
-    validate_certs: 'no'
-  environment:
-    no_proxy: '{{ item.client }}'
-  loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when:
-    - item.status == 405
-    - thanos_is_install | bool
-    - thanos_bucket_is_used | bool
-    - prometheus_server[0] in ansible_default_ipv4.address
-  register: register_status
-  until: register_status.status == 200
-  retries: 2
-  delay: 2
-  no_log: true
-  changed_when: false
-  failed_when: false
-
 - name: Register thanos compact exporter service with an http health check
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'

@@ -6,3 +6,7 @@ config:
   signature_version2: {{ thanos_obj_arg.signature_version2 | bool | to_json }}
   access_key: {{ thanos_obj_arg.access_key }}
   secret_key: {{ thanos_obj_arg.secret_key }}
+  http_config:
+    idle_conn_timeout: 1m30s
+    response_header_timeout: 2m
+    insecure_skip_verify: true

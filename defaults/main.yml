@@ -197,8 +197,8 @@ thanos_obj_arg:
   retention: '365' # Days to retain samples in bucket.
   type: 'S3'
   bucket: 'thanos'
-  endpoint: 'Storage-Production-thanos-minio.service.dc01.local:9001'
-  insecure: true
+  endpoint: 'storage-production-thanos-minio.service.dc01.local:9001'
+  insecure: false
   signature_version2: false
   access_key: '0GTXRMXD4FDFWURPABCG'
   secret_key: 'ODaHlToJWUkbzWI1TNkbZX43SiFPLRLoZeASP0Z8'
