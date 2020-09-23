@@ -1,0 +1,32 @@
+# -*- mode: conf -*-
+
+[Unit]
+Description=Thanos Query Frontend service.
+Documentation=https://thanos.io/tip/thanos/
+After=network.target
+
+[Service]
+{% if ansible_processor_vcpus > 1 %}
+Environment=GOMAXPROCS={{ (ansible_processor_vcpus * 0.5 + 1)|int }}
+{% else %}
+Environment=GOMAXPROCS=1
+{% endif %}
+Type=simple
+User=prometheus
+Group=prometheus
+LimitNOFILE={{ thanos_arg.ulimit_nofile }}
+LimitNPROC={{ thanos_arg.ulimit_nproc }}
+LimitCORE={{ thanos_arg.ulimit_core }}
+LimitMEMLOCK={{ thanos_arg.ulimit_memlock }}
+EnvironmentFile=-/etc/default/thanos-query-frontend
+ExecStart=/usr/bin/thanos query-frontend \
+          $THANOS_QUERY_FRONTEND_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=thanos-query-frontend
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target

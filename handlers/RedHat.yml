@@ -51,10 +51,3 @@
     state: 'restarted'
     daemon_reload: 'yes'
   loop: '{{ thanos_stand_components }}'
-
-- name: Restart trickster service
-  systemd:
-    name: 'trickster.service'
-    enabled: 'yes'
-    state: 'restarted'
-    daemon_reload: 'yes'

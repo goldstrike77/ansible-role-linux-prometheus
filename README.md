@@ -97,10 +97,10 @@ Even a single Prometheus server provides enough scalability, But at a certain cl
 ## Components
 ### Exporters
 An exporter is a piece of software that you deploy right beside the application you want to obtain metrics from. It takes in requests from Prometheus, gathers the required data from the application, transforms them into the correct format, and finally returns them in a response to Prometheus.
-### Trickster
-Trickster's proxy inspects the time range of a client query to determine what data points are already cached, and requests from Prometheus only the data points still needed to service the client request. This results in dramatically faster chart load times for everyone.
 ### Thanos Query
 The Query component is stateless and horizontally scalable and can be deployed with any number of replicas. Once connected to the Sidecars, it automatically detects which Prometheus servers need to be contacted for a given PromQL query. Also capable of deduplicating data collected from Prometheus distributed.
+### Thanos Query Frontend
+The thanos query frontend component implements a service that can be put in front of Thanos Queriers to improve the read path.
 ### Thanos Sidecar
 Sidecar is to backup Prometheus data into an Object Storage bucket, and giving other Thanos components access to the Prometheus instance the Sidecar is attached to.
 ### Thanos Store (optional)
@@ -164,9 +164,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### General parameters
 * `thanos_is_install`: A boolean value, whether install the Thanos.
-* `trickster_is_install`: A boolean value, whether install the Trickster.
 * `thanos_bucket_is_used`: A boolean value, whether use object storage.
-* `prometheus_conf_path`: Specify the Prometheus data directory.
 * `prometheus_data_path`:  Specify the Prometheus configure directory.
 
 ##### Consul SD configurations
@@ -185,7 +183,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_port.alertmanager`: alertmanager instance listen port.
 * `prometheus_port.cluster`:  alertmanager cluster listen port.
 * `prometheus_port.prometheus`: Prometheus instance listen port.
-* `thanos_port.bucket_http`: Port for bucket HTTP endpoints.
 * `thanos_port.compact_http`: Port for compact HTTP endpoints.
 * `thanos_port.query_grpc`: Port for query gRPC endpoints.
 * `thanos_port.query_http`: Port for query HTTP endpoints.
@@ -193,8 +190,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_port.sidecar_http`: Port for sidecar  HTTP endpoints.
 * `thanos_port.store_grpc`: Port for store gRPC endpoints.
 * `thanos_port.store_http`: Port for store HTTP endpoints.
-* `trickster_port.proxy_server`: Defines the port on which Trickster's Proxy server listens.
-* `trickster_port.metrics`: Defines the port that Trickster's metrics server listens on at /metrics.
 
 ##### Grafana parameters
 * `prometheus_grafana_path`: Specify the Grafana data directory.
@@ -279,18 +274,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_obj_arg.access_key`: AccessKeyID.
 * `thanos_obj_arg.secret_key`: SecretAccessKey.
 
-##### Trickster System Variables
-* `trickster_arg.cache_type`: Defines what kind of cache Trickster uses.
-* `trickster_arg.fast_forward_disable`: Turn off the 'fast forward' feature for any requests proxied.
-* `trickster_arg.max_size_bytes`: How large the cache can grow in bytes before the Index evicts least-recently-accessed items.
-* `trickster_arg.timeseries_retention_factor`: Defines the maximum number of recent timestamps to cache for a given query.
-* `trickster_arg.record_ttl_secs`: Defines the relative expiration of cached queries.
-* `trickster_arg.ulimit_core`: The number of coredump launched by systemd.
-* `trickster_arg.ulimit_memlock`: The number of memory lock launched by systemd.
-* `trickster_arg.ulimit_nofile`: The number of files launched by systemd.
-* `trickster_arg.ulimit_nproc`: The number of processes launched by systemd.
-* `trickster_arg.version`: Specify the Trickster version.
-
 ##### Service Mesh
 * `environments`: Define the service environment.
 * `datacenter`: Define the DataCenter.
@@ -325,7 +308,6 @@ See tests/inventory for an example, all host must belong to one child group.
     
     [Monitor:vars]
     thanos_is_install=true
-    trickster_is_install=true
     prometheus_consul_server='consul.service.dc01.local:8500'
     prometheus_consul_token='7471828c-d50a-4b25-b6a5-cccc02a03xxx'
 
@@ -333,10 +315,8 @@ See tests/inventory for an example, all host must belong to one child group.
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
 ```yaml
-prometheus_conf_path: '/etc/prometheus'
 prometheus_data_path: '/data'
 thanos_is_install: true
-trickster_is_install: true
 thanos_bucket_is_used: true
 prometheus_consul_server: 'consul.service.dc01.local:8500'
 prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
@@ -353,7 +333,6 @@ prometheus_port:
   cluster: '9094'
   prometheus: '9090'
 thanos_port:
-  bucket_http: '19195'
   compact_http: '19194'
   query_grpc: '19092'
   query_http: '19192'
@@ -361,9 +340,7 @@ thanos_port:
   sidecar_http: '19191'
   store_grpc: '19093'
   store_http: '19193'
-trickster_port:
-  proxy_server: '19090'
-  metrics: '8082'
+  query_frontend: '19090'
 prometheus_grafana_path: '/data'
 prometheus_grafana_version: '6.7'
 prometheus_grafana_admin_user: 'admin'
@@ -445,17 +422,6 @@ thanos_obj_arg:
   signature_version2: false
   access_key: 'QTNTQZZP1NOBNCL5LPRX'
   secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
-trickster_arg:
-  cache_type: 'memory'
-  fast_forward_disable: false
-  timeseries_retention_factor: '1024'
-  max_size_bytes: '536870912'
-  record_ttl_secs: '43200'
-  ulimit_core: 'infinity'
-  ulimit_memlock: 'infinity'
-  ulimit_nofile: '262144'
-  ulimit_nproc: '262144'
-  version: '1.0.1'
 environments: 'Development'
 datacenter: 'dc01'
 domain: 'local'

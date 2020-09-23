@@ -51,15 +51,6 @@
   notify: 'Restart thanos stand alone components service'
   when: (thanos_stand_systemd is changed or thanos_stand_default is changed or thanos_bucket is changed) and prometheus_server[0] in ansible_default_ipv4.address
 
-- name: Include trickster tasks
-  include: 'trickster.yml'
-  when: trickster_is_install | bool
-
-- name: Restart trickster service
-  shell: echo ''
-  notify: 'Restart trickster service'
-  when: trickster_update is changed or trickster_config is changed or trickster_systemd is changed
-
 - name: Force the handler to run immediately
   meta: flush_handlers
 

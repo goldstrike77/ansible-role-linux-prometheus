@@ -267,11 +267,11 @@
   changed_when: false
   failed_when: false
 
-- name: Register trickster exporter service with an http health check
+- name: Register thanos query frontend exporter service with an http health check
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
-    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_trickster_exporter","name":"trickster_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ trickster_port.metrics }},"meta":{"metrics_path":"/metrics","instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[-1] | upper }}","datacenter": "{{ datacenter | lower }}","domain":"{{ domain | lower }}","environment":"{{ environments | upper }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ trickster_port.metrics }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
+    body: '{"tags":["prometheus","exporter"],"ID":"{{ inventory_hostname | upper }}_thanos-query-frontend_exporter","name":"thanos-query-frontend_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ thanos_port.query_frontend }},"meta":{"metrics_path":"/metrics","instance":"{{ inventory_hostname | upper }}","group":"{{ group_names[-1] | upper }}","datacenter": "{{ datacenter | lower }}","domain":"{{ domain | lower }}","environment":"{{ environments | upper }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}},"checks":[{"http":"http://{{ ansible_default_ipv4.address }}:{{ thanos_port.query_frontend }}/metrics","interval":"60s","tls_skip_verify":true,"method":"HEAD","timeout":"10s"}]}'
     body_format: 'json'
     status_code: '200'
     headers:
@@ -284,7 +284,7 @@
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
   when: 
     - item.status == 405
-    - trickster_is_install | bool
+    - thanos_is_install | bool
   register: register_status
   until: register_status.status == 200
   retries: 2

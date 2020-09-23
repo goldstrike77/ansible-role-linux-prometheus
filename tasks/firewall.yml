@@ -12,7 +12,6 @@
   with_dict:
     - '{{ prometheus_port }}'
     - '{{ thanos_port }}'
-    - '{{ trickster_port }}'
   when:
     - services_state.ansible_facts.services["firewalld.service"] is defined
     - services_state.ansible_facts.services["firewalld.service"].state == 'running'

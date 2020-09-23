@@ -3,8 +3,6 @@
 prometheus_is_install: false
 thanos_is_install: false
 thanos_bucket_is_used: false
-trickster_is_install: false
-prometheus_conf_path: '/etc/prometheus'
 prometheus_data_path: '/data'
 
 # Consul SD configurations #
@@ -32,7 +30,6 @@ prometheus_port:
   snmp: '9116'
   smokeping: '9374'
 thanos_port:
-  bucket_http: '19195'
   compact_http: '19194'
   query_grpc: '19092'
   query_http: '19192'
@@ -40,9 +37,7 @@ thanos_port:
   sidecar_http: '19191'
   store_grpc: '19093'
   store_http: '19193'
-trickster_port:
-  proxy_server: '19090'
-  metrics: '8082'
+  query_frontend: '19090'
 
 # Grafana parameters #
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
@@ -202,19 +197,6 @@ thanos_obj_arg:
   signature_version2: false
   access_key: '0GTXRMXD4FDFWURPABCG'
   secret_key: 'ODaHlToJWUkbzWI1TNkbZX43SiFPLRLoZeASP0Z8'
-
-# Trickster System Variables #
-trickster_arg:
-  cache_type: 'memory' # Defines what kind of cache Trickster uses
-  max_size_bytes: '536870912' # How large the cache can grow in bytes before the Index evicts least-recently-accessed items.
-  fast_forward_disable: false # Turn off the 'fast forward' feature for any requests proxied
-  timeseries_retention_factor: '1024' # Defines the maximum number of recent timestamps to cache for a given query.
-  record_ttl_secs: '43200' # Defines the relative expiration of cached queries in seconds
-  ulimit_core: 'infinity' # The number of coredump launched by systemd
-  ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
-  ulimit_nofile: '262144' # The number of files launched by systemd
-  ulimit_nproc: '262144' # The number of processes launched by systemd
-  version: '1.0.5'
 
 # Consul templatee Variables #
 consul_template_version: '0.20.0'

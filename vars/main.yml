@@ -1,4 +1,6 @@
 ---
+prometheus_conf_path: '/etc/prometheus'
+
 prometheus_server: "\
   {% set _prometheus_server = [] %}\
   {% for host in groups[group_names[-1]] %}\
@@ -34,11 +36,10 @@ consul_soft_url: 'http://releases.hashicorp.com'
 
 thanos_soft_url: 'http://github.com/improbable-eng/thanos/releases/download'
 
-trickster_soft_url: 'http://github.com/tricksterproxy/trickster/releases/download'
-
 thanos_base_components:
   - 'sidecar'
   - 'query'
+  - 'query-frontend'
 
 thanos_opti_components:
   - 'store'
@@ -94,6 +95,7 @@ unauthenticate_target_services:
   - 'statsd'
   - 'thanos-compact'
   - 'thanos-query'
+  - 'thanos-query-frontend'
   - 'thanos-sidecar'
   - 'thanos-store'
   - 'trickster'
