@@ -1,9 +1,11 @@
 # -*- mode: conf -*-
 
 [Unit]
-Description=Smokeping-style prober for Prometheus
-Documentation=https://github.com/SuperQ/smokeping_prober
+
+Description=Prometheus push acceptor for ephemeral and batch jobs.
+Documentation=https://github.com/prometheus/pushgateway
 After=network.target
+
 
 [Service]
 {% if ansible_processor_vcpus > 1 %}
@@ -11,15 +13,16 @@ Environment=GOMAXPROCS={{ (ansible_processor_vcpus * 0.5 + 1)|int }}
 {% else %}
 Environment=GOMAXPROCS=1
 {% endif %}
-EnvironmentFile=-/etc/default/smokeping_prober
+EnvironmentFile=-/etc/default/pushgateway
 User=prometheus
 LimitNOFILE={{ prometheus_arg.ulimit_nofile }}
 LimitNPROC={{ prometheus_arg.ulimit_nproc }}
 LimitCORE={{ prometheus_arg.ulimit_core }}
 LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
-ExecStart=/usr/bin/smokeping_prober $SMOKEPING_PROBER_OPTS
+ExecStart=/usr/bin/pushgateway $PUSHGATEWAY_OPTS
 Restart=on-failure
 RestartSec=30s
 
 [Install]
+
 WantedBy=multi-user.target

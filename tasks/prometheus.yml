@@ -30,6 +30,7 @@
     mode: '0755'
   loop:
     - '{{ prometheus_data_path }}/prometheus'
+    - '{{ prometheus_data_path }}/pushgateway'
     - '{{ prometheus_data_path }}/alertmanager'
 
 - name: Prometheus configure file transfer

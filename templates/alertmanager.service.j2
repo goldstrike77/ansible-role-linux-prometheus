@@ -31,7 +31,8 @@ ExecStart=/usr/bin/alertmanager \
 {% endif %}
           $ALERTMANAGER_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
-Restart=always
+Restart=on-failure
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target

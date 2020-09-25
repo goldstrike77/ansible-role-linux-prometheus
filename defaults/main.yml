@@ -27,6 +27,7 @@ prometheus_port:
   blackbox: '9115'
   cluster: '9094'
   prometheus: '9090'
+  pushgateway: '9091'
   snmp: '9116'
   smokeping: '9374'
 thanos_port:

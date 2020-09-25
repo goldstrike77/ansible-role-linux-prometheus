@@ -19,6 +19,7 @@ LimitCORE={{ prometheus_arg.ulimit_core }}
 LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
 ExecStart=/usr/bin/blackbox_exporter $BLACKBOX_EXPORTER_OPTS
 Restart=on-failure
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target

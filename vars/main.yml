@@ -22,15 +22,18 @@ thanos_server: "\
   {{ _thanos_server }}"
 
 prometheus_conf_files:
-  - { src: 'prometheus.default.j2',   dest: '/etc/default/prometheus' }
-  - { src: 'prometheus.yml.j2',       dest: '{{ prometheus_conf_path }}/prometheus.yml' }
-  - { src: 'alertmanager.yml.j2',     dest: '{{ prometheus_conf_path }}/alertmanager.yml' }
   - { src: 'alertmanager.service.j2', dest: '/lib/systemd/system/alertmanager.service' }
-  - { src: 'prometheus.service.j2',   dest: '/lib/systemd/system/prometheus.service' } 
+  - { src: 'alertmanager.yml.j2',     dest: '{{ prometheus_conf_path }}/alertmanager.yml' }
+  - { src: 'prometheus.default.j2',   dest: '/etc/default/prometheus' }
+  - { src: 'prometheus.service.j2',   dest: '/lib/systemd/system/prometheus.service' }
+  - { src: 'prometheus.yml.j2',       dest: '{{ prometheus_conf_path }}/prometheus.yml' }
+  - { src: 'pushgateway.default.j2',  dest: '/etc/default/pushgateway' }
+  - { src: 'pushgateway.service.j2',  dest: '/lib/systemd/system/pushgateway.service' }
 
 prometheus_service:
-  - 'alertmanager.service'
-  - 'prometheus.service'
+  - 'alertmanager'
+  - 'pushgateway'
+  - 'prometheus'
 
 consul_soft_url: 'http://releases.hashicorp.com'
 
@@ -85,6 +88,7 @@ unauthenticate_target_services:
   - 'openldap'
   - 'php-fpm'
   - 'postgres'
+  - 'pushgateway'
   - 'prometheus'
   - 'rabbitmq'
   - 'redis-sentinel'

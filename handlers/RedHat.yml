@@ -1,7 +1,7 @@
 ---
 - name: Restart prometheus service
   systemd:
-    name: '{{ item }}'
+    name: '{{ item }}.service'
     enabled: 'yes'
     state: 'restarted'
     daemon_reload: 'yes'
@@ -17,7 +17,7 @@
 
 - name: Reload prometheus service
   systemd:
-    name: '{{ item }}'
+    name: '{{ item }}.service'
     state: 'reloaded'
   loop: '{{ prometheus_service }}'
 

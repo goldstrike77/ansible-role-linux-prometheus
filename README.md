@@ -330,8 +330,12 @@ prometheus_grafana_redis_dept: false
 prometheus_grafana_ngx_dept: true
 prometheus_port:
   alertmanager: '9093'
+  blackbox: '9115'
   cluster: '9094'
   prometheus: '9090'
+  pushgateway: '9091'
+  snmp: '9116'
+  smokeping: '9374'
 thanos_port:
   compact_http: '19194'
   query_grpc: '19092'

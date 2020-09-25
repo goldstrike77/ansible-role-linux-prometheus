@@ -22,7 +22,8 @@ ExecStart=/usr/bin/prometheus \
           --web.console.templates=/usr/share/prometheus/consoles \
           $PROMETHEUS_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
-Restart=always
+Restart=on-failure
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target
