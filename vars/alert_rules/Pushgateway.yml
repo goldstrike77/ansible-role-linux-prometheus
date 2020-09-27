@@ -1,0 +1,10 @@
+---
+prometheus_pushgateway_alert_rules:
+# Pushgateway
+  - alert: push_time_delay
+    expr: "time() - push_time_seconds > 108000"
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Ephemeral and batch jobs expose delayed."
