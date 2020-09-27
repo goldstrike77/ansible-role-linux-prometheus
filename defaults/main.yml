@@ -168,6 +168,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'Php'
   - 'PostgreSQL'
   - 'Prometheus'
+  - 'Pushgateway'
   - 'RabbitMQ'
   - 'Redis'
   - 'Smokeping'
