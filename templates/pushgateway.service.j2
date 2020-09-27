@@ -20,6 +20,7 @@ LimitNPROC={{ prometheus_arg.ulimit_nproc }}
 LimitCORE={{ prometheus_arg.ulimit_core }}
 LimitMEMLOCK={{ prometheus_arg.ulimit_memlock }}
 ExecStart=/usr/bin/pushgateway $PUSHGATEWAY_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=30s
 
