@@ -107,6 +107,8 @@ Sidecar is to backup Prometheus data into an Object Storage bucket, and giving o
 As the sidecar backs up data into the object storage of your choice, you can decrease Prometheus retention and store less locally. It can find in your object storage bucket.
 ### Thanos Compact (optional)
 The compact component simply scans the object storage and processes compaction where required. At the same time, it is responsible for creating downsampled copies of data to speed up queries.
+### Thanos Bucket (optional)
+The bucket component is a set of commands to inspect data in object storage buckets. It is normally run as a stand-alone command to aid with troubleshooting.
 ### Consul
 Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure. Prometheus has integrations with consul as service discovery mechanisms.
 ### Object Storage (optional)

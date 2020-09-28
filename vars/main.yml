@@ -49,6 +49,7 @@ thanos_opti_components:
 
 thanos_stand_components:
   - 'compact'
+  - 'bucket'
 
 architecture:
   amd64: 'amd64'
@@ -97,6 +98,7 @@ unauthenticate_target_services:
   - 'smokeping'
   - 'snmp'
   - 'statsd'
+  - 'thanos-bucket'
   - 'thanos-compact'
   - 'thanos-query'
   - 'thanos-query-frontend'

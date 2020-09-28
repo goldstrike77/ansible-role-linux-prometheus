@@ -1,6 +1,14 @@
 ---
 prometheus_thanos_alert_rules:
 # Thanos
+  - alert: Thanos_Component_Status 
+    expr: thanos_status == 0
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      description: 'The Thanos component state is abnormal.'
+
   - alert: Thanos_Compact_Halted
     expr: thanos_compactor_halted{service="thanos-compact_exporter"} == 1
     for: 10m

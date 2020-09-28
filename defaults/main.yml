@@ -28,17 +28,18 @@ prometheus_port:
   cluster: '9094'
   prometheus: '9090'
   pushgateway: '9091'
-  snmp: '9116'
   smokeping: '9374'
+  snmp: '9116'
 thanos_port:
+  bucket_http: '19195'
   compact_http: '19194'
+  query_frontend: '19090'
   query_grpc: '19092'
   query_http: '19192'
   sidecar_grpc: '19091'
   sidecar_http: '19191'
   store_grpc: '19093'
   store_http: '19193'
-  query_frontend: '19090'
 
 # Grafana parameters #
 prometheus_grafana_path: '{{ prometheus_data_path }}' # Specify the Grafana data directory.
