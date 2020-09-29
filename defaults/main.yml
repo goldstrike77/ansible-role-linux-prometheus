@@ -18,7 +18,6 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae' # The consul acl
 
 # Role dependencies #
 prometheus_grafana_dept: false # A boolean value, whether install the Grafana for metrics visualization.
-prometheus_grafana_redis_dept: false # A boolean value, whether installs Redis.
 prometheus_grafana_ngx_dept: false # A boolean value, whether proxy Grafana web interface using NGinx.
 
 # Listen port #
@@ -49,11 +48,6 @@ prometheus_grafana_admin_password: 'changeme' # The password of the default Graf
 prometheus_grafana_https: true # A boolean value, whether Encrypting HTTP client communications.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
 prometheus_grafana_proxy: false # Whether running behind a HaProxy.
-prometheus_grafana_redis_path: '{{ prometheus_data_path }}' # Specify the Redis data directory.
-prometheus_grafana_redis_requirepass: 'changeme' # Authorization clients password.
-prometheus_grafana_redis_maxmemory: '64' # A memory usage limit to the specified amount in MB.
-prometheus_grafana_redis_hosts: '{{ prometheus_server[0] }}' # Redis hosts address.
-prometheus_grafana_redis_port: '6379' # Redis listen port.
 prometheus_grafana_ngx_block_agents: false # Enables or disables block unsafe User Agents.
 prometheus_grafana_ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 prometheus_grafana_ngx_compress: false # Enables or disables compression.

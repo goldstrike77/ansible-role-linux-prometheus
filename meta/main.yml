@@ -58,12 +58,6 @@ dependencies:
   - role: 'ansible-role-linux-grafana'
     vars:
       grafana_proxy: '{{ prometheus_grafana_proxy | bool }}'
-      grafana_redis_dept: '{{ prometheus_grafana_redis_dept | bool }}'
-      grafana_redis_path: '{{ prometheus_grafana_redis_path }}'
-      grafana_redis_requirepass: '{{ prometheus_grafana_redis_requirepass }}'
-      grafana_redis_maxmemory: '{{ prometheus_grafana_redis_maxmemory }}'
-      grafana_redis_hosts: '{{ prometheus_grafana_redis_hosts }}'
-      grafana_redis_port: '{{ prometheus_grafana_redis_port }}'
       grafana_ngx_dept: '{{ prometheus_grafana_ngx_dept | bool }}'
       grafana_ldap_enabled: '{{ prometheus_grafana_ldap_enabled | bool }}'
       grafana_ldap_allow_sign_up: '{{ prometheus_grafana_ldap_allow_sign_up | bool }}'

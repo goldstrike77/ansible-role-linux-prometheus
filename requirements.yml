@@ -9,7 +9,3 @@
 - name: ansible-role-linux-nginx
   src: git+https://github.com/goldstrike77/ansible-role-linux-nginx
   version: origin/master
-
-- name: ansible-role-linux-redis
-  src: git+https://github.com/goldstrike77/ansible-role-linux-redis
-  version: origin/master
