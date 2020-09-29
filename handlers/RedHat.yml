@@ -21,13 +21,6 @@
     state: 'reloaded'
   loop: '{{ prometheus_service }}'
 
-- name: Restart consul-template service
-  systemd:
-    name: 'consul-template'
-    enabled: 'yes'
-    state: 'restarted'
-    daemon_reload: 'yes'
-
 - name: Restart thanos base components service
   systemd:
     name: 'thanos-{{ item }}.service'

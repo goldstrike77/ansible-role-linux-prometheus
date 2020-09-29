@@ -1,8 +1,8 @@
 ---
-- name: Include OS-specific variables
+- name: Include OS-specific variables.
   include_vars: '{{ ansible_os_family }}.yml'
 
-- name: Add prometheus YUM repositories
+- name: Add prometheus YUM repositories.
   yum_repository:
     name: '{{ prometheus_repo_name }}'
     description: '{{ prometheus_repo_name }} YUM repository'
@@ -11,7 +11,7 @@
     gpgcheck: 'no'
     timeout: '60'
 
-- name: Install the prometheus
+- name: Install the prometheus.
   yum:
     name: '{{ prometheus_software }}'
     state: 'present'
@@ -22,7 +22,7 @@
   retries: 5
   delay: 2
 
-- name: Install the prober exporters
+- name: Install the prober exporters.
   yum:
     name: '{{ prometheus_prober_exporters }}'
     state: 'present'
@@ -33,7 +33,7 @@
   retries: 5
   delay: 2
 
-- name: Install the thanos
+- name: Install the thanos.
   yum:
     name: 'thanos'
     state: 'present'

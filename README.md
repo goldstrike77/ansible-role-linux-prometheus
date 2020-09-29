@@ -167,7 +167,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### General parameters
 * `thanos_is_install`: A boolean value, whether install the Thanos.
 * `thanos_bucket_is_used`: A boolean value, whether use object storage.
-* `prometheus_data_path`:  Specify the Prometheus configure directory.
+* `prometheus_data_path`: Specify the Prometheus configure directory.
 
 ##### Consul SD configurations
 * `prometheus_consul_server`: The consul address and port.

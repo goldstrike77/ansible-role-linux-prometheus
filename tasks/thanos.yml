@@ -1,5 +1,5 @@
 ---
-- name: Thanos base components systemd service file transfer
+- name: Thanos base components systemd service file transfer.
   template:
     src: 'thanos-{{ item }}.service.j2'
     dest: '/lib/systemd/system/thanos-{{ item }}.service'
@@ -9,7 +9,7 @@
   loop: '{{ thanos_base_components }}'
   register: thanos_base_systemd
 
-- name: Thanos base components default file transfer
+- name: Thanos base components default file transfer.
   template:
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
@@ -20,7 +20,7 @@
   loop: '{{ thanos_base_components }}'
   register: thanos_base_default
 
-- name: Creating thanos data folder
+- name: Creating Thanos data folder.
   file:
     dest: '{{ prometheus_data_path }}/thanos'
     state: 'directory'
@@ -29,7 +29,7 @@
     mode: '0755'
   when: thanos_bucket_is_used | bool
 
-- name: Thanos objstore config file transfer
+- name: Thanos objstore config file transfer.
   template:
     src: 'bucket.yml.j2'
     dest: '{{ prometheus_data_path }}/thanos/bucket.yml'
@@ -40,7 +40,7 @@
   when: thanos_bucket_is_used | bool
   register: thanos_bucket
 
-- name: Thanos optional components systemd service file transfer
+- name: Thanos optional components systemd service file transfer.
   template:
     src: 'thanos-{{ item }}.service.j2'
     dest: '/lib/systemd/system/thanos-{{ item }}.service'
@@ -52,7 +52,7 @@
   when: thanos_bucket_is_used | bool
   register: thanos_opti_systemd
 
-- name: Thanos optional components default file transfer
+- name: Thanos optional components default file transfer.
   template:
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
@@ -64,7 +64,7 @@
   when: thanos_bucket_is_used | bool
   register: thanos_opti_default
 
-- name: Creating thanos compact process folder
+- name: Creating Thanos compact process folder.
   file:
     dest: '{{ prometheus_data_path }}/compact'
     state: 'directory'
@@ -75,7 +75,7 @@
     - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
 
-- name: Thanos stand alone components systemd service file transfer
+- name: Thanos stand alone components systemd service file transfer.
   template:
     src: 'thanos-{{ item }}.service.j2'
     dest: '/lib/systemd/system/thanos-{{ item }}.service'
@@ -89,7 +89,7 @@
     - prometheus_server[0] in ansible_default_ipv4.address
   register: thanos_stand_systemd
 
-- name: Thanos stand alone components default file transfer
+- name: Thanos stand alone components default file transfer.
   template:
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'

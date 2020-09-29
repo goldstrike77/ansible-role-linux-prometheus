@@ -1,13 +1,13 @@
 ---
 # General parameters #
-prometheus_is_install: false
-thanos_is_install: false
-thanos_bucket_is_used: false
-prometheus_data_path: '/data'
+prometheus_is_install: false # A boolean value, whether install the Prometheus.
+thanos_is_install: false # A boolean value, whether install the Thanos.
+thanos_bucket_is_used: false # A boolean value, whether use object storage.
+prometheus_data_path: '/data' # Specify the Prometheus configure directory.
 
 # Consul SD configurations #
-prometheus_consul_server: 'consul.service.dc01.local:8500'
-prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae'
+prometheus_consul_server: 'consul.service.dc01.local:8500' # The consul address and port.
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae' # The consul acl token.
 
 # Kubernetes SD configurations #
 #prometheus_kubernetes:
@@ -200,25 +200,6 @@ thanos_obj_arg:
   signature_version2: false
   access_key: '0GTXRMXD4FDFWURPABCG'
   secret_key: 'ODaHlToJWUkbzWI1TNkbZX43SiFPLRLoZeASP0Z8'
-
-# Consul templatee Variables #
-consul_template_version: '0.20.0'
-consul_template_arg:
-  conf_path: '/etc/consul-template.d'
-  consul_port: '8500'
-  consul_server: '127.0.0.1'
-  enable_syslog: true
-  log_level: 'info'
-  retry_attempts: '12'
-  retry_backoff: '250ms'
-  retry_enabled: true
-  retry_max_backoff: '3m'
-  template_backup: true
-  template_command_timeout: '60s'
-  uid: '2011'
-  ulimit_nofile: '8192'
-  ulimit_nproc: '8192'
-  user: 'consul'
 
 # Service Mesh #
 environments: 'Development' # Define the service environment.

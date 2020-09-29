@@ -1,5 +1,5 @@
 ---
-- name: Check register client are accessible from current host
+- name: Check register client are accessible from current host.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'GET'
@@ -12,7 +12,7 @@
   failed_when: false
   register: check_consul_reg
 
-- name: Register pushgateway exporter service with an http health check
+- name: Register pushgateway exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -27,8 +27,7 @@
   environment:
     no_proxy: '{{ item.client }}'
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when:
-    - item.status == 405
+  when: item.status == 405
   register: register_status
   until: register_status.status == 200
   retries: 2
@@ -37,7 +36,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register prometheus exporter service with an http health check
+- name: Register prometheus exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -52,8 +51,7 @@
   environment:
     no_proxy: '{{ item.client }}'
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when:
-    - item.status == 405
+  when: item.status == 405
   register: register_status
   until: register_status.status == 200
   retries: 2
@@ -62,7 +60,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register alertmanager exporter service with an http health check
+- name: Register alertmanager exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -77,8 +75,7 @@
   environment:
     no_proxy: '{{ item.client }}'
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when:
-    - item.status == 405
+  when: item.status == 405
   register: register_status
   until: register_status.status == 200
   retries: 2
@@ -110,7 +107,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register blackbox exporter service with an http health check
+- name: Register blackbox exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -125,8 +122,7 @@
   environment:
     no_proxy: '{{ item.client }}'
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when:
-    - item.status == 405
+  when: item.status == 405
   register: register_status
   until: register_status.status == 200
   retries: 2
@@ -135,7 +131,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register snmp exporter service with an http health check
+- name: Register snmp exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -150,8 +146,7 @@
   environment:
     no_proxy: '{{ item.client }}'
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when: 
-    - item.status == 405
+  when: item.status == 405
   register: register_status
   until: register_status.status == 200
   retries: 2
@@ -160,7 +155,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register smokeping prober service with an http health check
+- name: Register smokeping prober service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -175,8 +170,7 @@
   environment:
     no_proxy: '{{ item.client }}'
   loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
-  when:
-    - item.status == 405
+  when: item.status == 405
   register: register_status
   until: register_status.status == 200
   retries: 2
@@ -185,7 +179,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos sidecar exporter service with an http health check
+- name: Register thanos sidecar exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -211,7 +205,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos query exporter service with an http health check
+- name: Register thanos query exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -237,7 +231,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos store exporter service with an http health check
+- name: Register thanos store exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -264,7 +258,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos compact exporter service with an http health check
+- name: Register thanos compact exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -292,7 +286,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos bucket exporter service with an http health check
+- name: Register thanos bucket exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -320,7 +314,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register thanos query frontend exporter service with an http health check
+- name: Register thanos query frontend exporter service with an http health check.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'

@@ -1,5 +1,5 @@
 ---
-- name: Generate IP address filter
+- name: Generate IP address filter.
   set_fact:
     ip_sequence: "{{ ip_sequence | default([]) + [item[-1] | int] }}"
   with_sequence: start={{ prometheus_server.index(ansible_default_ipv4.address) }} end={{ prometheus_server | length * 4 }} stride=2
@@ -9,31 +9,28 @@
   failed_when: false
   ignore_errors: true
 
-- name: Creating prometheus configure folder
+- name: Creating Prometheus configure folder.
   file:
-    dest: '{{ item }}'
+    dest: '{{ prometheus_conf_path }}/{{ item }}'
     state: 'directory'
     owner: 'root'
     group: 'root'
     mode: '0755'
   loop:
-    - '{{ prometheus_conf_path }}/rules'
-    - '{{ prometheus_conf_path }}/templates'
-    - '{{ prometheus_conf_path }}/conf.d'
+    - 'rules'
+    - 'templates'
+    - 'conf.d'
 
-- name: Creating prometheus data folder
+- name: Creating Prometheus data folder.
   file:
-    dest: '{{ item }}'
+    dest: '{{ prometheus_data_path }}/{{ item }}'
     state: 'directory'
     owner: 'prometheus'
     group: 'prometheus'
     mode: '0755'
-  loop:
-    - '{{ prometheus_data_path }}/prometheus'
-    - '{{ prometheus_data_path }}/pushgateway'
-    - '{{ prometheus_data_path }}/alertmanager'
+  loop: '{{ prometheus_service }}'
 
-- name: Prometheus configure file transfer
+- name: Prometheus configure file transfer.
   template:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
@@ -44,7 +41,7 @@
   loop: '{{ prometheus_conf_files }}'
   register: soft_config
 
-- name: Prometheus alerting template file transfer
+- name: Prometheus alerting template file transfer.
   copy:
     src: "default.tmpl"
     dest: "{{ prometheus_conf_path }}/templates/default.tmpl"
@@ -54,12 +51,11 @@
     mode: '0644'
   notify: 'Reload prometheus service'
 
-- name: Include rules for alertmanager
+- name: Include rules for alertmanager.
   include_vars:
     file: 'alert_rules/{{ item }}.yml'
   loop: '{{ prometheus_alert_rules }}'
-  when:
-    - prometheus_alert_rules != []
+  when: prometheus_alert_rules != []
 
 - name: Gather target label name variables.
   set_fact:
@@ -67,10 +63,10 @@
       {% for key,value in tags.iteritems() %},{{ key }}{% endfor %}
   when: prometheus_alert_rules != []
 
-- name: Prometheus alerting rules template file transfer
+- name: Prometheus alerting rules template file transfer.
   template:
-    src: "alert.rules.j2"
-    dest: "/tmp/alert_{{ item }}.rules.j2"
+    src: 'alert.rules.j2'
+    dest: '/tmp/alert_{{ item }}.rules.j2'
   loop: '{{ prometheus_alert_rules }}'
   run_once: true
   delegate_to: localhost
@@ -78,8 +74,8 @@
 
 - name: Prometheus alerting rules generate.
   template:
-    src: "/tmp/alert_{{ item }}.rules.j2"
-    dest: "{{ prometheus_conf_path }}/rules/alert_{{ item }}.rules"
+    src: '/tmp/alert_{{ item }}.rules.j2'
+    dest: '{{ prometheus_conf_path }}/rules/alert_{{ item }}.rules'
     variable_start_string: "<<"
     variable_end_string: ">>"
     backup: 'yes'

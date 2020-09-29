@@ -1,5 +1,5 @@
 ---
-- name: Prober exporters YAML file transfer
+- name: Prober exporters YAML file transfer.
   copy:
     src: '{{ item }}.yml'
     dest: '/etc/prometheus/{{ item }}.yml'
@@ -10,7 +10,7 @@
   loop: '{{ prometheus_prober_exporters }}'
   register: prober_yaml
 
-- name: Prober exporters configure file transfer
+- name: Prober exporters configure file transfer.
   template:
     src: '{{ item }}.j2'
     dest: '/etc/default/{{ item }}'
@@ -21,7 +21,7 @@
   loop: '{{ prometheus_prober_exporters }}'
   register: prober_config
 
-- name: Prober exporters systemd file transfer
+- name: Prober exporters systemd file transfer.
   template:
     src: '{{ item }}.service.j2'
     dest: '/lib/systemd/system/{{ item }}.service'

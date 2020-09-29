@@ -1,66 +1,55 @@
 ---
-- name: Include tasks for specific OS
+- name: Include tasks for specific OS.
   include: '{{ ansible_os_family }}.yml'
 
-- name: Straight to getenforce selinux status
-  include: 'selinux.yml'
-
-- name: Configure the prometheus firewall
+- name: Configure the prometheus firewall.
   include: 'firewall.yml'
 
-- name: Include prometheus tasks
+- name: Include prometheus tasks.
   include: 'prometheus.yml'
 
-- name: Include prober exporter tasks
+- name: Include prober exporter tasks.
   include: 'exporter.yml'
 
-- name: Restart the prometheus service
+- name: Restart the prometheus service.
   shell: echo ''
   notify: 'Restart prometheus service'
   when: soft_updated is changed or soft_config is changed
 
-- name: Restart the prober exporter service
+- name: Restart the prober exporter service.
   shell: echo ''
   notify: 'Restart prober exporter service'
   when: prober_soft_updated is changed or prober_config is changed or prober_system is changed or prober_yaml is changed
 
-#- name: Include consul-template tasks
-#  include: 'consul-template.yml'
-
-#- name: Restart the consul-template service
-#  shell: echo ''
-#  notify: 'Restart consul-template service'
-#  when: consul_template_config_update is changed or consul_template_ctmpl_update is changed or consul_template_systemd_update is changed
-
-- name: Include thanos tasks
+- name: Include thanos tasks.
   include: 'thanos.yml'
   when: thanos_is_install | bool
 
-- name: Restart the thanos base components service
+- name: Restart the thanos base components service.
   shell: echo ''
   notify: 'Restart thanos base components service'
   when: thanos_base_systemd is changed or thanos_base_default is changed or thanos_bucket is changed
 
-- name: Restart thanos optional components service
+- name: Restart thanos optional components service.
   shell: echo ''
   notify: 'Restart thanos optional components service'
   when: thanos_opti_systemd is changed or thanos_opti_default is changed or thanos_bucket is changed
 
-- name: Restart thanos stand alone components service
+- name: Restart thanos stand alone components service.
   shell: echo ''
   notify: 'Restart thanos stand alone components service'
   when: (thanos_stand_systemd is changed or thanos_stand_default is changed or thanos_bucket is changed) and prometheus_server[0] in ansible_default_ipv4.address
 
-- name: Force the handler to run immediately
+- name: Force the handler to run immediately.
   meta: flush_handlers
 
-- name: Ensure MTA service is enabled
+- name: Ensure MTA service is enabled.
   systemd:
     name: 'postfix.service'
     enabled: 'yes'
     state: 'started'
 
-- name: Registered with HashiCorp Consul
+- name: Registered with HashiCorp Consul.
   include: 'register.yml'
   when:
     - exporter_is_install | bool

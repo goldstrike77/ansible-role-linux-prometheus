@@ -1,9 +1,9 @@
 ---
-- name: Gathering service facts
+- name: Gathering service facts.
   service_facts:
   register: services_state
 
-- name: Allow prometheus service port
+- name: Allow prometheus service port.
   firewalld:
     port: '{{ item.value }}/tcp'
     permanent: 'true'
