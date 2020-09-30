@@ -32,7 +32,7 @@ prometheus_port:
 thanos_port:
   bucket_http: '19195'
   compact_http: '19194'
-  query_frontend: '19090'
+  query_frontend_http: '19190'
   query_grpc: '19092'
   query_http: '19192'
   sidecar_grpc: '19091'

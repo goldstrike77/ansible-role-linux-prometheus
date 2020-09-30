@@ -42,7 +42,7 @@ thanos_soft_url: 'http://github.com/improbable-eng/thanos/releases/download'
 thanos_base_components:
   - 'sidecar'
   - 'query'
-  - 'query-frontend'
+  - 'query_frontend'
 
 thanos_opti_components:
   - 'store'
@@ -89,7 +89,7 @@ unauthenticate_target_services:
   - 'thanos-bucket'
   - 'thanos-compact'
   - 'thanos-query'
-  - 'thanos-query-frontend'
+  - 'thanos-query_frontend'
   - 'thanos-sidecar'
   - 'thanos-store'
   - 'vault'

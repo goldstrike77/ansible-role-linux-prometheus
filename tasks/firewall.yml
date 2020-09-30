@@ -3,15 +3,23 @@
   service_facts:
   register: services_state
 
-- name: Allow prometheus service port.
-  firewalld:
-    port: '{{ item.value }}/tcp'
-    permanent: 'true'
-    immediate: 'true'
-    state: 'enabled'
-  with_dict:
-    - '{{ prometheus_port }}'
-    - '{{ thanos_port }}'
+- name: Firewalld operation.
+  block:
+    - name: Allow Prometheus service port.
+      firewalld:
+        port: '{{ item.value }}/tcp'
+        permanent: 'true'
+        immediate: 'true'
+        state: 'enabled'
+      loop: '{{ prometheus_port | dict2items }}'
+    - name: Allow Thanos service port.
+      firewalld:
+        port: '{{ item.value }}/tcp'
+        permanent: 'true'
+        immediate: 'true'
+        state: 'enabled'
+      loop: '{{ thanos_port | dict2items }}'
+      when: thanos_is_install | bool
   when:
     - services_state.ansible_facts.services["firewalld.service"] is defined
     - services_state.ansible_facts.services["firewalld.service"].state == 'running'
