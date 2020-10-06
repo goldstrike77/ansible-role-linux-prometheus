@@ -36,3 +36,38 @@ prometheus_mysql_alert_rules:
       severity: warning
     annotations:
       description: "The innodb logs are waiting for disk at a rate of {{$value}} second."
+  - alert: MySQL_Open_File
+    expr: "mysql_global_status_innodb_num_open_files > (mysql_global_variables_open_files_limit) * 0.80"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Too many open files."
+  - alert: MySQL_Conn
+    expr: "mysql_global_status_max_used_connections > mysql_global_variables_max_connections * 0.9"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Used more than 90% of max connections."
+  - alert: MySQL_InnoDB_Force_Recovery
+    expr: "mysql_global_variables_innodb_force_recovery != 0"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "InnoDB Force Recovery is enabled."
+  - alert: MySQL_Binary_Log
+    expr: "mysql_global_variables_log_bin != 1"
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: "Binary Log is disabled."
+  - alert: MySQL_Group_Rep
+    expr: 'mysql_global_status_commands_total{command="group_replication_stop"} == 1'
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: "Group replication stopped."
