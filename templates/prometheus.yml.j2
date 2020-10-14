@@ -9,7 +9,7 @@ global:
 # Alertmanager configuration
 alerting:
   alert_relabel_configs:
-    - regex: 'replica|job|ipaddress|metrics_path|scheme'
+    - regex: 'replica|job|ipaddress|metrics_path|scheme|application'
       action: labeldrop
   alertmanagers:
     - static_configs:
@@ -39,7 +39,9 @@ scrape_configs:
       - regex: __meta_consul_service_metadata_(.+)
         action: labelmap
       - source_labels: [__meta_consul_service]
+        replacement: '${1}'
         target_label: 'service'
+        regex: '([^=]+)_exporter'
       - source_labels: [__meta_consul_service_metadata_metrics_path]
         action: replace
         target_label: __metrics_path__
@@ -73,7 +75,9 @@ scrape_configs:
       - regex: __meta_consul_service_metadata_(.+)
         action: labelmap
       - source_labels: [__meta_consul_service]
+        replacement: '${1}'
         target_label: 'service'
+        regex: '([^=]+)_exporter'
       - source_labels: [__meta_consul_service_metadata_metrics_path]
         action: replace
         target_label: __metrics_path__
@@ -132,6 +136,10 @@ scrape_configs:
       regex: __meta_kubernetes_node_label_(.+)
     - target_label: __address__
       replacement: {{ host.apiserver | default("127.0.0.1") }}
+    - source_labels: [__address__]
+      action: replace
+      target_label: application
+      replacement: Kubernetes
     - source_labels: [__meta_kubernetes_node_name]
       regex: (.+)
       target_label: __metrics_path__
