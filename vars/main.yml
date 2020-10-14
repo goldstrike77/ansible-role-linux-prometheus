@@ -53,12 +53,13 @@ thanos_stand_components:
 
 unauthenticate_target_services:
   - 'alertmanager'
-  - 'beat'
+  - 'auditbeat'
   - 'blackbox'
   - 'consul'
   - 'dellhw'
   - 'docker'
   - 'elastic'
+  - 'filebeat'
   - 'gitlab'
   - 'grafana'
   - 'haproxy'
@@ -75,6 +76,7 @@ unauthenticate_target_services:
   - 'nginx'
   - 'node'
   - 'openldap'
+  - 'packetbeat'
   - 'php-fpm'
   - 'postgres'
   - 'pushgateway'
