@@ -36,9 +36,9 @@ route:
 
 inhibit_rules:
 - source_match:
-    severity: 'critical'
+    severity: '{{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}'
   target_match:
-    severity: 'warning'
+    severity: '{{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning }}'
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
