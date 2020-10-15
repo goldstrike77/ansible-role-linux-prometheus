@@ -108,3 +108,17 @@ prometheus_prober_exporters:
   - 'blackbox_exporter'
   - 'smokeping_prober'
   - 'snmp_exporter'
+
+prometheus_alert_incident_severity:
+  disaster: 'disaster'
+  critical: 'critical'
+  warning: 'warning'
+  medium: 'medium'
+  low: 'low'
+
+prometheus_alert_incident_priority:
+  disaster: 'p0'
+  critical: 'p1'
+  warning: 'p2'
+  medium: 'p3'
+  low: 'p4'

@@ -4,6 +4,20 @@ prometheus_is_install: false # A boolean value, whether install the Prometheus.
 thanos_is_install: false # A boolean value, whether install the Thanos.
 thanos_bucket_is_used: false # A boolean value, whether use object storage.
 prometheus_data_path: '/data' # Specify the Prometheus configure directory.
+prometheus_alert_incident_levels_map: 'severity' # Defines the display mode of incident alarm, severity or priority.
+# ┌──────────┬──────────┐
+# │ priority │ severity │
+# ├──────────┼──────────┤
+# │    p0    │ disaster │
+# ├──────────┼──────────┤
+# │    p1    │ critical │
+# ├──────────┼──────────┤
+# │    p2    │ warning  │
+# ├──────────┼──────────┤
+# │    p3    │ medium   │
+# ├──────────┼──────────┤
+# │    p4    │ low      │
+# └──────────┴──────────┘
 
 # Consul SD configurations #
 prometheus_consul_server: 'consul.service.dc01.local:8500' # The consul address and port.

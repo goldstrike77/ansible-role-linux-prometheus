@@ -20,7 +20,11 @@ route:
   routes:
 {% if alertmanager_arg.wechat_api_corpid is defined %}
     - match:
-        severity: critical
+        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].disaster }}
+      receiver: team-infra-wechat
+      continue: true
+    - match:
+        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}
       receiver: team-infra-wechat
       continue: true
 {% endif %}

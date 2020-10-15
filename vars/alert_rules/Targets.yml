@@ -5,13 +5,13 @@ prometheus_targets_alert_rules:
     expr: "up == 0"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Endpoint has been unreachable."
 #  - alert: targets_Flapped
 #    expr: "avg_over_time(up[10m]) != 1"
 #    for: 5m
 #    labels:
-#      severity: critical
+#      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
 #    annotations:
 #      description: "Endpoint has been flapped."
