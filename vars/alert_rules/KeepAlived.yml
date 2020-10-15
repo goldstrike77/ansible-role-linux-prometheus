@@ -4,6 +4,6 @@ prometheus_keepalived_alert_rules:
     expr: 'keepalived_up == 0'
     for: 10m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Instance has been stoped."

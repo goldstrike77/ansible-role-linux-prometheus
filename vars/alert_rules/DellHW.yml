@@ -5,195 +5,195 @@ prometheus_dellhw_alert_rules:
     expr: 'dell_hw_chassis_status{component="Batteries"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Board CMOS Battery has potentially failed."
   - alert: Cooling
     expr: 'dell_hw_chassis_status{component="Fans"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Cooling component has potentially failed."
   - alert: Intrusion
     expr: 'dell_hw_chassis_status{component="Intrusion"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Board Intrusion has potentially failed."
   - alert: Memory
     expr: 'dell_hw_chassis_status{component="Memory"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Board Memory has potentially failed."
   - alert: Power_Supplies
     expr: 'dell_hw_chassis_status{component="Power_Supplies"} == 1 or dell_hw_ps_status == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Power Supplies has potentially failed."
   - alert: Processors
     expr: 'dell_hw_chassis_status{component="Processors"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "CPU/GPU has potentially failed."
   - alert: Temperatures
     expr: 'dell_hw_chassis_status{component="Temperatures"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Temperature Probes has potentially failed."
   - alert: Voltages
     expr: 'dell_hw_chassis_status{component="Voltages"} == 1'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Board Voltages has potentially failed."
   - alert: Storage_battery
     expr: "dell_hw_storage_battery_status == 1"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Storage Controller Battery has potentially failed."
   - alert: Storage_Controller
     expr: "dell_hw_storage_controller_status == 1"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Storage Controller has potentially failed."
   - alert: Storage_Enclosure
     expr: "dell_hw_storage_enclosure_status == 1"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Storage Enclosure has potentially failed."
   - alert: Storage_Pdisk
     expr: "dell_hw_storage_pdisk_status == 1"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Physical disks has potentially failed."
   - alert: Storage_Vdisk
     expr: "dell_hw_storage_vdisk_status == 1"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Virtual disks has potentially failed."
   - alert: Inlet_Temperature
     expr: 'dell_hw_chassis_temps_reading{component="System_Board_Inlet_Temp"} >= dell_hw_chassis_temps_max_warning{component="System_Board_Inlet_Temp"}'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Temperatures has exceeded the threshold."
 #  - alert: Ethernet
 #    expr: "dell_hw_nic_status == 1"
 #    for: 5m
 #    labels:
-#      severity: critical
+#      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
 #    annotations:
 #      description: "Connection status of network cards has potentially failed."
   - alert: Batteries
     expr: 'dell_hw_chassis_status{component="Batteries"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Board CMOS Battery is not okay."
   - alert: Cooling
     expr: 'dell_hw_chassis_status{component="Fans"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Cooling component is not okay."
   - alert: Intrusion
     expr: 'dell_hw_chassis_status{component="Intrusion"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Board Intrusion is not okay."
   - alert: Memory
     expr: 'dell_hw_chassis_status{component="Memory"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Board Memory is not okay."
   - alert: Power_Supplies
     expr: 'dell_hw_chassis_status{component="Power_Supplies"} == 2 or dell_hw_ps_status == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Power Supplies is not okay."
   - alert: Processors
     expr: 'dell_hw_chassis_status{component="Processors"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "CPU/GPU is not okay."
   - alert: Temperatures
     expr: 'dell_hw_chassis_status{component="Temperatures"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Temperature Probes is not okay."
   - alert: Voltages
     expr: 'dell_hw_chassis_status{component="Voltages"} == 2'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Board Voltages is not okay."
   - alert: Storage_battery
     expr: "dell_hw_storage_battery_status == 2"
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Storage Controller Battery is not okay."
   - alert: Storage_Controller
     expr: "dell_hw_storage_controller_status == 2"
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Storage Controller is not okay."
   - alert: Storage_Enclosure
     expr: "dell_hw_storage_enclosure_status == 2"
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Storage Enclosure is not okay."
   - alert: Storage_Pdisk
     expr: "dell_hw_storage_pdisk_status == 2"
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Physical disks is not okay."
   - alert: Storage_Vdisk
     expr: "dell_hw_storage_vdisk_status == 2"
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Virtual disks is not okay."

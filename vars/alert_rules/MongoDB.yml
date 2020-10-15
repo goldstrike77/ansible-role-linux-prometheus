@@ -5,34 +5,34 @@ prometheus_mongodb_alert_rules:
     expr: "mongodb_up == 0"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Instance has been stoped."
   - alert: MongoDB_Rep_Lag
     expr: 'avg by (environment,group,instance,service<< tags_key | default("") >>)(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg by (environment,group,instance,service<< tags_key | default("") >>)(mongodb_mongod_replset_member_optime_date{state="SECONDARY"}) > 60'
     for: 5m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Replication lag is more than {{$value}} seconds."
   - alert: MongoDB_Cursors_Num
     expr: 'mongodb_mongod_metrics_cursor_open{state="total"} > 10000'
     for: 5m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Too many cursors opened clients of {{$value}}."
   - alert: MongoDB_Cursors_Timeout
     expr: 'increase(mongodb_mongod_metrics_cursor_timed_out_total[10m]) > 100'
     for: 5m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Too many cursors are timing out of {{$value}}."
   - alert: MongoDB_Connections
     expr: 'mongodb_mongod_connections{state="current"} > 5000'
     for: 5m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Too many connections of {{$value}}."

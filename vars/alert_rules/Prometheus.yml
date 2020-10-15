@@ -5,14 +5,14 @@ prometheus_prometheus_alert_rules:
     expr: "prometheus_config_last_reload_successful != 1"
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Prometheus configuration reload error."
   - alert: prometheus_Disconnect_Alertmanager
     expr: "prometheus_notifications_alertmanagers_discovered < 1"
     for: 5m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Prometheus cannot connect the alertmanager."
 

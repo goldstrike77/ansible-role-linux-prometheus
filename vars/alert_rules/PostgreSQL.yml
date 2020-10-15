@@ -5,34 +5,34 @@ prometheus_postgresql_alert_rules:
     expr: 'pg_up == 0'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Instance has been stoped."
   - alert: PostgreSQL_Rep_Lag
     expr: "pg_replication_lag > 60"
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "The replication has fallen behind and is not recovering."
   - alert: PostgreSQL_TableNotVaccumed
     expr: 'time() - pg_stat_user_tables_last_autovacuum > 60 * 60 * 24'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Table has not been vaccum for 24 hours."
   - alert: PostgreSQL_TableNotAnalyzed
     expr: 'time() - pg_stat_user_tables_last_autoanalyze > 60 * 60 * 24'
     for: 10m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "Table has not been analyzed for 24 hours."
   - alert: PostgreSQL_Dead_locks
     expr: 'rate(pg_stat_database_deadlocks[5m]) > 0'
     for: 30m
     labels:
-      severity: warning
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
     annotations:
       description: "PostgreSQL has dead-locks."

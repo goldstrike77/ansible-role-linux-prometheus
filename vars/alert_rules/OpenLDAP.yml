@@ -5,6 +5,6 @@ prometheus_openldap_alert_rules:
     expr: 'rate(openldap_scrape{result="fail"}[5m]) > 0'
     for: 5m
     labels:
-      severity: critical
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "OpenLDAP service scrapes failing."
