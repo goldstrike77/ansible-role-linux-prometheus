@@ -18,13 +18,13 @@ LimitNOFILE={{ thanos_arg.ulimit_nofile }}
 LimitNPROC={{ thanos_arg.ulimit_nproc }}
 LimitCORE={{ thanos_arg.ulimit_core }}
 LimitMEMLOCK={{ thanos_arg.ulimit_memlock }}
-EnvironmentFile=-/etc/default/thanos-query_frontend
+EnvironmentFile=-/etc/default/thanos-query-frontend
 ExecStart=/usr/bin/thanos query-frontend \
           $THANOS_QUERY_FRONTEND_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=thanos-query_frontend
+SyslogIdentifier=thanos-query-frontend
 Restart=on-failure
 RestartSec=30s
 
