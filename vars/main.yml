@@ -37,8 +37,6 @@ prometheus_service:
 
 consul_soft_url: 'http://releases.hashicorp.com'
 
-thanos_soft_url: 'http://github.com/improbable-eng/thanos/releases/download'
-
 thanos_base_components:
   - 'sidecar'
   - 'query'
