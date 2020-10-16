@@ -19,28 +19,28 @@ prometheus_redis_alert_rules:
 #    expr: "time() - redis_rdb_last_save_timestamp_seconds > 60 * 60 * 24"
 #    for: 60m
 #    labels:
-#      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+#      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 #    annotations:
 #      description: "Redis has not been backuped for 24 hours."
   - alert: redis_Rejected
     expr: "increase(redis_rejected_connections_total[1m]) > 0"
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Some connections to Redis has been rejected."
   - alert: redis_RAM_Usage
     expr: "redis_memory_used_bytes / redis_memory_max_bytes * 100 > 90"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Redis Memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
   - alert: redis_Rep
     expr: "delta(redis_connected_slaves[5m]) < 0"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Redis instance lost a slave.'
   - alert: redis_Master_LinkDown

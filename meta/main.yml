@@ -68,11 +68,16 @@ dependencies:
       grafana_admin_password: '{{ prometheus_grafana_admin_password }}'
       grafana_https: '{{ prometheus_grafana_https | bool }}'
       grafana_port: '{{ prometheus_grafana_port }}'
+      grafana_incident_levels_map: "{{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map] }}"
       grafana_ds_arg:
         - name: 'prometheus'
           settings:
             - server: '{{ ansible_default_ipv4.address }}'
               port: '{% if thanos_is_install | bool %}{{ thanos_port.query_frontend_http }}{% else %}{{ prometheus_port.prometheus }}{% endif %}'
+        - name: 'alertmanager'
+          settings:
+            - server: '{{ ansible_default_ipv4.address }}'
+              port: '{{ prometheus_port.alertmanager }}'
       grafana_ngx_block_agents: '{{ prometheus_grafana_ngx_block_agents }}'
       grafana_ngx_block_string: '{{ prometheus_grafana_ngx_block_string }}'
       grafana_ngx_compress: '{{ prometheus_grafana_ngx_compress }}'

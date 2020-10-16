@@ -11,20 +11,20 @@ prometheus_haproxy_alert_rules:
     expr: 'rate(haproxy_server_connection_errors_total[5m]) > .1'
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "An increase in server connection errors."
   - alert: haproxy_Response_Errors
     expr: 'rate(haproxy_server_response_errors_total[5m]) > .1'
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "An increase in server response errors."
   - alert: haproxy_Backend_Errors
     expr: 'rate(haproxy_backend_connection_errors_total[5m]) > .1'
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "An increase in backend connection errors."

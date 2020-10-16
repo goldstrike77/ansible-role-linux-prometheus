@@ -8,15 +8,13 @@ prometheus_alert_incident_levels_map: 'severity' # Defines the display mode of i
 # ┌──────────┬──────────┐
 # │ priority │ severity │
 # ├──────────┼──────────┤
-# │    p0    │ disaster │
-# ├──────────┼──────────┤
 # │    p1    │ critical │
 # ├──────────┼──────────┤
-# │    p2    │ warning  │
+# │    p2    │ high     │
 # ├──────────┼──────────┤
-# │    p3    │ medium   │
+# │    p3    │ warning  │
 # ├──────────┼──────────┤
-# │    p4    │ low      │
+# │    p4    │ info     │
 # └──────────┴──────────┘
 
 # Consul SD configurations #

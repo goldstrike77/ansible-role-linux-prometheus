@@ -20,11 +20,11 @@ route:
   routes:
 {% if alertmanager_arg.wechat_api_corpid is defined %}
     - match:
-        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].disaster }}
+        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}
       receiver: team-infra-wechat
       continue: true
     - match:
-        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}
+        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high }}
       receiver: team-infra-wechat
       continue: true
 {% endif %}
@@ -38,7 +38,7 @@ inhibit_rules:
 - source_match:
     severity: '{{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}'
   target_match:
-    severity: '{{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning }}'
+    severity: '{{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high }}'
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:

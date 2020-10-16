@@ -7,7 +7,7 @@ prometheus_kubernetes_alert_rules:
     expr: "rate(kube_pod_container_status_restarts_total[15m]) * 60 * 5 > 0"
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 
   - alert: KubeDeploymentReplicasMismatch
     annotations:
@@ -15,7 +15,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_deployment_spec_replicas != kube_deployment_status_replicas_available"
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 
   - alert: KubeDeploymentGenerationMismatch
     annotations:
@@ -23,7 +23,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_deployment_status_observed_generation != kube_deployment_metadata_generation"
     for: 15m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 
   - alert: KubeStatefulSetReplicasMismatch
     annotations:
@@ -31,7 +31,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas"
     for: 30m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 
   - alert: KubeStatefulSetGenerationMismatch
     annotations:
@@ -39,7 +39,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_statefulset_status_observed_generation != kube_statefulset_metadata_generation"
     for: 30m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeStatefulSetUpdateNotRolledOut
     annotations:
@@ -47,7 +47,7 @@ prometheus_kubernetes_alert_rules:
     expr: "max without (revision) ( kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision ) * ( kube_statefulset_replicas != kube_statefulset_status_replicas_updated )"
     for: 30m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeDaemonSetRolloutStuck
     annotations:
@@ -55,7 +55,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_daemonset_status_number_ready / kube_daemonset_status_desired_number_scheduled * 100 < 100"
     for: 15m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeDaemonSetNotScheduled
     annotations:
@@ -63,7 +63,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_current_number_scheduled > 0"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeDaemonSetMisScheduled
     annotations:
@@ -71,7 +71,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_daemonset_status_number_misscheduled > 0"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeCronJobRunning
     annotations:
@@ -79,7 +79,7 @@ prometheus_kubernetes_alert_rules:
     expr: "time() - kube_cronjob_next_schedule_time > 3600"
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeJobCompletion
     annotations:
@@ -87,7 +87,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_job_spec_completions - kube_job_status_succeeded > 0"
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeJobFailed
     annotations:
@@ -95,7 +95,7 @@ prometheus_kubernetes_alert_rules:
     expr: "kube_job_status_failed > 0"
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 
   - alert: KubeNodeNotReady
     annotations:
@@ -111,7 +111,7 @@ prometheus_kubernetes_alert_rules:
     expr: 'count by (gitVersion,environment,group)(count by (gitVersion,environment,group) (label_replace(kubernetes_build_info,"gitVersion","$1","gitVersion","(v[0-9]*.[0-9]*.[0-9]*).*"))) > 1'
     for: 60m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeClientErrors
     annotations:
@@ -119,7 +119,7 @@ prometheus_kubernetes_alert_rules:
     expr: '(sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (environment,group,instance,service<< tags_key | default("") >>) / sum(rate(rest_client_requests_total[5m])) by (environment,group,instance,service<< tags_key | default("") >>)) * 100 > 1'
     for: 15m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeletTooManyPods
     annotations:
@@ -134,7 +134,7 @@ prometheus_kubernetes_alert_rules:
       description: A client certificate used to authenticate to the apiserver is expiring in less than 7 days.
     expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,environment,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 604800"
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeClientCertificateExpiration
     annotations:

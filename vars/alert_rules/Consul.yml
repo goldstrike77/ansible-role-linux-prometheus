@@ -12,6 +12,6 @@ prometheus_consul_alert_rules:
     expr: "sum by (environment,group,instance,service,node,service_name<< tags_key | default('') >>)(consul_catalog_service_node_healthy == 0)"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Consul services are failing."

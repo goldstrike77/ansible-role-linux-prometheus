@@ -5,7 +5,7 @@ prometheus_alertmanager_alert_rules:
     expr: "rate(alertmanager_notifications_failed_total[5m]) > 0" 
     for: 5m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Alertmanager is seeing errors for integration {{$labels.integration}}."
   - alert: alertmanager_Configuration_Reload

@@ -19,49 +19,49 @@ prometheus_mysql_alert_rules:
     expr: "(mysql_slave_lag_seconds > 30) and on(instance) (predict_linear(mysql_slave_lag_seconds[5m],60 * 2) > 0)"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "The mysql slave replication has fallen behind and is not recovering."
   - alert: MySQL_Rep_Lag
     expr: "(mysql_heartbeat_lag_seconds > 30) and on(instance) (predict_linear(mysql_heartbeat_lag_seconds[5m],60 * 2) > 0)"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "The mysql slave replication has fallen behind and is not recovering."
   - alert: MySQL_InnoDB_Log_Waits
     expr: "rate(mysql_global_status_innodb_log_waits[15m]) > 10"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "The innodb logs are waiting for disk at a rate of {{$value}} second."
   - alert: MySQL_Open_File
     expr: "mysql_global_status_innodb_num_open_files > (mysql_global_variables_open_files_limit) * 0.80"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Too many open files."
   - alert: MySQL_Conn
     expr: "mysql_global_status_max_used_connections > mysql_global_variables_max_connections * 0.9"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Used more than 90% of max connections."
   - alert: MySQL_InnoDB_Force_Recovery
     expr: "mysql_global_variables_innodb_force_recovery != 0"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "InnoDB Force Recovery is enabled."
   - alert: MySQL_Binary_Log
     expr: "mysql_global_variables_log_bin != 1"
     for: 10m
     labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Binary Log is disabled."
   - alert: MySQL_Group_Rep

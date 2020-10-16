@@ -58,7 +58,7 @@ unauthenticate_target_services:
   - 'consul'
   - 'dellhw'
   - 'docker'
-  - 'elastic'
+  - 'elasticsearch'
   - 'filebeat'
   - 'gitlab'
   - 'grafana'
@@ -110,15 +110,13 @@ prometheus_prober_exporters:
   - 'snmp_exporter'
 
 prometheus_alert_incident_severity:
-  disaster: 'disaster'
   critical: 'critical'
+  high: 'high'
   warning: 'warning'
-  medium: 'medium'
-  low: 'low'
+  info: 'info'
 
 prometheus_alert_incident_priority:
-  disaster: 'p0'
   critical: 'p1'
-  warning: 'p2'
-  medium: 'p3'
-  low: 'p4'
+  high: 'p2'
+  warning: 'p3'
+  info: 'p4'
