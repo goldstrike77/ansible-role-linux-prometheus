@@ -23,9 +23,9 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae' # The consul acl
 
 # Kubernetes SD configurations #
 #prometheus_kubernetes:
-#  - apiserver: 'Master-PRD-APIServer.service.dc01.local:6443'
+#  - apiserver: 'Demo-Master-PRD-APIServer.service.dc01.local:6443'
 #    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-#  - apiserver: 'Master-DEV-APIServer.service.dc01.local:6443'
+#  - apiserver: 'Demo-Master-DEV-APIServer.service.dc01.local:6443'
 #    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 # Role dependencies #
@@ -148,7 +148,7 @@ alertmanager_arg:
 #  wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
 #  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
 #  wechat_to_party: '1'
-#  webhook_url: 'http://MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+#  webhook_url: 'http://Demo-MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
@@ -201,7 +201,7 @@ thanos_obj_arg:
   retention: '365' # Days to retain samples in bucket.
   type: 'S3'
   bucket: 'thanos'
-  endpoint: 'storage-production-thanos-minio.service.dc01.local:9001'
+  endpoint: 'demo-storage-production-thanos-minio.service.dc01.local:9001'
   insecure: false
   signature_version2: false
   access_key: '0GTXRMXD4FDFWURPABCG'
