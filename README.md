@@ -318,9 +318,9 @@ prometheus_alert_incident_levels_map: 'severity'
 prometheus_consul_server: 'consul.service.dc01.local:8500'
 prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
 prometheus_kubernetes:
-  - apiserver: 'Demo-Master-PRD-APIServer.service.dc01.local:6443'
+  - apiserver: 'demo-master-prd-apiserver.service.dc01.local:6443'
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-  - apiserver: 'Demo-Master-DEV-APIServer.service.dc01.local:6443'
+  - apiserver: 'demo-master-dev-apiserver.service.dc01.local:6443'
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 prometheus_grafana_dept: true
 prometheus_grafana_ngx_dept: true
@@ -393,7 +393,7 @@ alertmanager_arg:
   wechat_to_party: '1'
   wechat_api_corpid: 'wxe787605fxxxxxxxx'
   wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-  webhook_url: 'http://Demo-MONITOR-Production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+  webhook_url: 'http://demo-monitor-production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:
   - 'Consul'
   - 'ElasticSearch'
