@@ -71,3 +71,10 @@ prometheus_mysql_alert_rules:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: "Group replication stopped."
+  - alert: MySQL_InnoDB_Deadlock
+    expr: 'irate(mysql_info_schema_innodb_metrics_lock_lock_deadlocks_total[5m]) > 5'
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "InnoDB deadlock was found with a value of {{ $value }}."
