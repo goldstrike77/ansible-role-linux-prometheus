@@ -205,11 +205,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 * `prometheus_grafana_ngx_compress`: Enables or disables compression.
 * `prometheus_grafana_ngx_domain`: Defines domain name.
-* `prometheus_grafana_ngx_pagespeed`: Enables or disables pagespeed modules.
 * `prometheus_grafana_ngx_port_http`: NGinx HTTP listen port.
 * `prometheus_grafana_ngx_port_https`: NGinx HTTPs listen port.
 * `prometheus_grafana_ngx_ssl_protocols`: intermediate or modern, defines SSL protocol profile.
-* `prometheus_grafana_ngx_version`: extras or standard
 
 ##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
@@ -275,6 +273,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `environments`: Define the service environment.
 * `datacenter`: Define the DataCenter.
 * `domain`: Define the Domain.
+* `customer`: Define the customer name.
 * `tags`: Define the service custom label.
 * `exporter_is_install`: Whether to install prometheus exporter.
 * `consul_public_register`: Whether register a exporter service with public consul client.
@@ -353,11 +352,9 @@ prometheus_grafana_ngx_block_agents: false
 prometheus_grafana_ngx_block_string: false
 prometheus_grafana_ngx_compress: false
 prometheus_grafana_ngx_domain: 'visual.example.com'
-prometheus_grafana_ngx_pagespeed: false
 prometheus_grafana_ngx_port_http: '80'
 prometheus_grafana_ngx_port_https: '443'
 prometheus_grafana_ngx_ssl_protocols: 'modern'
-prometheus_grafana_ngx_version: 'extras'
 prometheus_arg:
   evaluation_interval: '30s'
   query_max_concurrency: '1024'
@@ -413,14 +410,15 @@ thanos_obj_arg:
   retention: '365'
   type: 'S3'
   bucket: 'public'
-  endpoint: 'demo-storage-production-thanos-minio.service.dc01.local:9001'
+  endpoint: 'demo-prd-infra-monitor-minio-thanos.service.dc01.local:9001'
   insecure: false
   signature_version2: false
-  access_key: 'QTNTQZZP1NOBNCL5LPRX'
-  secret_key: 'b1mPOhMQc8JP49Jy8pJLsDwHayDtBFC3M9YxSmzM'
-environments: 'Development'
+  access_key: 'HYBBSS5EAC3RZEURZ3TQ'
+  secret_key: '4AElW1GQ59GMxq5SgvWzpN6wiZUapQZiMyhpeaAj'
+environments: 'prd'
 datacenter: 'dc01'
 domain: 'local'
+customer: 'demo'
 tags:
   subscription: 'default'
   owner: 'nobody'

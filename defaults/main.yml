@@ -64,11 +64,9 @@ prometheus_grafana_ngx_block_agents: false # Enables or disables block unsafe Us
 prometheus_grafana_ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
 prometheus_grafana_ngx_compress: false # Enables or disables compression.
 prometheus_grafana_ngx_domain: 'visual.example.com' # Defines domain name.
-prometheus_grafana_ngx_pagespeed: false # Enables or disables pagespeed modules.
 prometheus_grafana_ngx_port_http: '80' # NGinx HTTP listen port.
 prometheus_grafana_ngx_port_https: '443' # NGinx HTTPs listen port.
 prometheus_grafana_ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
-prometheus_grafana_ngx_version: 'standard' # extras or standard
 prometheus_grafana_ldap_enabled: false
 prometheus_grafana_ldap_allow_sign_up: false
 prometheus_grafana_ldap_arg:
@@ -110,11 +108,11 @@ prometheus_grafana_ldap_arg:
 
 # Prometheus System Variables #
 prometheus_arg:
-  evaluation_interval: '30s' # How frequently to evaluate rules
+  evaluation_interval: '60s' # How frequently to evaluate rules
   query_max_concurrency: '1024' # Maximum number of queries executed concurrently
   refresh_interval: '60s' # Refresh interval to re-read the instance list
   scrape_interval: '60s' # How frequently to scrape targets from this job
-  scrape_timeout: '10s' # How long until a scrape request times out
+  scrape_timeout: '30s' # How long until a scrape request times out
   storage_tsdb_block_duration: '2h' # Must be set to equal values to disable local compaction
   storage_tsdb_retention: '10d' # How long to retain samples in storage
   ulimit_core: 'infinity' # The number of coredump launched by systemd
@@ -201,16 +199,17 @@ thanos_obj_arg:
   retention: '365' # Days to retain samples in bucket.
   type: 'S3'
   bucket: 'thanos'
-  endpoint: 'demo-storage-production-thanos-minio.service.dc01.local:9001'
+  endpoint: 'demo-prd-infra-monitor-minio-thanos.service.dc01.local:9001'
   insecure: false
   signature_version2: false
-  access_key: '0GTXRMXD4FDFWURPABCG'
-  secret_key: 'ODaHlToJWUkbzWI1TNkbZX43SiFPLRLoZeASP0Z8'
+  access_key: 'HYBBSS5EAC3RZEURZ3TQ'
+  secret_key: '4AElW1GQ59GMxq5SgvWzpN6wiZUapQZiMyhpeaAj'
 
 # Service Mesh #
-environments: 'Development' # Define the service environment.
+environments: 'prd' # Define the service environment.
 datacenter: 'dc01'
 domain: 'local'
+customer: 'demo'
 #tags: # Define the service custom label.
 #  subscription: 'default'
 #  owner: 'nobody'

@@ -3,7 +3,7 @@ prometheus_conf_path: '/etc/prometheus'
 
 prometheus_server: "\
   {% set _prometheus_server = [] %}\
-  {% for host in groups[group_names[-1]] %}\
+  {% for host in groups[group_names[0]] %}\
     {% if ( prometheus_is_install ) %}\
       {% if _prometheus_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
     {% endif %}\
@@ -12,7 +12,7 @@ prometheus_server: "\
 
 thanos_server: "\
   {% set _thanos_server = [] %}\
-  {% for host in groups[group_names[-1]] %}\
+  {% for host in groups[group_names[0]] %}\
     {% if ( prometheus_is_install ) %}\
       {% if (hostvars[host]['ansible_host']) not in ansible_default_ipv4.address %}\
         {% if _thanos_server.append(hostvars[host]['ansible_host']) %}{% endif %}\
