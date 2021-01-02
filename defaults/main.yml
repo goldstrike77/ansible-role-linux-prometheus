@@ -158,6 +158,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'ElasticSearch'
   - 'Graylog'
   - 'HaProxy'
+  - 'Jenkins'
   - 'JMX'
   - 'Kafka'
   - 'KeepAlived'

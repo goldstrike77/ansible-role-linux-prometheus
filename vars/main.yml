@@ -62,6 +62,7 @@ unauthenticate_target_services:
   - 'grafana'
   - 'haproxy'
   - 'ingress-nginx'
+  - 'jenkins'
   - 'jmx'
   - 'kafka'
   - 'keepalived'

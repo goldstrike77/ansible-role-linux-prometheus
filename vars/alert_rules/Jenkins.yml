@@ -1,0 +1,58 @@
+---
+prometheus_jenkins_alert_rules:
+# Jenkins
+  - alert: JenkinsTooManyJobsQueued
+    expr: "jenkins_queue_size_value > 5"
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
+    annotations:
+      description: 'Has {{ $value | printf "%.0f" }} jobs queue.'
+
+  - alert: JenkinsTooManyJobsStuckInQueue
+    expr: "jenkins_queue_stuck_value > 5"
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
+    annotations:
+      description: 'Has {{ $value | printf "%.0f" }} jobs stuck in the queue.'
+
+  - alert: JenkinsWaitingTooMuchOnJobStart
+    expr: "jenkins_job_waiting_duration > 0.05"
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
+    annotations:
+      description: 'Waiting on average {{ $value | printf "%.2f" }} seconds to start a job.'
+
+  - alert: JenkinsTooLowJobSuccessRate
+    expr: "jenkins_runs_success_total / jenkins_runs_total_total < 0.60"
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
+    annotations:
+      description: 'Has {{ $value | printf "%.2f" }}% of jobs being successful.'
+
+  - alert: JenkinsTooManyPluginsNeedUpate
+    expr: "jenkins_plugins_withUpdate > 3"
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
+    annotations:
+      description: 'Has {{ $value | printf "%.0f" }} plugins that require an update.'
+
+  - alert: JenkinsHealthScoreToLow
+    expr: "jenkins_health_check_score < 1"
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
+    annotations:
+      description: 'Health score lower than 100%.'
+
+  - alert: JenkinsTooManyOfflineNodes
+    expr: "jenkins_node_offline_value > 1"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+    annotations:
+      description: 'Has {{ $value | printf "%.0f" }} nodes that are offline.'
