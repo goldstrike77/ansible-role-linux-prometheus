@@ -29,6 +29,15 @@
     mode: '0755'
   when: thanos_bucket_is_used | bool
 
+- name: Thanos cache config file transfer.
+  template:
+    src: 'cache.yml.j2'
+    dest: '{{ prometheus_data_path }}/thanos/cache.yml'
+    backup: 'no'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0644'
+
 - name: Thanos objstore config file transfer.
   template:
     src: 'bucket.yml.j2'

@@ -84,7 +84,7 @@ dependencies:
       grafana_ngx_domain: '{{ prometheus_grafana_ngx_domain }}'
       grafana_ngx_port_http: '{{ prometheus_grafana_ngx_port_http }}'
       grafana_ngx_port_https: '{{ prometheus_grafana_ngx_port_https }}'
-      grafana_ngx_ssl_protocols: '{{ prometheus_grafana_ngx_ssl_protocols }}'
+      grafana_ngx_ssl_protocols: 'modern'
       grafana_ngx_site:
         - domain: '{{ prometheus_grafana_ngx_domain }}'
           syntax:

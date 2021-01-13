@@ -207,7 +207,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_ngx_domain`: Defines domain name.
 * `prometheus_grafana_ngx_port_http`: NGinx HTTP listen port.
 * `prometheus_grafana_ngx_port_https`: NGinx HTTPs listen port.
-* `prometheus_grafana_ngx_ssl_protocols`: intermediate or modern, defines SSL protocol profile.
 
 ##### Prometheus System Variables
 * `prometheus_arg.evaluation_interval`: How frequently to evaluate rules.
@@ -251,6 +250,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_arg.index_cache_size`: Maximum size of items held in the index cache.
 * `thanos_arg.log_format`: Log format.
 * `thanos_arg.log_level`: Log level.
+* `thanos_arg.max_size`: Maximum memory size of the cache in bytes.
 * `thanos_arg.query_auto_downsampling`: Enable automatic adjustment source data.
 * `thanos_arg.query_max_concurrent`: Maximum number of queries processed concurrently.
 * `thanos_arg.query_timeout`: Maximum time to process query.
@@ -354,7 +354,6 @@ prometheus_grafana_ngx_compress: false
 prometheus_grafana_ngx_domain: 'visual.example.com'
 prometheus_grafana_ngx_port_http: '80'
 prometheus_grafana_ngx_port_https: '443'
-prometheus_grafana_ngx_ssl_protocols: 'modern'
 prometheus_arg:
   evaluation_interval: '30s'
   query_max_concurrency: '1024'
@@ -399,6 +398,7 @@ thanos_arg:
   index_cache_size: '1GB'
   log_format: 'logfmt'
   log_level: 'info'
+  max_size: '256MB'
   query_auto_downsampling: false
   query_max_concurrent: '1024'
   query_timeout: '1m'

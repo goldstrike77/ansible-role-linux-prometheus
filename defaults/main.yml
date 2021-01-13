@@ -66,7 +66,6 @@ prometheus_grafana_ngx_compress: false # Enables or disables compression.
 prometheus_grafana_ngx_domain: 'visual.example.com' # Defines domain name.
 prometheus_grafana_ngx_port_http: '80' # NGinx HTTP listen port.
 prometheus_grafana_ngx_port_https: '443' # NGinx HTTPs listen port.
-prometheus_grafana_ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
 prometheus_grafana_ldap_enabled: false
 prometheus_grafana_ldap_allow_sign_up: false
 prometheus_grafana_ldap_arg:
@@ -187,6 +186,7 @@ thanos_arg:
   index_cache_size: '1GB' # Maximum size of items held in the index cache
   log_format: 'logfmt'
   log_level: 'info'
+  max_size: '256MB' # Maximum memory size of the cache in bytes.
   query_auto_downsampling: false # Enable automatic adjustment source data
   query_max_concurrent: '1024' # Maximum number of queries processed concurrently
   query_timeout: '1m' # Maximum time to process query

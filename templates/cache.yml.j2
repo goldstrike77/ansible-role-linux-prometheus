@@ -1,0 +1,5 @@
+type: IN-MEMORY
+config:
+  max_size: "{{ thanos_arg.max_size | default('256MB') }}"
+  max_size_items: 0
+  validity: 0s
