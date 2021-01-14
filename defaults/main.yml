@@ -198,13 +198,24 @@ thanos_arg:
 # Thanos objstore Variables #
 thanos_obj_arg:
   retention: '365' # Days to retain samples in bucket.
-  type: 'S3'
+  type: 'S3' # Define the Object Storage Provider, Possible values are S3, AZURE, ALIYUNOSS.
+# S3
   bucket: 'thanos'
   endpoint: 'demo-prd-infra-monitor-minio-thanos.service.dc01.local:9001'
   insecure: false
   signature_version2: false
   access_key: 'HYBBSS5EAC3RZEURZ3TQ'
   secret_key: '4AElW1GQ59GMxq5SgvWzpN6wiZUapQZiMyhpeaAj'
+# AZURE
+#  storage_account: "sashapinfmon01"
+#  storage_account_key: "ARV1F8G6s1EI5ieyQnQNXpE67UK/uzREgQIYd3sTIDnO8vaBxQfuuhTAqAkd+A6hUaMNcix5mJw/gMc/IJ7bPg=="
+#  container: "thanos"
+#  endpoint: "blob.core.chinacloudapi.cn"
+# ALIYUNOSS
+#  endpoint: ""
+#  bucket: ""
+#  access_key_id: ""
+#  access_key_secret: ""
 
 # Service Mesh #
 environments: 'prd' # Define the service environment.

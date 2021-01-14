@@ -1,12 +1,26 @@
-type: {{ thanos_obj_arg.type }}
+type: {{ thanos_obj_arg.type | upper }}
 config:
-  bucket: {{ thanos_obj_arg.bucket }}
-  endpoint: {{ thanos_obj_arg.endpoint | lower }}
+{% if thanos_obj_arg.type | upper == "S3" %}
+  bucket: "{{ thanos_obj_arg.bucket | default(thanos) }}"
+  endpoint: "{{ thanos_obj_arg.endpoint | lower }}"
   insecure: {{ thanos_obj_arg.insecure | bool | to_json }}
   signature_version2: {{ thanos_obj_arg.signature_version2 | bool | to_json }}
-  access_key: {{ thanos_obj_arg.access_key }}
-  secret_key: {{ thanos_obj_arg.secret_key }}
+  access_key: "{{ thanos_obj_arg.access_key }}"
+  secret_key: "{{ thanos_obj_arg.secret_key }}"
   http_config:
     idle_conn_timeout: 1m30s
     response_header_timeout: 2m
     insecure_skip_verify: true
+{% elif thanos_obj_arg.type | upper == "AZURE" %}
+  storage_account: "{{ thanos_obj_arg.storage_account }}"
+  storage_account_key: "{{ thanos_obj_arg.storage_account_key }}"
+  container: "{{ thanos_obj_arg.container | default(thanos) }}"
+  endpoint: "{{ thanos_obj_arg.endpoint | default('blob.core.chinacloudapi.cn') }}"
+  max_retries: 0
+{% elif thanos_obj_arg.type | upper == "ALIYUNOSS" %}
+  endpoint: "{{ thanos_obj_arg.endpoint }}"
+  bucket: "{{ thanos_obj_arg.bucket | default(thanos) }}"
+  access_key_id: "{{ thanos_obj_arg.access_key_id }}"
+  access_key_secret: "{{ thanos_obj_arg.access_key_secret }}"
+{% else %}
+{% endif %}

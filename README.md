@@ -261,7 +261,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### Thanos objstore Variables
 * `thanos_obj_arg.retention`: Days to retain samples in bucket.
-* `thanos_obj_arg.type`: Objstore service type.
+* `thanos_obj_arg.type`: Define the Object Storage Provider, Possible values are S3, AZURE, ALIYUNOSS.
 * `thanos_obj_arg.bucket`: Object storage bucket name.
 * `thanos_obj_arg.endpoint`: Objstore service endpoint.
 * `thanos_obj_arg.insecure`: Objstore service. 
