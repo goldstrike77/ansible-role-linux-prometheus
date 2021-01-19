@@ -170,6 +170,7 @@ prometheus_alert_rules: # Defining alerting rules.
   - 'NGinx'
   - 'OpenLDAP'
   - 'OS'
+  - 'OSSec'
   - 'Php'
   - 'PostgreSQL'
   - 'Prometheus'

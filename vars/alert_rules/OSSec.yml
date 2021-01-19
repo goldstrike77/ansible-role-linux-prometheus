@@ -1,0 +1,73 @@
+---
+prometheus_ossec_alert_rules:
+# OSSec
+  - alert: daemons_analysisd_stop
+    expr: "ossec_analysisd_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Analysisd daemon have been stopped."
+  - alert: daemons_authd_stop
+    expr: "ossec_authd_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Authd daemon have been stopped."
+  - alert: daemons_execd_stop
+    expr: "ossec_execd_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Execd daemon have been stopped."
+  - alert: daemons_logcollector_stop
+    expr: "ossec_logcollector_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Logcollector daemon have been stopped."
+  - alert: daemons_monitord_stop
+    expr: "ossec_monitord_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Monitord daemon have been stopped."
+  - alert: daemons_remoted_stop
+    expr: "ossec_remoted_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Remoted daemon have been stopped."
+  - alert: daemons_syscheckd_stop
+    expr: "ossec_syscheckd_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Syscheckd daemon have been stopped."
+  - alert: daemons_apid_stop
+    expr: "wazuh_apid_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Apid daemon have been stopped."
+  - alert: daemons_db_stop
+    expr: "wazuh_db_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "DB daemon have been stopped."
+  - alert: daemons_modulesd_stop
+    expr: "wazuh_modulesd_up == 0"
+    for: 5m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: "Modulesd daemon have been stopped."
