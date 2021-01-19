@@ -57,8 +57,8 @@ scrape_configs:
 {% endif %}
   - job_name: 'Authenticate exporters'
     basic_auth:
-      username: prometheus
-      password: password
+      username: 'prometheus'
+      password: 'tj@VH9ECytRF'
     tls_config:
       insecure_skip_verify: true
     consul_sd_configs:

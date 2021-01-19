@@ -389,7 +389,7 @@ alertmanager_arg:
   wechat_to_party: '1'
   wechat_api_corpid: 'wxe787605fxxxxxxxx'
   wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-  webhook_url: 'http://demo-monitor-production-alerta.service.dc01.local:19199/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+  webhook_url: 'http://demo-monitor-production-alerta.service.dc01.local:19199/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:
   - 'Consul'
   - 'ElasticSearch'

@@ -75,6 +75,7 @@ unauthenticate_target_services:
   - 'nginx'
   - 'node'
   - 'openldap'
+  - 'ossec'
   - 'packetbeat'
   - 'php-fpm'
   - 'postgres'
