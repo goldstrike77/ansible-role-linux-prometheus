@@ -9,7 +9,7 @@ prometheus_mongodb_alert_rules:
     annotations:
       description: "Instance has been stoped."
   - alert: MongoDB_Rep_Lag
-    expr: 'avg by (environment,group,instance,service<< tags_key | default("") >>)(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg by (environment,group,instance,service<< tags_key | default("") >>)(mongodb_mongod_replset_member_optime_date{state="SECONDARY"}) > 60'
+    expr: 'avg by (customer,environment,project,group,instance,service<< tags_key | default("") >>)(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg by (customer,environment,project,group,instance,service<< tags_key | default("") >>)(mongodb_mongod_replset_member_optime_date{state="SECONDARY"}) > 60'
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
