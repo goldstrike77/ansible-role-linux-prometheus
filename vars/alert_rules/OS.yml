@@ -24,7 +24,6 @@ prometheus_os_alert_rules:
       description: 'Processor usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
   - alert: node_RAM_Usage
     expr: '((sum(node_memory_MemTotal_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>) - sum(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes )by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) / (sum(node_memory_MemTotal_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) * 100 > 90) or ((sum(wmi_cs_physical_memory_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>) - sum(wmi_os_physical_memory_free_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) / (sum(wmi_cs_physical_memory_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) * 100 > 90)'
-
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>

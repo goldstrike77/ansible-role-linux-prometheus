@@ -10,7 +10,7 @@ prometheus_thanos_alert_rules:
       description: 'The Thanos component state is abnormal.'
 
   - alert: Thanos_Compact_Halted
-    expr: thanos_compactor_halted{service="thanos-compact_exporter"} == 1
+    expr: thanos_compactor_halted{service="thanos-compact"} == 1
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
@@ -18,7 +18,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos compaction has failed to run and now is halted.'
 
   - alert: Thanos_Compact_CompactionsFailed
-    expr: rate(prometheus_tsdb_compactions_failed_total{service="thanos-compact_exporter"}[5m]) > 0
+    expr: rate(prometheus_tsdb_compactions_failed_total{service="thanos-compact"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -26,7 +26,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Compact is failing compaction.'
 
   - alert: Thanos_Compact_BucketOperationsFailed
-    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-compact_exporter"}[5m]) > 0
+    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-compact"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -34,7 +34,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Compact bucket operations are failing.'
 
   - alert: Thanos_Compact_NotRunIn24Hours
-    expr: (time() - max by(customer,environment,project,group,instance,service<< tags_key | default('') >>)(thanos_objstore_bucket_last_successful_upload_time{service="thanos-compact_exporter"}) ) /60/60 > 24
+    expr: (time() - max by(customer,environment,project,group,instance,service<< tags_key | default('') >>)(thanos_objstore_bucket_last_successful_upload_time{service="thanos-compact"}) ) /60/60 > 24
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -42,7 +42,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Compaction has not been run in 24 hours.'
 
   - alert: Thanos_Compact_IsNotRunning
-    expr: up{service="thanos-compact_exporter"} == 0 or absent({service="thanos-compact_exporter"})
+    expr: up{service="thanos-compact"} == 0 or absent({service="thanos-compact"})
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -50,7 +50,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Compaction is not running.'
 
   - alert: Thanos_Compact_MultipleCompactionsAreRunning
-    expr: sum by(customer,environment,project,group,instance,service<< tags_key | default('') >>)(up{service="thanos-compact_exporter"}) > 1
+    expr: sum by(customer,environment,project,group,instance,service<< tags_key | default('') >>)(up{service="thanos-compact"}) > 1
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -58,7 +58,7 @@ prometheus_thanos_alert_rules:
       description: "Multiple replicas of Thanos compaction shouldn't be running."
 
   - alert: Thanos_Store_GrpcErrorRate
-    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-store_exporter"}[5m]) > 0
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-store"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -66,7 +66,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Store is returning Internal/Unavailable errors.'
 
   - alert: Thanos_Store_BucketOperationsFailed
-    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-store_exporter"}[5m]) > 0
+    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-store"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -74,7 +74,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Store is failing to do bucket operations.'
 
   - alert: Thanos_Sidecar_Prometheus
-    expr: thanos_sidecar_prometheus_up{service="thanos-sidecar_exporter"} == 0
+    expr: thanos_sidecar_prometheus_up{service="thanos-sidecar"} == 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
@@ -82,7 +82,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Sidecar cannot connect to Prometheus.'
 
   - alert: Thanos_Sidecar_BucketOperationsFailed
-    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-sidecar_exporter"}[5m]) > 0
+    expr: rate(thanos_objstore_bucket_operation_failures_total{service="thanos-sidecar"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -90,7 +90,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Sidecar bucket operations are failing.'
 
   - alert: Thanos_Sidecar_GrpcErrorRate
-    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-sidecar_exporter"}[5m]) > 0
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-sidecar"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -98,7 +98,7 @@ prometheus_thanos_alert_rules:
       description: 'Thanos Sidecar is returning Internal/Unavailable errors.'
 
   - alert: Thanos_Query_GrpcErrorRate
-    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-query_exporter"}[5m]) > 0
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",service="thanos-query"}[5m]) > 0
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
