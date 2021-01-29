@@ -116,7 +116,7 @@ prometheus_kubernetes_alert_rules:
   - alert: KubeClientErrors
     annotations:
       description: Kubernetes API server client is experiencing {{ printf "%0.0f" $value }}% errors.'
-    expr: '(sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (customer,environment,project,group,instance,service<< tags_key | default("") >>) / sum(rate(rest_client_requests_total[5m])) by (customer,environment,project,group,instance,service<< tags_key | default("") >>)) * 100 > 1'
+    expr: '(sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) / sum(rate(rest_client_requests_total[5m])) by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) * 100 > 1'
     for: 15m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -132,14 +132,14 @@ prometheus_kubernetes_alert_rules:
   - alert: KubeClientCertificateExpiration
     annotations:
       description: A client certificate used to authenticate to the apiserver is expiring in less than 7 days.
-    expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,customer,environment,project,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 604800"
+    expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 604800"
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
   
   - alert: KubeClientCertificateExpiration
     annotations:
       description: A client certificate used to authenticate to the apiserver is expiring in less than 24 hours.
-    expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,customer,environment,project,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 86400"
+    expr: "apiserver_client_certificate_expiration_seconds_count > 0 and histogram_quantile(0.01, sum by (le,datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) (rate(apiserver_client_certificate_expiration_seconds_bucket[5m]))) < 86400"
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
 
@@ -170,7 +170,7 @@ prometheus_kubernetes_alert_rules:
   - alert: HPAScaleCapability
     annotations:
       description: 'HPA has hit the maximum number of desired Pods.'
-    expr: 'sum(kube_hpa_status_desired_replicas) by (hpa,customer,environment,project,group,instance,service<< tags_key | default("") >>) >= sum(kube_hpa_spec_max_replicas) by (hpa,customer,environment,project,group,instance,service<< tags_key | default("") >>)'
+    expr: 'sum(kube_hpa_status_desired_replicas) by (hpa,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) >= sum(kube_hpa_spec_max_replicas) by (hpa,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)'
     for: 30m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>

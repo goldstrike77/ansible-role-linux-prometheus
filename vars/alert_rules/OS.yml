@@ -14,21 +14,21 @@ prometheus_os_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Processor load has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
+      description: 'Processor load has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: node_CPU_usage
-    expr: '((100 * (1 - avg by(customer,environment,project,group,instance,service<< tags_key | default('') >>)(irate(node_cpu_seconds_total{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(customer,environment,project,group,instance,service<< tags_key | default('') >>)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)'
+    expr: '((100 * (1 - avg by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>)(irate(node_cpu_seconds_total{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Processor usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
+      description: 'Processor usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: node_RAM_Usage
-    expr: '((sum(node_memory_MemTotal_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>) - sum(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes )by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) / (sum(node_memory_MemTotal_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) * 100 > 90) or ((sum(wmi_cs_physical_memory_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>) - sum(wmi_os_physical_memory_free_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) / (sum(wmi_cs_physical_memory_bytes)by(customer,environment,project,group,instance,service<< tags_key | default('') >>)) * 100 > 90)'
+    expr: '((sum(node_memory_MemTotal_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) - sum(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes )by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>)) / (sum(node_memory_MemTotal_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>)) * 100 > 90) or ((sum(wmi_cs_physical_memory_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) - sum(wmi_os_physical_memory_free_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>)) / (sum(wmi_cs_physical_memory_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>)) * 100 > 90)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.2f" }}%.'
+      description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: node_FS_Usage
     expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)) * 100'
     for: 10m
@@ -86,14 +86,14 @@ prometheus_os_alert_rules:
     annotations:
       description: "Service has been stoped."
   - alert: node_Disc_Read
-    expr: '(sum by (customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(node_disk_read_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(wmi_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
+    expr: '(sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(node_disk_read_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(wmi_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Disk is probably reading too much data with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_Disc_Write
-    expr: '(sum by (customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(node_disk_written_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(wmi_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
+    expr: '(sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(node_disk_written_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default('') >>) (irate(wmi_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>

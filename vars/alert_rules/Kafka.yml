@@ -2,7 +2,7 @@
 prometheus_kafka_alert_rules:
 # Kafka
   - alert: Kafka_ConsumersGroup
-    expr: "sum(kafka_consumergroup_lag) by (customer,environment,project,group,instance,service,consumergroup<< tags_key | default('') >>) > 50"
+    expr: "sum(kafka_consumergroup_lag) by (datacenter,customer,environment,project,group,instance,service,consumergroup<< tags_key | default('') >>) > 50"
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>

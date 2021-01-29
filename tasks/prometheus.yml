@@ -13,9 +13,9 @@
   file:
     dest: '{{ prometheus_conf_path }}/{{ item }}'
     state: 'directory'
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0750'
   loop:
     - 'rules'
     - 'templates'
@@ -27,7 +27,7 @@
     state: 'directory'
     owner: 'prometheus'
     group: 'prometheus'
-    mode: '0755'
+    mode: '0750'
   loop: '{{ prometheus_service }}'
 
 - name: Prometheus configure file transfer.

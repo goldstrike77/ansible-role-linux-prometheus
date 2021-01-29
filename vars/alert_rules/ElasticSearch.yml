@@ -14,7 +14,7 @@ prometheus_elasticsearch_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'ElasticSearch node heap usage is over 90% with a value of {{ $value | printf "%.2f" }}%.'
+      description: 'ElasticSearch node heap usage is over 90% with a value of {{ $value | printf "%.0f" }}%.'
 #  - alert: Elastic_Cluster_Downgrade
 #    expr: "elasticsearch_cluster_health_number_of_nodes < 3"
 #    for: 10m

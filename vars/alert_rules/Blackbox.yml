@@ -2,21 +2,21 @@
 prometheus_blackbox_alert_rules:
 # Blackbox
   - alert: WebSite
-    expr: "avg by (customer,environment,project,group,instance,service,target<< tags_key | default('') >>) (probe_success == 0)"
+    expr: "avg by (datacenter,customer,environment,project,group,instance,service,target<< tags_key | default('') >>) (probe_success == 0)"
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: 'Endpoint has been unreachable.'
   - alert: SSLCertExpiringSoon
-    expr: "avg by (customer,environment,project,group,instance,service,target<< tags_key | default('') >>) ((probe_ssl_earliest_cert_expiry - time()) / 86400 < 35)"
+    expr: "avg by (datacenter,customer,environment,project,group,instance,service,target<< tags_key | default('') >>) ((probe_ssl_earliest_cert_expiry - time()) / 86400 < 35)"
     for: 60m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'SSL certificate expires in {{ $value | printf "%.0f" }} days.'
   - alert: StatusCode
-    expr: "avg by (customer,environment,project,group,instance,service,target<< tags_key | default('') >>) (probe_http_status_code <= 99 or probe_http_status_code >= 400)"
+    expr: "avg by (datacenter,customer,environment,project,group,instance,service,target<< tags_key | default('') >>) (probe_http_status_code <= 99 or probe_http_status_code >= 400)"
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
