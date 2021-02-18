@@ -4,7 +4,7 @@ global:
   scrape_timeout:      {{ prometheus_arg.scrape_timeout }}
   evaluation_interval: {{ prometheus_arg.evaluation_interval }}
   external_labels:
-    replica: {{ inventory_hostname|upper }}
+    replica: {{ ansible_hostname|upper }}
 
 # Alertmanager configuration
 alerting:
