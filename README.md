@@ -33,6 +33,7 @@ __Table of Contents__
 - [License](#license)
 - [Author Information](#author-information)
 - [Contributors](#Contributors)
+- [Donations](#Donations)
 
 
 ## Introduction
@@ -443,3 +444,8 @@ Please send your suggestions to make this role better.
 
 ## Contributors
 Special thanks to the [Connext Information Technology](http://www.connext.com.cn) for their contributions to this role.
+
+## Donations
+By donating to the following Monero address.
+
+    46CHVMbb6wQV2PJYEbahb353SYGqXhcdFQVEWdCnHb6JaR5125h3kNQ6bcqLye5G7UF7qz6xL9qHLDSAY3baagfmLZABz75
