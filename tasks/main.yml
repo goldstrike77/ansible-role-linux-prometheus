@@ -11,34 +11,9 @@
 - name: Include prober exporter tasks.
   include: 'exporter.yml'
 
-- name: Restart the prometheus service.
-  shell: echo ''
-  notify: 'Restart prometheus service'
-  when: soft_updated is changed or soft_config is changed
-
-- name: Restart the prober exporter service.
-  shell: echo ''
-  notify: 'Restart prober exporter service'
-  when: prober_soft_updated is changed or prober_config is changed or prober_system is changed or prober_yaml is changed
-
 - name: Include thanos tasks.
   include: 'thanos.yml'
   when: thanos_is_install | bool
-
-- name: Restart the thanos base components service.
-  shell: echo ''
-  notify: 'Restart thanos base components service'
-  when: thanos_base_systemd is changed or thanos_base_default is changed or thanos_bucket is changed
-
-- name: Restart thanos optional components service.
-  shell: echo ''
-  notify: 'Restart thanos optional components service'
-  when: thanos_opti_systemd is changed or thanos_opti_default is changed or thanos_bucket is changed
-
-- name: Restart thanos stand alone components service.
-  shell: echo ''
-  notify: 'Restart thanos stand alone components service'
-  when: (thanos_stand_systemd is changed or thanos_stand_default is changed or thanos_bucket is changed) and prometheus_server[0] in ansible_default_ipv4.address
 
 - name: Force the handler to run immediately.
   meta: flush_handlers

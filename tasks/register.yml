@@ -48,7 +48,7 @@
   failed_when: false
   register: check_consul_reg
 
-- name: Register Prometheus common exporter with an health check.
+- name: Register Prometheus common exporter.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.0.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -72,7 +72,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register Prometheus prober exporter with an health check.
+- name: Register Prometheus prober exporter.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.0.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -96,7 +96,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register Thanos base component exporter with an health check.
+- name: Register Thanos base component exporter.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.0.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -122,7 +122,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register Thanos optiona component exporter with an health check.
+- name: Register Thanos optiona component exporter.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.0.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'
@@ -149,7 +149,7 @@
   changed_when: false
   failed_when: false
 
-- name: Register Thanos standalone component exporter with an health check.
+- name: Register Thanos standalone component exporter.
   uri:
     url: '{{ consul_public_http_prot }}://{{ item.0.client }}:{{ consul_public_http_port }}/v1/agent/service/register'
     method: 'PUT'

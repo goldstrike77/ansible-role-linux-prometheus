@@ -166,8 +166,8 @@ for example:
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `thanos_is_install`: A boolean value, whether install the Thanos.
-* `thanos_bucket_is_used`: A boolean value, whether use object storage.
+* `thanos_is_install`: A boolean to determine whether or not to install the Thanos.
+* `thanos_bucket_is_used`: A boolean to determine whether or not to use object storage.
 * `prometheus_data_path`: Specify the Prometheus configure directory.
 * `prometheus_alert_incident_levels_map`: Defines the display mode of incident alarm, severity or priority.
 
@@ -179,8 +179,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_kubernetes`: The Kubernetes API server information.
 
 ##### Role dependencies
-* `prometheus_grafana_dept`: A boolean value, whether install the Grafana for metrics visualization.
-* `prometheus_grafana_ngx_dept`: A boolean value, whether proxy Grafana web interface using NGinx.
+* `prometheus_grafana_dept`: A boolean to determine whether or not to install the Grafana for metrics visualization.
+* `prometheus_grafana_ngx_dept`: A boolean to determine whether or not to proxy Grafana web interface using NGinx.
 
 ##### Listen port
 * `prometheus_port.alertmanager`: alertmanager instance listen port.
@@ -261,14 +261,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `thanos_arg.ulimit_nproc`: The number of processes launched by systemd.
 
 ##### Thanos objstore Variables
-* `thanos_obj_arg.retention`: Days to retain samples in bucket.
-* `thanos_obj_arg.type`: Define the Object Storage Provider, Possible values are S3, AZURE, ALIYUNOSS.
-* `thanos_obj_arg.bucket`: Object storage bucket name.
-* `thanos_obj_arg.endpoint`: Objstore service endpoint.
-* `thanos_obj_arg.insecure`: Objstore service. 
-* `thanos_obj_arg.signature_version2`: I real don't know what that means.
-* `thanos_obj_arg.access_key`: AccessKeyID.
-* `thanos_obj_arg.secret_key`: SecretAccessKey.
+* `thanos_obj_arg`: Defines Object Storage implementation configurations.
 
 ##### Service Mesh
 * `environments`: Define the service environment.

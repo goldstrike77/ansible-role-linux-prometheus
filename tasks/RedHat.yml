@@ -13,14 +13,17 @@
 
 - name: Install the prometheus.
   yum:
-    name: '{{ prometheus_software }}'
+    name: '{{ item.package }}'
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
-  register: soft_updated
-  until: soft_updated is succeeded
+  register: prom_soft_updated
+  until: prom_soft_updated is succeeded
+  loop: '{{ prometheus_software }}'
+  when: item.create | default(true) | bool
   retries: 5
   delay: 2
+  notify: 'Restart prometheus service.'
 
 - name: Install the prober exporters.
   yum:
@@ -28,19 +31,8 @@
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
-  register: prober_soft_updated
-  until: prober_soft_updated is succeeded
+  register: prom_prober_soft_updated
+  until: prom_prober_soft_updated is succeeded
   retries: 5
   delay: 2
-
-- name: Install the thanos.
-  yum:
-    name: 'thanos'
-    state: 'present'
-    validate_certs: 'no'
-    disable_gpg_check: 'yes'
-  register: thanos_upgrade
-  until: thanos_upgrade is succeeded
-  retries: 5
-  delay: 2
-  when: thanos_is_install | bool
+  notify: 'Restart prober exporter service.'

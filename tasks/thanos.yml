@@ -7,7 +7,7 @@
     group: 'root'
     mode: '0644'
   loop: '{{ thanos_base_components }}'
-  register: thanos_base_systemd
+  notify: 'Restart thanos base components service.'
 
 - name: Thanos base components default file transfer.
   template:
@@ -18,7 +18,7 @@
     group: 'root'
     mode: '0644'
   loop: '{{ thanos_base_components }}'
-  register: thanos_base_default
+  notify: 'Restart thanos base components service.'
 
 - name: Creating Thanos data folder.
   file:
@@ -47,7 +47,7 @@
     group: 'prometheus'
     mode: '0644'
   when: thanos_bucket_is_used | bool
-  register: thanos_bucket
+  notify: 'Restart thanos base components service.'
 
 - name: Thanos optional components systemd service file transfer.
   template:
@@ -59,7 +59,7 @@
     mode: '0644'
   loop: '{{ thanos_opti_components }}'
   when: thanos_bucket_is_used | bool
-  register: thanos_opti_systemd
+  notify: 'Restart thanos optional components service.'
 
 - name: Thanos optional components default file transfer.
   template:
@@ -71,7 +71,7 @@
     mode: '0644'
   loop: '{{ thanos_opti_components }}'
   when: thanos_bucket_is_used | bool
-  register: thanos_opti_default
+  notify: 'Restart thanos optional components service.'
 
 - name: Creating Thanos compact process folder.
   file:
@@ -96,7 +96,7 @@
   when:
     - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
-  register: thanos_stand_systemd
+  notify: 'Restart thanos stand alone components service.'
 
 - name: Thanos stand alone components default file transfer.
   template:
@@ -110,4 +110,4 @@
   when:
     - thanos_bucket_is_used | bool
     - prometheus_server[0] in ansible_default_ipv4.address
-  register: thanos_stand_default
+  notify: 'Restart thanos stand alone components service.'

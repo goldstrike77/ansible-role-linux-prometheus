@@ -1,5 +1,5 @@
 ---
-- name: Restart prometheus service
+- name: Restart prometheus service.
   systemd:
     name: '{{ item }}.service'
     enabled: 'yes'
@@ -7,7 +7,7 @@
     daemon_reload: 'yes'
   loop: '{{ prometheus_service }}'
 
-- name: Restart prober exporter service
+- name: Restart prober exporter service.
   systemd:
     name: '{{ item }}.service'
     enabled: 'yes'
@@ -15,13 +15,13 @@
     daemon_reload: 'yes'
   loop: '{{ prometheus_prober_exporters }}'
 
-- name: Reload prometheus service
+- name: Reload prometheus service.
   systemd:
     name: '{{ item }}.service'
     state: 'reloaded'
   loop: '{{ prometheus_service }}'
 
-- name: Restart thanos base components service
+- name: Restart thanos base components service.
   systemd:
     name: 'thanos-{{ item }}.service'
     enabled: 'yes'
@@ -29,7 +29,7 @@
     daemon_reload: 'yes'
   loop: '{{ thanos_base_components }}'
 
-- name: Restart thanos optional components service
+- name: Restart thanos optional components service.
   systemd:
     name: 'thanos-{{ item }}.service'
     enabled: 'yes'
@@ -37,7 +37,7 @@
     daemon_reload: 'yes'
   loop: '{{ thanos_opti_components }}'
 
-- name: Restart thanos stand alone components service
+- name: Restart thanos stand alone components service.
   systemd:
     name: 'thanos-{{ item }}.service'
     enabled: 'yes'

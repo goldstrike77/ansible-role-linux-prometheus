@@ -39,7 +39,7 @@
     group: 'root'
     mode: '0644'
   loop: '{{ prometheus_conf_files }}'
-  register: soft_config
+  notify: 'Restart prometheus service.'
 
 - name: Prometheus alerting template file transfer.
   copy:
@@ -49,7 +49,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  notify: 'Reload prometheus service'
+  notify: 'Reload prometheus service.'
 
 - name: Include rules for alertmanager.
   include_vars:
@@ -85,7 +85,7 @@
     validate: "/bin/promtool check rules %s"
   loop: '{{ prometheus_alert_rules }}'
   when: prometheus_alert_rules != []
-  notify: 'Reload prometheus service'
+  notify: 'Reload prometheus service.'
 
 - name: Prometheus alerting rules template erase.
   file:

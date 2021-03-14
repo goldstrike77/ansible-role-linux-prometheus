@@ -2,6 +2,7 @@
 prometheus_repo_name: 'prometheus'
 prometheus_repo_url: 'http://cache.omygods.com/prometheus-rpm/release/el/$releasever/$basearch/'
 prometheus_software:
-  - 'alertmanager'
-  - 'prometheus2'
-  - 'pushgateway'
+  - { package: 'alertmanager' }
+  - { package: 'prometheus2' }
+  - { package: 'pushgateway' }
+  - { package: 'thanos', create: '{{ thanos_is_install | bool }}' }

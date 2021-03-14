@@ -1,8 +1,8 @@
 ---
 # General parameters #
 prometheus_is_install: false # A boolean value, whether install the Prometheus.
-thanos_is_install: false # A boolean value, whether install the Thanos.
-thanos_bucket_is_used: false # A boolean value, whether use object storage.
+thanos_is_install: false # A boolean to determine whether or not to install the Thanos.
+thanos_bucket_is_used: false # A boolean to determine whether or not to use object storage.
 prometheus_data_path: '/data' # Specify the Prometheus configure directory.
 prometheus_alert_incident_levels_map: 'severity' # Defines the display mode of incident alarm, severity or priority.
 # ┌──────────┬──────────┐
@@ -29,8 +29,8 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae' # The consul acl
 #    token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 # Role dependencies #
-prometheus_grafana_dept: true # A boolean value, whether install the Grafana for metrics visualization.
-prometheus_grafana_ngx_dept: true # A boolean value, whether proxy Grafana web interface using NGinx.
+prometheus_grafana_dept: true # A boolean to determine whether or not to install the Grafana for metrics visualization.
+prometheus_grafana_ngx_dept: true # A boolean to determine whether or not to proxy Grafana web interface using NGinx.
 
 # Listen port #
 prometheus_port: 
