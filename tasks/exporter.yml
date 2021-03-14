@@ -8,8 +8,7 @@
     group: 'root'
     mode: '0644'
   loop: '{{ prometheus_prober_exporters }}'
-  notify:
-    - Restart prober exporter service.
+  notify: 'Restart prober exporter service.'
 
 - name: Prober exporters configure file transfer.
   template:
@@ -20,8 +19,7 @@
     group: 'root'
     mode: '0644'
   loop: '{{ prometheus_prober_exporters }}'
-  notify:
-    - Restart prober exporter service.
+  notify: 'Restart prober exporter service.'
 
 - name: Prober exporters systemd file transfer.
   template:
@@ -31,5 +29,4 @@
     group: 'root'
     mode: '0644'
   loop: '{{ prometheus_prober_exporters }}'
-  notify:
-    - Restart prober exporter service.
+  notify: 'Restart prober exporter service.'
