@@ -202,9 +202,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_https`: A boolean value, whether Encrypting HTTP client communications.
 * `prometheus_grafana_port`: Grafana instance listen port.
 * `prometheus_grafana_proxy`: Whether running behind a HaProxy.
-* `prometheus_grafana_ngx_block_agents`: Enables or disables block unsafe User Agents.
-* `prometheus_grafana_ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
-* `prometheus_grafana_ngx_compress`: Enables or disables compression.
 * `prometheus_grafana_ngx_domain`: Defines domain name.
 * `prometheus_grafana_ngx_port_http`: NGinx HTTP listen port.
 * `prometheus_grafana_ngx_port_https`: NGinx HTTPs listen port.
@@ -237,7 +234,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.smtp_require_tls`: The SMTP TLS requirement.
 * `alertmanager_arg.smtp_smarthost`: The SMTP host through which emails are sent.
 * `alertmanager_arg.wechat_api_agentid`: The wechat agent ID.
-* `alertmanager_arg.wechat_api_url`: The WeChat API URL.
 * `alertmanager_arg.wechat_to_party`: The WeChat department to send notifications to.
 * `alertmanager_arg.wechat_api_corpid`: The corp id for authentication.
 * `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
@@ -342,9 +338,6 @@ prometheus_grafana_admin_password: 'changeme'
 prometheus_grafana_https: true
 prometheus_grafana_port: '3000'
 prometheus_grafana_proxy: false
-prometheus_grafana_ngx_block_agents: false
-prometheus_grafana_ngx_block_string: false
-prometheus_grafana_ngx_compress: false
 prometheus_grafana_ngx_domain: 'visual.example.com'
 prometheus_grafana_ngx_port_http: '80'
 prometheus_grafana_ngx_port_https: '443'
@@ -379,11 +372,10 @@ alertmanager_arg:
   smtp_require_tls: false
   smtp_smarthost: '127.0.0.1:25'
   wechat_api_agentid: '0'
-  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
   wechat_to_party: '1'
   wechat_api_corpid: 'wxe787605fxxxxxxxx'
   wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-  webhook_url: 'http://demo-monitor-production-alerta.service.dc01.local:19199/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+  webhook_url: 'http://demo-monitor-production-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:
   - 'Consul'
   - 'ElasticSearch'

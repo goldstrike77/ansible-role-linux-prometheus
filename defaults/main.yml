@@ -60,9 +60,6 @@ prometheus_grafana_admin_password: 'changeme' # The password of the default Graf
 prometheus_grafana_https: true # A boolean value, whether Encrypting HTTP client communications.
 prometheus_grafana_port: '3000' # Grafana instance listen port.
 prometheus_grafana_proxy: false # Whether running behind a HaProxy.
-prometheus_grafana_ngx_block_agents: false # Enables or disables block unsafe User Agents.
-prometheus_grafana_ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
-prometheus_grafana_ngx_compress: false # Enables or disables compression.
 prometheus_grafana_ngx_domain: 'visual.example.com' # Defines domain name.
 prometheus_grafana_ngx_port_http: '80' # NGinx HTTP listen port.
 prometheus_grafana_ngx_port_https: '443' # NGinx HTTPs listen port.
@@ -112,7 +109,7 @@ prometheus_arg:
   refresh_interval: '60s' # Refresh interval to re-read the instance list
   scrape_interval: '60s' # How frequently to scrape targets from this job
   scrape_timeout: '30s' # How long until a scrape request times out
-  storage_tsdb_block_duration: '2h' # Must be set to equal values to disable local compaction
+  storage_tsdb_block_duration: '1h' # Must be set to equal values to disable local compaction
   storage_tsdb_retention: '7d' # How long to retain samples in storage
   ulimit_core: 'infinity' # The number of coredump launched by systemd
   ulimit_memlock: 'infinity' # The number of memory lock launched by systemd
@@ -143,9 +140,8 @@ alertmanager_arg:
 #  wechat_api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
 #  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
 #  wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
-#  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
 #  wechat_to_party: '1'
-#  webhook_url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:19199/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+#  webhook_url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.

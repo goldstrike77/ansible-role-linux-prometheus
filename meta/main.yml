@@ -78,9 +78,9 @@ dependencies:
           settings:
             - server: '{{ ansible_default_ipv4.address }}'
               port: '{{ prometheus_port.alertmanager }}'
-      grafana_ngx_block_agents: '{{ prometheus_grafana_ngx_block_agents }}'
-      grafana_ngx_block_string: '{{ prometheus_grafana_ngx_block_string }}'
-      grafana_ngx_compress: '{{ prometheus_grafana_ngx_compress }}'
+      grafana_ngx_block_agents: true
+      grafana_ngx_block_string: true
+      grafana_ngx_compress: true
       grafana_ngx_domain: '{{ prometheus_grafana_ngx_domain }}'
       grafana_ngx_port_http: '{{ prometheus_grafana_ngx_port_http }}'
       grafana_ngx_port_https: '{{ prometheus_grafana_ngx_port_https }}'
