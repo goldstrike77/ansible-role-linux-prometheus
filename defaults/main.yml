@@ -184,7 +184,7 @@ thanos_arg:
   log_format: 'logfmt'
   log_level: 'info'
   max_size: '256MB' # Maximum memory size of the cache in bytes.
-  query_auto_downsampling: true # Enable automatic adjustment source data
+  query_auto_downsampling: false # Enable automatic adjustment source data
   query_max_concurrent: '1024' # Maximum number of queries processed concurrently
   query_timeout: '1m' # Maximum time to process query
   ulimit_core: 'infinity' # The number of coredump launched by systemd
