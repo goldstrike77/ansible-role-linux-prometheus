@@ -51,19 +51,19 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Filesystem inodes has less than 10% with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_Disc_Read
-    expr: 'irate(node_disk_read_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_reads_completed_total{device!~"dm-.+"}[5m]) > 0.1'
+    expr: '(irate(node_disk_read_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_reads_completed_total{device!~"dm-.+"}[5m])) * 1000 > 100'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Disk read latency > 100ms with a value of {{ $value }}.'
+      description: 'Disk read latency > 100ms with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_Disc_Write 
-    expr: 'irate(node_disk_write_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_writes_completed_total{device!~"dm-.+"}[5m]) > 0.1'
+    expr: '(irate(node_disk_write_time_seconds_total{device!~"dm-.+"}[5m]) / irate(node_disk_writes_completed_total{device!~"dm-.+"}[5m])) * 1000 > 100'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Disk write latency > 100ms with a value of {{ $value }}.'
+      description: 'Disk write latency > 100ms with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_NIC_Receive
     expr: '(irate(node_network_receive_bytes_total{device!~"lo|docker.*"}[5m]) > 300000000) or (irate(wmi_net_bytes_received_total[5m]) > 300000000)'
     for: 10m
