@@ -9,6 +9,23 @@ prometheus_kubernetes_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
 
+  - alert: KubePodNotReady
+    annotations:
+      description: Pod has been in a non-ready state.	
+    expr: 'sum by (namespace,pod,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (max by(namespace,pod,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (kube_pod_status_phase{phase=~"Pending|Unknown"}) * on(namespace,pod,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) group_left(owner_kind) max by(namespace,pod,owner_kind,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (kube_pod_owner{owner_kind!="Job"})) > 0'
+    for: 60m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+
+
+  - alert: KubeContainerWaiting
+    annotations:
+      description: Pod container waiting longer than 1 hour.
+    expr: 'sum by (namespace,pod,containerdatacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (kube_pod_container_status_waiting_reason) > 0'
+    for: 60m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+
   - alert: KubeDeploymentReplicasMismatch
     annotations:
       description: Deployment has not matched the expected number of replicas for longer than an hour.
@@ -174,3 +191,43 @@ prometheus_kubernetes_alert_rules:
     for: 30m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+
+  - alert: KubeHpaReplicasMismatch
+    annotations:
+      description: 'HPA has not matched descired number of replicas.'
+    expr: '(kube_hpa_status_desired_replicas != kube_hpa_status_current_replicas) and changes(kube_hpa_status_current_replicas[15m]) == 0'
+    for: 30m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+
+  - alert: KubeHpaMaxedOut
+    annotations:
+      description: 'HPA is running at max replicas.'
+    expr: 'kube_hpa_status_current_replicas == kube_hpa_spec_max_replicas'
+    for: 30m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+
+  - alert: KubeCPUOvercommit
+    annotations:
+      description: 'Cluster has overcommitted CPU resource requests.'
+    expr: 'sum(sum(kube_pod_container_resource_requests_cpu_cores and on(pod) kube_pod_status_scheduled{condition="true"})) / sum(kube_node_status_allocatable_cpu_cores) > (count(kube_node_status_allocatable_cpu_cores)-1) / count(kube_node_status_allocatable_cpu_cores)'
+    for: 30m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+
+  - alert: KubeCPUQuotaOvercommit
+    annotations:
+      description: 'Cluster has overcommitted CPU resource quota.'
+    expr: 'sum(kube_resourcequota{type="hard", resource="cpu"}) / sum(kube_node_status_allocatable_cpu_cores) > 1.5'
+    for: 30m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+
+  - alert: KubeMemoryQuotaOvercommit
+    annotations:
+      description: 'Cluster has overcommitted memory resource quota.'
+    expr: 'sum(kube_resourcequota{type="hard", resource="memory"}) / sum(kube_node_status_allocatable_memory_bytes{job="node-exporter"}) > 1.5'
+    for: 30m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>

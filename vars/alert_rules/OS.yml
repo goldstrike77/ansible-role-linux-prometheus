@@ -43,6 +43,20 @@ prometheus_os_alert_rules:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
       description: 'Filesystem has less than 10% with a value of {{ $value | printf "%.0f" }}.'
+  - alert: node_FS_Space_Filling_Up
+    expr: '( node_filesystem_avail_bytes{fstype!=""} / node_filesystem_size_bytes{fstype!=""} * 100 < 40 and predict_linear(node_filesystem_avail_bytes{fstype!=""}[6h], 24*60*60) < 0 and node_filesystem_readonly{fstype!=""} == 0 )'
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+    annotations:
+      description: 'Filesystem is predicted to run out of space within the next 24 hours.'
+  - alert: node_FS_Space_Filling_Up
+    expr: '( node_filesystem_files_free{fstype!=""} / node_filesystem_files{fstype!=""} * 100 < 40 and predict_linear(node_filesystem_files_free{fstype!=""}[6h], 24*60*60) < 0 and node_filesystem_readonly{fstype!=""} == 0 )'
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
+    annotations:
+      description: 'Filesystem is predicted to run out of space within the next 4 hours.'
   - alert: node_FS_Inodes
     expr: 'node_filesystem_files_free{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_files{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} * 100 < 10'
     for: 10m
@@ -106,3 +120,24 @@ prometheus_os_alert_rules:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Several OOM kills detected recently.'
+  - alert: node_Clock_Skew_Detected
+    expr: '( node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0 ) or ( node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0 )'
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+    annotations:
+      description: 'Clock skew detected.'
+  - alert: node_Clock_Not_Synchronising
+    expr: 'min_over_time(node_timex_sync_status[5m]) == 0'
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
+    annotations:
+      description: 'Clock not synchronising.'
+  - alert: node_High_Number_Conntrack_Entries_Used
+    expr: '(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) > 0.75'
+    for: 10m
+    labels:
+      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
+    annotations:
+      description: 'Number of conntrack are getting close to the limit.'
