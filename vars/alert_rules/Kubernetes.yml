@@ -11,12 +11,11 @@ prometheus_kubernetes_alert_rules:
 
   - alert: KubePodNotReady
     annotations:
-      description: Pod has been in a non-ready state.	
+      description: Pod has been in a non-ready state.
     expr: 'sum by (namespace,pod,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (max by(namespace,pod,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (kube_pod_status_phase{phase=~"Pending|Unknown"}) * on(namespace,pod,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) group_left(owner_kind) max by(namespace,pod,owner_kind,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (kube_pod_owner{owner_kind!="Job"})) > 0'
     for: 60m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
-
 
   - alert: KubeContainerWaiting
     annotations:
