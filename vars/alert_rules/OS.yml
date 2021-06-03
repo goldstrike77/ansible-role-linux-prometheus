@@ -2,7 +2,7 @@
 prometheus_os_alert_rules:
 # Operating system
   - alert: node_Reboot
-    expr: "(rate(node_boot_time_seconds[10m]) != 0) or (rate(wmi_system_system_up_time[10m]) != 0)"
+    expr: "(rate(node_boot_time_seconds[10m]) != 0) or (rate(windows_system_system_up_time[10m]) != 0)"
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
@@ -16,28 +16,28 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Processor load has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: node_CPU_usage
-    expr: '((100 * (1 - avg by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)(irate(node_cpu_seconds_total{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)(irate(wmi_cpu_time_total{mode="idle"}[10m])))) > 90)'
+    expr: '((100 * (1 - avg by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)(irate(node_cpu_seconds_total{mode="idle"}[10m])))) > 90) or ((100 * (1 - avg by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)(irate(windows_cpu_time_total{mode="idle"}[10m])))) > 90)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Processor usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: node_RAM_Usage
-    expr: '((sum(node_memory_MemTotal_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) - sum(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes )by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) / (sum(node_memory_MemTotal_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) * 100 > 90) or ((sum(wmi_cs_physical_memory_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) - sum(wmi_os_physical_memory_free_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) / (sum(wmi_cs_physical_memory_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) * 100 > 90)'
+    expr: '((sum(node_memory_MemTotal_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) - sum(node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes )by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) / (sum(node_memory_MemTotal_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) * 100 > 90) or ((sum(windows_cs_physical_memory_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) - sum(windows_os_physical_memory_free_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) / (sum(windows_cs_physical_memory_bytes)by(datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)) * 100 > 90)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: node_FS_Usage
-    expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)) * 100'
+    expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.2) or (windows_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / windows_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.2)) * 100'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Filesystem has less than 20% with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_FS_Usage
-    expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (wmi_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / wmi_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)) * 100'
+    expr: '((node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} / node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs"} < 0.1) or (windows_logical_disk_free_bytes{volume!~"HarddiskVolume.*"} / windows_logical_disk_size_bytes{volume!~"HarddiskVolume.*"} < 0.1)) * 100'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
@@ -79,35 +79,35 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Disk write latency > 100ms with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_NIC_Receive
-    expr: '(irate(node_network_receive_bytes_total{device!~"lo|docker.*"}[5m]) > 300000000) or (irate(wmi_net_bytes_received_total[5m]) > 300000000)'
+    expr: '(irate(node_network_receive_bytes_total{device!~"lo|docker.*"}[5m]) > 300000000) or (irate(windows_net_bytes_received_total[5m]) > 300000000)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "{{ $labels.device }} has more than 300M receive."
   - alert: node_NIC_Transmit
-    expr: '(irate(node_network_transmit_bytes_total{device!~"lo|docker.*"}[5m]) > 30000000) or (irate(wmi_net_bytes_sent_total[5m]) > 30000000)'
+    expr: '(irate(node_network_transmit_bytes_total{device!~"lo|docker.*"}[5m]) > 30000000) or (irate(windows_net_bytes_sent_total[5m]) > 30000000)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "{{ $labels.device }} has more than 300M traffic."
   - alert: node_Service
-    expr: '(node_systemd_unit_state{state="inactive"} == 1) or (wmi_service_state{state="stopped"} == 1)'
+    expr: '(node_systemd_unit_state{state="inactive"} == 1) or (windows_service_state{state="stopped"} == 1)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: "Service has been stoped."
   - alert: node_Disc_Read
-    expr: '(sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(node_disk_read_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(wmi_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
+    expr: '(sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(node_disk_read_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(windows_logical_disk_read_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Disk is probably reading too much data with a value of {{ $value | printf "%.0f" }}.'
   - alert: node_Disc_Write
-    expr: '(sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(node_disk_written_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(wmi_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
+    expr: '(sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(node_disk_written_bytes_total{device!~"dm-.+"}[5m])) / 1024 / 1024 > 50) or (sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) (irate(windows_logical_disk_write_bytes_total{volume!~"HarddiskVolume.*"}[5m])) / 1024 / 1024 > 50)'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -121,14 +121,14 @@ prometheus_os_alert_rules:
     annotations:
       description: 'Several OOM kills detected recently.'
   - alert: node_Clock_Skew_Detected
-    expr: '( node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0 ) or ( node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0 )'
+    expr: '( node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0 ) or ( node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0 ) or windows_time_computed_time_offset_seconds > 1'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Clock skew detected.'
   - alert: node_Clock_Not_Synchronising
-    expr: 'min_over_time(node_timex_sync_status[5m]) == 0'
+    expr: 'min_over_time(node_timex_sync_status[5m]) == 0 or max_over_time(windows_time_ntp_client_time_source_count[10m]) == 0'
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
