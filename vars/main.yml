@@ -22,13 +22,14 @@ thanos_server: "\
   {{ _thanos_server }}"
 
 prometheus_conf_files:
-  - { src: 'alertmanager.service.j2', dest: '/lib/systemd/system/alertmanager.service' }
-  - { src: 'alertmanager.yml.j2',     dest: '{{ prometheus_conf_path }}/alertmanager.yml' }
-  - { src: 'prometheus.default.j2',   dest: '/etc/default/prometheus' }
-  - { src: 'prometheus.service.j2',   dest: '/lib/systemd/system/prometheus.service' }
-  - { src: 'prometheus.yml.j2',       dest: '{{ prometheus_conf_path }}/prometheus.yml' }
-  - { src: 'pushgateway.default.j2',  dest: '/etc/default/pushgateway' }
-  - { src: 'pushgateway.service.j2',  dest: '/lib/systemd/system/pushgateway.service' }
+  - { src: 'alertmanager.default', dest: '/etc/default/alertmanager' }
+  - { src: 'alertmanager.service', dest: '/lib/systemd/system/alertmanager.service' }
+  - { src: 'alertmanager.yml',     dest: '{{ prometheus_conf_path }}/alertmanager.yml' }
+  - { src: 'prometheus.default',   dest: '/etc/default/prometheus' }
+  - { src: 'prometheus.service',   dest: '/lib/systemd/system/prometheus.service' }
+  - { src: 'prometheus.yml',       dest: '{{ prometheus_conf_path }}/prometheus.yml' }
+  - { src: 'pushgateway.default',  dest: '/etc/default/pushgateway' }
+  - { src: 'pushgateway.service',  dest: '/lib/systemd/system/pushgateway.service' }
 
 prometheus_service:
   - 'alertmanager'

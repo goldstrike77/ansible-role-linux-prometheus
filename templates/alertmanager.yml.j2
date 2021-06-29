@@ -31,10 +31,12 @@ route:
       receiver: team-infra-wechat
       continue: true
 {% endif %}
-{% if alertmanager_arg.webhook_url is defined %}
+{% if alertmanager_arg.webhook is defined %}
+{% for webhook_parameter in alertmanager_arg.webhook %}
     - match:
-      receiver: team-infra-alerta
+      receiver: team-infra-{{ webhook_parameter.name }}
       continue: true
+{% endfor %}
 {% endif %}
 
 inhibit_rules:
@@ -58,9 +60,11 @@ receivers:
         corp_id: '{{ alertmanager_arg.wechat_api_corpid }}'
         api_secret: '{{ alertmanager_arg.wechat_api_secret }}'
 {% endif %}
-{% if alertmanager_arg.webhook_url is defined %}
-  - name: "team-infra-alerta"
+{% if alertmanager_arg.webhook is defined %}
+{% for webhook_parameter in alertmanager_arg.webhook %}
+  - name: "team-infra-{{ webhook_parameter.name }}"
     webhook_configs:
       - send_resolved: true
-        url: '{{ alertmanager_arg.webhook_url }}'
+        url: '{{ webhook_parameter.url }}'
+{% endfor %}
 {% endif %}

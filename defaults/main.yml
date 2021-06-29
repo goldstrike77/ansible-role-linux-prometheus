@@ -1,6 +1,6 @@
 ---
 # General parameters #
-prometheus_is_install: false # A boolean value, whether install the Prometheus.
+prometheus_is_install: false # A boolean to determine whether or not to install the Prometheus.
 thanos_is_install: false # A boolean to determine whether or not to install the Thanos.
 thanos_bucket_is_used: false # A boolean to determine whether or not to use object storage.
 prometheus_data_path: '/data' # Specify the Prometheus configure directory.
@@ -19,7 +19,7 @@ prometheus_alert_incident_levels_map: 'severity' # Defines the display mode of i
 
 # Consul SD configurations #
 prometheus_consul_server: 'consul.service.dc01.local:8500' # The consul address and port.
-prometheus_consul_token: '7471828c-d50a-4b25-b6a5-d80f02a03bae' # The consul acl token.
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx' # The consul acl token.
 
 # Kubernetes SD configurations #
 #prometheus_kubernetes:
@@ -141,7 +141,9 @@ alertmanager_arg:
 #  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
 #  wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
 #  wechat_to_party: '1'
-#  webhook_url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+#  webhook:
+#    - name: 'alerta' 
+#      url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
@@ -198,7 +200,7 @@ thanos_obj_arg:
   type: 'S3' # Define the Object Storage Provider, Possible values are S3, AZURE, ALIYUNOSS.
 # S3
   bucket: 'thanos'
-  endpoint: 'demo-prd-infra-monitor-minio-thanos.service.dc01.local:9001'
+  endpoint: 'demo-prd-infra-storage-minio-thanos.service.dc01.local:9001'
   insecure: false
   signature_version2: false
   access_key: 'HYBBSS5EAC3RZEURZ3TQ'

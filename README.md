@@ -32,7 +32,6 @@ __Table of Contents__
   * [Combination of group vars and playbook](#combination-of-group-vars-and-playbook)
 - [License](#license)
 - [Author Information](#author-information)
-- [Contributors](#Contributors)
 - [Donations](#Donations)
 
 
@@ -237,7 +236,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.wechat_to_party`: The WeChat department to send notifications to.
 * `alertmanager_arg.wechat_api_corpid`: The corp id for authentication.
 * `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
-* `alertmanager_arg.webhook_url`: The endpoint to send HTTP POST requests to.
+* `alertmanager_arg.webhook`: The endpoint to send HTTP POST requests to.
 
 ##### Alertmanager rules
 * `prometheus_alert_rules`: Defining alerting rules.
@@ -294,7 +293,7 @@ See tests/inventory for an example, all host must belong to one child group.
     [Monitor:vars]
     thanos_is_install=true
     prometheus_consul_server='consul.service.dc01.local:8500'
-    prometheus_consul_token='7471828c-d50a-4b25-b6a5-cccc02a03xxx'
+    prometheus_consul_token='7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx'
 
 ### Combination of group vars and playbook
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
@@ -305,7 +304,7 @@ thanos_is_install: true
 thanos_bucket_is_used: true
 prometheus_alert_incident_levels_map: 'severity'
 prometheus_consul_server: 'consul.service.dc01.local:8500'
-prometheus_consul_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
+prometheus_consul_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx'
 prometheus_kubernetes:
   - apiserver: 'demo-master-prd-apiserver.service.dc01.local:6443'
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -375,7 +374,9 @@ alertmanager_arg:
   wechat_to_party: '1'
   wechat_api_corpid: 'wxe787605fxxxxxxxx'
   wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-  webhook_url: 'http://demo-monitor-production-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+  webhook:
+    - name: 'alerta' 
+      url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:
   - 'Consul'
   - 'ElasticSearch'
@@ -395,8 +396,8 @@ thanos_arg:
 thanos_obj_arg:
   retention: '365'
   type: 'S3'
-  bucket: 'public'
-  endpoint: 'demo-prd-infra-monitor-minio-thanos.service.dc01.local:9001'
+  bucket: 'thanos'
+  endpoint: 'demo-prd-infra-storage-minio-thanos.service.dc01.local:9001'
   insecure: false
   signature_version2: false
   access_key: 'HYBBSS5EAC3RZEURZ3TQ'
@@ -413,7 +414,7 @@ tags:
   region: 'China'
 exporter_is_install: false
 consul_public_register: false
-consul_public_exporter_token: '7471828c-d50a-4b25-b6a5-cccc02a03xxx'
+consul_public_exporter_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx'
 consul_public_http_prot: 'https'
 consul_public_http_port: '8500'
 consul_public_clients:
@@ -426,9 +427,6 @@ consul_public_clients:
 
 ## Author Information
 Please send your suggestions to make this role better.
-
-## Contributors
-Special thanks to the [Connext Information Technology](http://www.connext.com.cn) for their contributions to this role.
 
 ## Donations
 Please donate to the following monero address.

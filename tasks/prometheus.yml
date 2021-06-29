@@ -32,7 +32,7 @@
 
 - name: Prometheus configure file transfer.
   template:
-    src: '{{ item.src }}'
+    src: '{{ item.src }}.j2'
     dest: '{{ item.dest }}'
     backup: 'yes'
     owner: 'root'
