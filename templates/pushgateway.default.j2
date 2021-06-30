@@ -1,1 +1,1 @@
-PUSHGATEWAY_OPTS='--web.listen-address="{{ ansible_default_ipv4.address }}:{{ prometheus_port.pushgateway }}" --persistence.file="{{ prometheus_data_path }}/pushgateway/data" --persistence.interval=5m'
+PUSHGATEWAY_OPTS='--log.level={{ prometheus_arg.log_level | default("warn") }} --web.listen-address="{{ ansible_default_ipv4.address }}:{{ prometheus_port.pushgateway }}" --persistence.file="{{ prometheus_data_path }}/pushgateway/data" --persistence.interval=5m'

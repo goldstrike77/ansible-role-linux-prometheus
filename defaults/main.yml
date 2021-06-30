@@ -105,6 +105,7 @@ prometheus_grafana_ldap_arg:
 # Prometheus System Variables #
 prometheus_arg:
   evaluation_interval: '60s' # How frequently to evaluate rules
+  log_level: 'warn' # The level of logging, One of: [debug, info, warn, error]
   query_max_concurrency: '1024' # Maximum number of queries executed concurrently
   refresh_interval: '60s' # Refresh interval to re-read the instance list
   scrape_interval: '60s' # How frequently to scrape targets from this job
@@ -184,7 +185,7 @@ thanos_arg:
   chunk_pool_size: '2GB' # Maximum size of concurrently allocatable bytes for chunks
   index_cache_size: '1GB' # Maximum size of items held in the index cache
   log_format: 'logfmt'
-  log_level: 'info'
+  log_level: 'warn'
   max_size: '256MB' # Maximum memory size of the cache in bytes.
   query_auto_downsampling: false # Enable automatic adjustment source data
   query_max_concurrent: '1024' # Maximum number of queries processed concurrently

@@ -1,2 +1,0 @@
-# smokeping_prober requires a list of hosts to ping
-SMOKEPING_PROBER_OPTS='--web.listen-address="{{ ansible_default_ipv4.address }}:{{ prometheus_port.smokeping }}" --log.format="logger:syslog?appname=smokeping_prober&local=7" --ping.interval=10s {{ prometheus_prober_arg.smokeping_hosts | default(["127.0.0.1"]) | list | join(" ") }}'

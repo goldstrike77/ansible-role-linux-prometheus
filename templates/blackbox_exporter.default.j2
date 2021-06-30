@@ -1,0 +1,1 @@
+BLACKBOX_EXPORTER_OPTS='--log.level={{ prometheus_arg.log_level | default("warn") }} --web.listen-address=":{{ prometheus_port.blackbox }}" --config.file /etc/prometheus/blackbox_exporter.yml'

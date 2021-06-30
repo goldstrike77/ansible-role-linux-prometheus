@@ -2,7 +2,7 @@
 - name: Prober exporters YAML file transfer.
   copy:
     src: '{{ item }}.yml'
-    dest: '/etc/prometheus/{{ item }}.yml'
+    dest: '{{ prometheus_conf_path }}/{{ item }}.yml'
     backup: 'yes'
     owner: 'root'
     group: 'root'
@@ -12,7 +12,7 @@
 
 - name: Prober exporters configure file transfer.
   template:
-    src: '{{ item }}.j2'
+    src: '{{ item }}.default.j2'
     dest: '/etc/default/{{ item }}'
     backup: 'yes'
     owner: 'root'
