@@ -198,7 +198,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_grafana_version`: Specify the Grafana version.
 * `prometheus_grafana_admin_user`: The name of the default Grafana admin user.
 * `prometheus_grafana_admin_password`: The password of the default Grafana admin.
-* `prometheus_grafana_https`: A boolean value, whether Encrypting HTTP client communications.
+* `prometheus_grafana_https`: A boolean to determine whether or not to Encrypting HTTP client communications.
 * `prometheus_grafana_port`: Grafana instance listen port.
 * `prometheus_grafana_proxy`: Whether running behind a HaProxy.
 * `prometheus_grafana_ngx_domain`: Defines domain name.
@@ -306,10 +306,24 @@ prometheus_alert_incident_levels_map: 'severity'
 prometheus_consul_server: 'consul.service.dc01.local:8500'
 prometheus_consul_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx'
 prometheus_kubernetes:
-  - apiserver: 'demo-master-prd-apiserver.service.dc01.local:6443'
+  - apiserver: 'demo-prd-infra-operator-k8s.service.dc01.local:6443'
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-  - apiserver: 'demo-master-dev-apiserver.service.dc01.local:6443'
+    node_discover:
+      enable: true
+    pod_discover:
+      enable: false
+      scheme: 'http'
+      port: '8080'
+      metrics_path: 'prometheus'
+  - apiserver: 'demo-dev-infra-operator-k8s.service.dc01.local:6443'
     token: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    node_discover:
+      enable: true
+    pod_discover:
+      enable: false
+      scheme: 'http'
+      port: '8080'
+      metrics_path: 'prometheus'
 prometheus_grafana_dept: true
 prometheus_grafana_ngx_dept: true
 prometheus_port:
