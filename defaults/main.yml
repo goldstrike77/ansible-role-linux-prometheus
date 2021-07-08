@@ -42,6 +42,16 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx' # The consul acl
 #      port: '8080'
 #      metrics_path: 'prometheus'
 
+# Azure Monitor configurations #
+#prometheus_azure_monitor:
+#  tenant_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#  client_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#  client_secret: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#  environment: 'AzureChinaCloud'
+#  subscription:
+#    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+
 # Role dependencies #
 prometheus_grafana_dept: true # A boolean to determine whether or not to install the Grafana for metrics visualization.
 prometheus_grafana_ngx_dept: true # A boolean to determine whether or not to proxy Grafana web interface using NGinx.
@@ -49,6 +59,7 @@ prometheus_grafana_ngx_dept: true # A boolean to determine whether or not to pro
 # Listen port #
 prometheus_port: 
   alertmanager: '9093'
+  azure_monitor: '9276'
   blackbox: '9115'
   cluster: '9094'
   prometheus: '9090'

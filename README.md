@@ -177,6 +177,9 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### Kubernetes SD configurations
 * `prometheus_kubernetes`: The Kubernetes API server information.
 
+##### Azure Monitor configurations
+* `prometheus_azure_monitor`: The Azure credentials.
+
 ##### Role dependencies
 * `prometheus_grafana_dept`: A boolean to determine whether or not to install the Grafana for metrics visualization.
 * `prometheus_grafana_ngx_dept`: A boolean to determine whether or not to proxy Grafana web interface using NGinx.
@@ -324,6 +327,14 @@ prometheus_kubernetes:
       scheme: 'http'
       port: '8080'
       metrics_path: 'prometheus'
+prometheus_azure_monitor:
+  tenant_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  client_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  client_secret: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  environment: 'AzureChinaCloud'
+  subscription:
+    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 prometheus_grafana_dept: true
 prometheus_grafana_ngx_dept: true
 prometheus_port:

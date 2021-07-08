@@ -15,6 +15,10 @@
   include: 'thanos.yml'
   when: thanos_is_install | bool
 
+- name: Include Azure Monitor tasks.
+  include: 'azure_monitor.yml'
+  when: prometheus_azure_monitor is defined
+
 - name: Force the handler to run immediately.
   meta: flush_handlers
 
