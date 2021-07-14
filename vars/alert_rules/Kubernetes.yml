@@ -218,7 +218,7 @@ prometheus_kubernetes_alert_rules:
   - alert: KubeCPUQuotaOvercommit
     annotations:
       description: 'Cluster has overcommitted CPU resource quota.'
-    expr: 'sum(kube_resourcequota{type="hard", resource="cpu"}) / sum(kube_node_status_allocatable_cpu_cores) > 1.5'
+    expr: 'sum(kube_resourcequota{type="hard", resource="cpu"})by(datacenter,customer,environment,project,group<< tags_key | default("") >>) / sum(kube_node_status_allocatable_cpu_cores)by(datacenter,customer,environment,project,group<< tags_key | default("") >>) > 1.5'
     for: 30m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
@@ -226,7 +226,7 @@ prometheus_kubernetes_alert_rules:
   - alert: KubeMemoryQuotaOvercommit
     annotations:
       description: 'Cluster has overcommitted memory resource quota.'
-    expr: 'sum(kube_resourcequota{type="hard", resource="memory"}) / sum(kube_node_status_allocatable_memory_bytes{job="node-exporter"}) > 1.5'
+    expr: 'sum(kube_resourcequota{type="hard", resource="memory"})by(datacenter,customer,environment,project,group<< tags_key | default("") >>) / sum(kube_node_status_allocatable_memory_bytes)by(datacenter,customer,environment,project,group<< tags_key | default("") >>) > 1.5'
     for: 30m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>

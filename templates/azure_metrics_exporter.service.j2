@@ -15,7 +15,7 @@ LimitNOFILE=262144
 LimitNPROC=262144
 LimitCORE=infinity
 LimitMEMLOCK=infinity
-ExecStart=/usr/local/bin/azure-metrics-exporter --bind={{ ansible_default_ipv4.address }}:{{ prometheus_port.azure_monitor | default('9276') }} --enable-caching
+ExecStart=/usr/local/bin/azure-metrics-exporter --bind=0.0.0.0:{{ prometheus_port.azure_monitor | default('9276') }} --enable-caching
 Restart=on-failure
 RestartSec=5s
 
