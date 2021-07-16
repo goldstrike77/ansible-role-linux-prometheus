@@ -14,9 +14,9 @@
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
     backup: 'yes'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0640'
   loop: '{{ thanos_base_components }}'
   notify: 'Restart thanos base components service.'
 
@@ -36,7 +36,7 @@
     backup: 'no'
     owner: 'prometheus'
     group: 'prometheus'
-    mode: '0644'
+    mode: '0640'
 
 - name: Thanos objstore config file transfer.
   template:
@@ -45,7 +45,7 @@
     backup: 'yes'
     owner: 'prometheus'
     group: 'prometheus'
-    mode: '0644'
+    mode: '0640'
   when: thanos_bucket_is_used | bool
   notify: 'Restart thanos base components service.'
 
@@ -66,9 +66,9 @@
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
     backup: 'yes'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0640'
   loop: '{{ thanos_opti_components }}'
   when: thanos_bucket_is_used | bool
   notify: 'Restart thanos optional components service.'
@@ -103,9 +103,9 @@
     src: 'thanos-{{ item }}.default.j2'
     dest: '/etc/default/thanos-{{ item }}'
     backup: 'yes'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0640'
   loop: '{{ thanos_stand_components }}'
   when:
     - thanos_bucket_is_used | bool

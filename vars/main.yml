@@ -36,8 +36,6 @@ prometheus_service:
   - 'pushgateway'
   - 'prometheus'
 
-consul_soft_url: 'http://releases.hashicorp.com'
-
 thanos_base_components:
   - 'sidecar'
   - 'query'
@@ -52,6 +50,7 @@ thanos_stand_components:
 
 unauthenticate_target_services:
   - 'alertmanager'
+  - 'azure-metrics'
   - 'auditbeat'
   - 'blackbox'
   - 'consul'

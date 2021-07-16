@@ -35,9 +35,9 @@
     src: '{{ item.src }}.j2'
     dest: '{{ item.dest }}'
     backup: 'yes'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0640'
   loop: '{{ prometheus_conf_files }}'
   notify: 'Restart prometheus service.'
 
@@ -46,9 +46,9 @@
     src: "default.tmpl"
     dest: "{{ prometheus_conf_path }}/templates/default.tmpl"
     backup: 'yes'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0640'
   notify: 'Reload prometheus service.'
 
 - name: Include rules for alertmanager.
@@ -79,9 +79,9 @@
     variable_start_string: "<<"
     variable_end_string: ">>"
     backup: 'yes'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
+    owner: 'prometheus'
+    group: 'prometheus'
+    mode: '0640'
     validate: "/bin/promtool check rules %s"
   loop: '{{ prometheus_alert_rules }}'
   when: prometheus_alert_rules != []

@@ -176,3 +176,29 @@
   no_log: true
   changed_when: false
   failed_when: false
+
+- name: Register Azure Monitor exporter.
+  uri:
+    url: '{{ consul_public_http_prot }}://{{ item.client  }}:{{ consul_public_http_port }}/v1/agent/service/register'
+    method: 'PUT'
+    body: '{"tags":["prometheus","exporter"],"ID":"{{ ansible_hostname | lower }}_azure-metrics_exporter","name":"azure-metrics_exporter","address":"{{ ansible_default_ipv4.address }}","port":{{ prometheus_port.azure_monitor }},"meta":{"application":"Cloud","metrics_path":"/metrics","instance":"{{ ansible_hostname | lower }}","customer":"{{ customer | title | regex_replace("_", "-") }}","project":"{{ group_names[-1] | title | regex_replace("_", "-") }}","group":"{{ group_names[0] | title }}","datacenter": "{{ datacenter | lower }}","domain":"{{ domain | lower }}","environment":"{{ environments | lower }}"{% if tags is defined %},{{ tags | to_json | regex_replace("{") | regex_replace("}") }}{% endif %}}}'
+    body_format: 'json'
+    status_code: '200'
+    headers:
+      X-Consul-Token: '{{ consul_public_exporter_token }}'
+      X-Requested-By: '{{ ansible_default_ipv4.address }}'
+      cache-control: 'no-cache'
+    validate_certs: 'no'
+  environment:
+    no_proxy: '{{ item.client }}'
+  loop: "{{ check_consul_reg.results | json_query('[*].{client:item,status:status}') }}"
+  when:
+    - item.status == 405
+    - prometheus_azure_monitor is defined
+  register: register_status
+  until: register_status.status == 200
+  retries: 3
+  delay: 2
+  no_log: true
+  changed_when: false
+  failed_when: false

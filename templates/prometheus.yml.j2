@@ -232,8 +232,8 @@ scrape_configs:
       subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}'] 
       filter: ["resourceType eq 'Microsoft.Cache/Redis'"]
       metric: ["cachehits","cacheLatency","cachemisses","cachemissrate","cacheRead","cacheWrite","connectedclients","errors","evictedkeys","expiredkeys","getcommands","operationsPerSecond","percentProcessorTime","serverLoad","setcommands","totalcommandsprocessed","totalkeys","usedmemory","usedmemorypercentage","usedmemoryRss"]
-      interval: ["PT5M"]
-      timespan: ["PT5M"]
+      interval: ["PT1M"]
+      timespan: ["PT1M"]
       aggregation: ["average"]
     static_configs:
       - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
@@ -249,10 +249,10 @@ scrape_configs:
       name: ["azure_mysql"]
       subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}']
       filter: ["resourceType eq 'Microsoft.DBforMySQL/servers'"]
-      metric: ["active_connections","backup_storage_used","connections_failed","cpu_percent","io_consumption_percent","memory_percent","network_bytes_egress","network_bytes_ingress","seconds_behind_master","serverlog_storage_limit","serverlog_storage_percent","serverlog_storage_usage","storage_limit","storage_percent","storage_used"]
-      interval: ["PT15M"]
-      timespan: ["PT15M"]
-      aggregation: ['maximum','average','total']
+      metric: ["active_connections","connections_failed","cpu_percent","io_consumption_percent","memory_percent","network_bytes_egress","network_bytes_ingress","seconds_behind_master","serverlog_storage_limit","serverlog_storage_percent","serverlog_storage_usage","storage_limit","storage_percent","storage_used"]
+      interval: ["PT1M"]
+      timespan: ["PT1M"]
+      aggregation: ['average']
     static_configs:
       - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
     relabel_configs:
@@ -286,8 +286,26 @@ scrape_configs:
       subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}']
       filter: ["resourceType eq 'Microsoft.Sql/servers/elasticPools'"]
       metric: ["cpu_limit","cpu_percent","log_write_percent","physical_data_read_percent","sessions_percent","storage_limit","storage_percent","storage_used","tempdb_data_size","tempdb_log_size","tempdb_log_used_percent","workers_percent","xtp_storage_percent"]
-      interval: ["PT5M"]
-      timespan: ["PT5M"]
+      interval: ["PT1M"]
+      timespan: ["PT1M"]
+      aggregation: ['average']
+    static_configs:
+      - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
+    relabel_configs:
+      - regex: job
+        action: labeldrop
+    metric_relabel_configs:
+      - regex: 'interval|timespan|unit'
+        action: labeldrop
+  - job_name: 'Azure SQL Managed Instance'
+    metrics_path: /probe/metrics/list
+    params:
+      name: ["azure_sqlmanagedinstance"]
+      subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}']
+      filter: ["resourceType eq 'Microsoft.Sql/managedInstances'"]
+      metric: ["avg_cpu_percent","io_bytes_read","io_bytes_written","io_requests","reserved_storage_mb","storage_space_used_mb","virtual_core_count"]
+      interval: ["PT1M"]
+      timespan: ["PT1M"]
       aggregation: ['average']
     static_configs:
       - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
