@@ -241,8 +241,20 @@ scrape_configs:
       - regex: job
         action: labeldrop
     metric_relabel_configs:
-      - regex: 'interval|timespan|unit'
-        action: labeldrop
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'subscription'
+        regex: '^\/subscriptions\/(\S+).*/resource[gG]roups\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'resourcegroup'
+        regex: '.*/resource[gG]roups\/(\S+).*/providers\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'host'
+        regex: '.*/Microsoft.Cache\/Redis\/(\S+).*'
+      - action: labeldrop
+        regex: 'interval|timespan|unit|resourceID'
   - job_name: 'Azure Database for MySQL'
     metrics_path: /probe/metrics/list
     params:
@@ -259,8 +271,20 @@ scrape_configs:
       - regex: job
         action: labeldrop
     metric_relabel_configs:
-      - regex: 'interval|timespan|unit'
-        action: labeldrop
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'subscription'
+        regex: '^\/subscriptions\/(\S+).*/resource[gG]roups\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'resourcegroup'
+        regex: '.*/resource[gG]roups\/(\S+).*/providers\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'host'
+        regex: '.*/Microsoft.DB[fF]orMySQL\/servers\/(\S+).*'
+      - action: labeldrop
+        regex: 'interval|timespan|unit|resourceID'
   - job_name: 'Azure Virtual network gateway'
     metrics_path: /probe/metrics/list
     params:
@@ -277,8 +301,20 @@ scrape_configs:
       - regex: job
         action: labeldrop
     metric_relabel_configs:
-      - regex: 'interval|timespan|unit'
-        action: labeldrop
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'subscription'
+        regex: '^\/subscriptions\/(\S+).*/resource[gG]roups\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'resourcegroup'
+        regex: '.*/resource[gG]roups\/(\S+).*/providers\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'host'
+        regex: '.*/Microsoft.Network\/virtualNetworkGateways\/(\S+).*'
+      - action: labeldrop
+        regex: 'interval|timespan|unit|resourceID'
   - job_name: 'Azure SQL Elastic pool'
     metrics_path: /probe/metrics/list
     params:
@@ -295,8 +331,20 @@ scrape_configs:
       - regex: job
         action: labeldrop
     metric_relabel_configs:
-      - regex: 'interval|timespan|unit'
-        action: labeldrop
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'subscription'
+        regex: '^\/subscriptions\/(\S+).*/resource[gG]roups\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'resourcegroup'
+        regex: '.*/resource[gG]roups\/(\S+).*/providers\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'host'
+        regex: '.*/Microsoft.Sql\/servers\/(\S+).*\/elasticpools(\S+)'
+      - action: labeldrop
+        regex: 'interval|timespan|unit|resourceID'
   - job_name: 'Azure SQL Managed Instance'
     metrics_path: /probe/metrics/list
     params:
@@ -313,6 +361,18 @@ scrape_configs:
       - regex: job
         action: labeldrop
     metric_relabel_configs:
-      - regex: 'interval|timespan|unit'
-        action: labeldrop
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'subscription'
+        regex: '^\/subscriptions\/(\S+).*/resource[gG]roups\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'resourcegroup'
+        regex: '.*/resource[gG]roups\/(\S+).*/providers\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'host'
+        regex: '.*/Microsoft.Sql\/managedInstances\/(\S+).*'
+      - action: labeldrop
+        regex: 'interval|timespan|unit|resourceID'
 {% endif %}
