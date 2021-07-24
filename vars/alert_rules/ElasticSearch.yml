@@ -9,7 +9,7 @@ prometheus_elasticsearch_alert_rules:
     annotations:
       description: "ElasticSearch node has been stoped."
   - alert: Elastic_Heap_Usage
-    expr: "elasticsearch_jvm_memory_used_bytes{area='heap'} / elasticsearch_jvm_memory_max_bytes{area='heap'} > 0.9"
+    expr: "( elasticsearch_jvm_memory_used_bytes{area='heap'} / elasticsearch_jvm_memory_max_bytes{area='heap'} * 100 ) > 90"
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
@@ -56,7 +56,7 @@ prometheus_elasticsearch_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: "Breakers tripped has a value of {{ $value }}."
+      description: 'Breakers tripped has a value of {{ $value | printf "%.0f" }}.'
   - alert: Elastic_relocation_shards
     expr: "elasticsearch_cluster_health_relocating_shards > 0"
     for: 30m
