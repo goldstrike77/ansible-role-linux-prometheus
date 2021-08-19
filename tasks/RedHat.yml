@@ -9,6 +9,7 @@
     file: '{{ prometheus_repo_name }}'
     baseurl: '{{ prometheus_repo_url }}'
     gpgcheck: 'no'
+    sslverify: 'no'
     timeout: '60'
 
 - name: Install the prometheus.
