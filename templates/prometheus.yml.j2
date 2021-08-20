@@ -224,7 +224,7 @@ scrape_configs:
 {% endfor %}
 {% endif %}
 {% if prometheus_azure_monitor is defined %}
-# The maximum allowed metric count of the request is 20.
+# The maximum metric count of requests allowed by Azure Monitor rest API is 20.
 {% if "Microsoft.Cache/Redis" in prometheus_azure_monitor.resources %}
   - job_name: 'Azure Cache for Redis'
     metrics_path: /probe/metrics/list
@@ -413,7 +413,7 @@ scrape_configs:
       - source_labels: [resourceID]
         replacement: '${1}'
         target_label: 'host'
-        regex: '.*/Microsoft.Storage\/storageAccounts\/(\S+).*\/(\S+)'
+        regex: '.*/Microsoft.Storage\/storageAccounts\/(\S+).*'
       - action: labeldrop
         regex: 'interval|timespan|unit|resourceID'
 {% endif %}
