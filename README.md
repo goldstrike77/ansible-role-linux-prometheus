@@ -177,7 +177,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### Kubernetes SD configurations
 * `prometheus_kubernetes`: The Kubernetes API server information.
 
-##### Azure Monitor configurations
+##### Azure Monitor Metric configurations
 * `prometheus_azure_monitor`: The Azure credentials.
 
 ##### Role dependencies
@@ -328,13 +328,20 @@ prometheus_kubernetes:
       port: '8080'
       metrics_path: 'prometheus'
 prometheus_azure_monitor:
-  tenant_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-  client_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-  client_secret: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  tenant_id: 'a4fa8873-af02-4d7c-8198-684e93c5d8c6'
+  client_id: 'c1fa72cf-1582-4a7c-8ec9-50b116d5a7de'
+  client_secret: 'cb67f3f9-1794-49ae-9e51-ce2789be12c4'
   environment: 'AzureChinaCloud'
   subscription:
-    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    - '1d290a0f-003d-4cb8-b504-d4285346506e'
+    - '2ea31cc2-f994-417a-af84-9a4d7aa492cb'
+  resources:
+    - 'Microsoft.Cache/Redis'
+    - 'Microsoft.DBforMySQL/servers'
+    - 'microsoft.network/virtualnetworkgateways'
+    - 'Microsoft.Sql/managedInstances'
+    - 'Microsoft.Sql/servers/elasticPools'
+    - 'Microsoft.Storage/storageAccounts'
 prometheus_grafana_dept: true
 prometheus_grafana_ngx_dept: true
 prometheus_port:

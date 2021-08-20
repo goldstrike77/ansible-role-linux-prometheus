@@ -42,7 +42,7 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx' # The consul acl
 #      port: '8080'
 #      metrics_path: 'prometheus'
 
-# Azure Monitor configurations #
+# Azure Monitor Metric configurations #
 #prometheus_azure_monitor:
 #  tenant_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 #  client_id: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
@@ -51,6 +51,13 @@ prometheus_consul_token: '7471828c-d50a-4b25-b6a5-xxxxxxxxxxxx' # The consul acl
 #  subscription:
 #    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 #    - 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#  resources:
+#    - 'Microsoft.Cache/Redis'
+#    - 'Microsoft.DBforMySQL/servers'
+#    - 'microsoft.network/virtualnetworkgateways'
+#    - 'Microsoft.Sql/managedInstances'
+#    - 'Microsoft.Sql/servers/elasticPools'
+#    - 'Microsoft.Storage/storageAccounts'
 
 # Role dependencies #
 prometheus_grafana_dept: true # A boolean to determine whether or not to install the Grafana for metrics visualization.
