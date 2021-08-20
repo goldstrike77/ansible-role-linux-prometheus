@@ -393,9 +393,9 @@ scrape_configs:
       subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}']
       filter: ["resourceType eq 'Microsoft.Storage/storageAccounts'"]
       metric: ["Availability","Egress","Ingress","SuccessE2ELatency","SuccessServerLatency","Transactions","UsedCapacity"]
-      interval: ["PT1M"]
-      timespan: ["PT1M"]
-      aggregation: ['average']
+      interval: ["PT1H"]
+      timespan: ["PT1H"]
+      aggregation: ['average',"total"]
     static_configs:
       - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
     relabel_configs:
