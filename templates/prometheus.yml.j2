@@ -220,6 +220,25 @@ scrape_configs:
         regex: (.+)
         target_label: __metrics_path__
         replacement: /$1/{{ host.pod_discover.metrics_path | default("prometheus") }}
+      - source_labels: [__address__]
+        target_label: environment
+        replacement: "{{ environments | default('prd') }}"
+      - source_labels: [__address__]
+        target_label: datacenter
+        replacement: "{{ datacenter | default('dc01') }}"
+      - source_labels: [__address__]
+        target_label: domain
+        replacement: "{{ domain | default('local') }}"
+      - source_labels: [__address__]
+        target_label: customer
+        replacement: "{{ customer | default('demo') }}"
+{% if tags is defined %}
+{% for key,value in tags.iteritems() %}
+      - source_labels: [__address__]
+        target_label: "{{ key }}"
+        replacement: "{{ value }}"
+{% endfor %}
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}
