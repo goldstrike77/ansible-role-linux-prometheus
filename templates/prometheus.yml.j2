@@ -157,6 +157,9 @@ scrape_configs:
         regex: (.+)
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics
+      - source_labels: [__address__]
+        target_label: k8s_role_type
+        replacement: "node"
   - job_name: 'Kubernetes cadvisor - {{ host.apiserver | default("127.0.0.1") }}'
     scheme: https
     bearer_token: '{{ host.token | default("xxx") }}'
@@ -179,6 +182,9 @@ scrape_configs:
         regex: (.+)
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+      - source_labels: [__address__]
+        target_label: k8s_role_type
+        replacement: "node"
 {% endif %}
 {% if host.pod_discover.enable | bool %}
   - job_name: 'Kubernetes pod - {{ host.apiserver | default("127.0.0.1") }}'
@@ -221,24 +227,8 @@ scrape_configs:
         target_label: __metrics_path__
         replacement: /$1/{{ host.pod_discover.metrics_path | default("prometheus") }}
       - source_labels: [__address__]
-        target_label: environment
-        replacement: "{{ environments | default('prd') }}"
-      - source_labels: [__address__]
-        target_label: datacenter
-        replacement: "{{ datacenter | default('dc01') }}"
-      - source_labels: [__address__]
-        target_label: domain
-        replacement: "{{ domain | default('local') }}"
-      - source_labels: [__address__]
-        target_label: customer
-        replacement: "{{ customer | default('demo') }}"
-{% if tags is defined %}
-{% for key,value in tags.iteritems() %}
-      - source_labels: [__address__]
-        target_label: "{{ key }}"
-        replacement: "{{ value }}"
-{% endfor %}
-{% endif %}
+        target_label: k8s_role_type
+        replacement: "pod"
 {% endif %}
 {% endfor %}
 {% endif %}
