@@ -299,15 +299,15 @@ scrape_configs:
         regex: 'interval|timespan|unit|resourceID'
 {% endif %}
 {% if "Microsoft.DBforPostgreSQL/servers" in prometheus_azure_monitor.resources %}
-  - job_name: 'Azure Database for PostgreSQL server'
+  - job_name: 'Azure Database for PostgreSQL'
     metrics_path: /probe/metrics/list
     params:
       name: ["azure_pgsql"]
       subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}']
       filter: ["resourceType eq 'Microsoft.DBforPostgreSQL/servers'"]
       metric: ["active_connections","backup_storage_used","connections_failed","cpu_percent","io_consumption_percent","memory_percent","network_bytes_egress","network_bytes_ingress","pg_replica_log_delay_in_bytes","pg_replica_log_delay_in_seconds","serverlog_storage_limit","serverlog_storage_percent","serverlog_storage_usage","storage_limit","storage_percent","storage_used"]
-      interval: ["PT1M"]
-      timespan: ["PT1M"]
+      interval: ["PT15M"]
+      timespan: ["PT15M"]
       aggregation: ['average']
     static_configs:
       - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
