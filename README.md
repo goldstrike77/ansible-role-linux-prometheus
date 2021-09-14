@@ -338,6 +338,7 @@ prometheus_azure_monitor:
   resources:
     - 'Microsoft.Cache/Redis'
     - 'Microsoft.DBforMySQL/servers'
+    - 'Microsoft.DBforPostgreSQL/servers'
     - 'microsoft.network/virtualnetworkgateways'
     - 'Microsoft.Sql/managedInstances'
     - 'Microsoft.Sql/servers/elasticPools'

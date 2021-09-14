@@ -298,6 +298,38 @@ scrape_configs:
       - action: labeldrop
         regex: 'interval|timespan|unit|resourceID'
 {% endif %}
+{% if "Microsoft.DBforPostgreSQL/servers" in prometheus_azure_monitor.resources %}
+  - job_name: 'Azure Database for PostgreSQL server'
+    metrics_path: /probe/metrics/list
+    params:
+      name: ["azure_pgsql"]
+      subscription: ['{{ prometheus_azure_monitor.subscription | list | join("','") }}']
+      filter: ["resourceType eq 'Microsoft.DBforPostgreSQL/servers'"]
+      metric: ["active_connections","backup_storage_used","connections_failed","cpu_percent","io_consumption_percent","memory_percent","network_bytes_egress","network_bytes_ingress","pg_replica_log_delay_in_bytes","pg_replica_log_delay_in_seconds","serverlog_storage_limit","serverlog_storage_percent","serverlog_storage_usage","storage_limit","storage_percent","storage_used"]
+      interval: ["PT1M"]
+      timespan: ["PT1M"]
+      aggregation: ['average']
+    static_configs:
+      - targets: [":{{ prometheus_port.azure_monitor | default('9276') }}"]
+    relabel_configs:
+      - regex: job
+        action: labeldrop
+    metric_relabel_configs:
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'subscription'
+        regex: '^\/subscriptions\/(\S+).*/resource[gG]roups\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'resourcegroup'
+        regex: '.*/resource[gG]roups\/(\S+).*/providers\/(\S+)'
+      - source_labels: [resourceID]
+        replacement: '${1}'
+        target_label: 'host'
+        regex: '.*/Microsoft.DB[fF]orPostgreSQL\/servers\/(\S+).*'
+      - action: labeldrop
+        regex: 'interval|timespan|unit|resourceID'
+{% endif %}
 {% if "microsoft.network/virtualnetworkgateways" in prometheus_azure_monitor.resources %}
   - job_name: 'Azure Virtual network gateway'
     metrics_path: /probe/metrics/list
