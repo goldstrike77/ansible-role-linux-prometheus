@@ -5,6 +5,11 @@ global:
   evaluation_interval: {{ prometheus_arg.evaluation_interval }}
   external_labels:
     replica: {{ ansible_hostname|upper }}
+{% if prometheus_external_labels is defined %}
+{% for key,value in prometheus_external_labels.iteritems() %}
+    {{ key }}: '{{ value }}'
+{% endfor %}
+{% endif %}
 
 # Alertmanager configuration
 alerting:

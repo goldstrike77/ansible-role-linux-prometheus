@@ -16,6 +16,9 @@ prometheus_alert_incident_levels_map: 'severity' # Defines the display mode of i
 # ├──────────┼──────────┤
 # │    p4    │ info     │
 # └──────────┴──────────┘
+#prometheus_external_labels: # The global labels to time series or alerts when communicating with external systems.
+#  geography: 'China'
+#  region: 'chinaeast2'
 
 # Consul SD configurations #
 prometheus_consul_server: 'consul.service.dc01.local:8500' # The consul address and port.
