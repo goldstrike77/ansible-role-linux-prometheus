@@ -161,7 +161,7 @@ prometheus_arg:
 
 # Alertmanager System Variables #
 alertmanager_arg:
-  mail_to_user: 'somebody@somebody.com'
+  timezone: 'Local' # Local or UTC.
   group_by:
     - 'alertname'
     - 'cluster'
@@ -169,16 +169,19 @@ alertmanager_arg:
   group_wait: '60s'
   group_interval: '60s'
   repeat_interval: '2h'
-  smtp_auth_password: 'changeme'
-  smtp_auth_username: 'user'
-  smtp_from: 'do-not-reply@somebody.com'
-  smtp_require_tls: false
-  smtp_smarthost: '127.0.0.1:25'
-#  wechat_api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
-#  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
-#  wechat_api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
-#  wechat_to_party: '1'
-#  webhook:
+#  smtp_arg:
+#    auth_password: 'changeme'
+#    auth_username: 'user'
+#    require_tls: false
+#    smarthost: '127.0.0.1:25'
+#    from: 'do-not-reply@somebody.com'
+#    to: 'somebody@somebody.com'
+#  wechat_arg:
+#   api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
+#   api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
+#   api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
+#   to_party: '1'
+#  webhook_parameter:
 #    - name: 'alerta' 
 #      url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 

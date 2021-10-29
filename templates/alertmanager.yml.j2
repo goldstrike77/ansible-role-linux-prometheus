@@ -2,12 +2,14 @@ global:
   http_config:
     tls_config:
       insecure_skip_verify: true
-  smtp_smarthost: '{{ alertmanager_arg.smtp_smarthost }}'
-  smtp_from: '{{ alertmanager_arg.smtp_from }}'
-  smtp_require_tls: {{ alertmanager_arg.smtp_require_tls | bool | to_json }}
-  smtp_auth_username: '{{ alertmanager_arg.smtp_auth_username }}'
-  smtp_auth_password: '{{ alertmanager_arg.smtp_auth_password }}'
   wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+{% if alertmanager_arg.smtp_arg is defined %}
+  smtp_smarthost: '{{ alertmanager_arg.smtp_arg.smarthost }}'
+  smtp_from: '{{ alertmanager_arg.smtp_arg.from }}'
+  smtp_require_tls: {{ alertmanager_arg.smtp_arg.require_tls | bool | to_json }}
+  smtp_auth_username: '{{ alertmanager_arg.smtp_arg.auth_username }}'
+  smtp_auth_password: '{{ alertmanager_arg.smtp_arg.auth_password }}'
+{% endif %}
 
 templates:
 - '/etc/prometheus/templates/default.tmpl'
@@ -19,9 +21,11 @@ route:
   group_wait: '{{ alertmanager_arg.group_wait }}'
   group_interval: '{{ alertmanager_arg.group_interval }}'
   repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
+{% if alertmanager_arg.smtp_arg is defined %}
   receiver: team-infra-mails
+{% endif %}
   routes:
-{% if alertmanager_arg.wechat_api_corpid is defined %}
+{% if alertmanager_arg.wechat_arg.api_corpid is defined %}
     - match:
         severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}
       receiver: team-infra-wechat
@@ -47,18 +51,20 @@ inhibit_rules:
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
+{% if alertmanager_arg.smtp_arg is defined %}
   - name: 'team-infra-mails'
     email_configs:
       - send_resolved: true
-        to: '{{ alertmanager_arg.mail_to_user }}'
-{% if alertmanager_arg.wechat_api_corpid is defined %}
+        to: '{{ alertmanager_arg.smtp_arg.to }}'
+{% endif %}
+{% if alertmanager_arg.wechat_arg is defined %}
   - name: "team-infra-wechat"
     wechat_configs:
       - send_resolved: true
-        to_party: '{{ alertmanager_arg.wechat_to_party }}'
-        agent_id: '{{ alertmanager_arg.wechat_api_agentid }}'
-        corp_id: '{{ alertmanager_arg.wechat_api_corpid }}'
-        api_secret: '{{ alertmanager_arg.wechat_api_secret }}'
+        to_party: '{{ alertmanager_arg.wechat_arg.to_party }}'
+        agent_id: '{{ alertmanager_arg.wechat_arg.agentid }}'
+        corp_id: '{{ alertmanager_arg.wechat_arg.corpid }}'
+        api_secret: '{{ alertmanager_arg.wechat_arg.secret }}'
 {% endif %}
 {% if alertmanager_arg.webhook is defined %}
 {% for webhook_parameter in alertmanager_arg.webhook %}

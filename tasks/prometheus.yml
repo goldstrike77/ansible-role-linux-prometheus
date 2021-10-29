@@ -42,9 +42,11 @@
   notify: 'Restart prometheus service.'
 
 - name: Prometheus alerting template file transfer.
-  copy:
-    src: "default.tmpl"
-    dest: "{{ prometheus_conf_path }}/templates/default.tmpl"
+  template:
+    src: 'default.tmpl'
+    dest: '{{ prometheus_conf_path }}/templates/default.tmpl'
+    variable_start_string: "<<"
+    variable_end_string: ">>"
     backup: 'yes'
     owner: 'prometheus'
     group: 'prometheus'

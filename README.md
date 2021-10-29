@@ -231,16 +231,16 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.group_wait`: How long to initially wait to send a notification for a group of alerts.
 * `alertmanager_arg.group_interval`: How long to wait before sending a notification about new alerts that are added to a group.
 * `alertmanager_arg.repeat_interval`: How long to wait before sending a notification again if it has already been sent successfully for an alert.
-* `alertmanager_arg.smtp_auth_password`: SMTP authentication password.
-* `alertmanager_arg.smtp_auth_username`: SMTP authentication username.
-* `alertmanager_arg.smtp_from`: The sender address.
-* `alertmanager_arg.smtp_require_tls`: The SMTP TLS requirement.
-* `alertmanager_arg.smtp_smarthost`: The SMTP host through which emails are sent.
-* `alertmanager_arg.wechat_api_agentid`: The wechat agent ID.
-* `alertmanager_arg.wechat_to_party`: The WeChat department to send notifications to.
-* `alertmanager_arg.wechat_api_corpid`: The corp id for authentication.
-* `alertmanager_arg.wechat_api_secret`: The API key to use when talking to the WeChat API.
-* `alertmanager_arg.webhook`: The endpoint to send HTTP POST requests to.
+* `alertmanager_arg.smtp_arg.auth_password`: SMTP authentication password.
+* `alertmanager_arg.smtp_arg.auth_username`: SMTP authentication username.
+* `alertmanager_arg.smtp_arg.from`: The sender address.
+* `alertmanager_arg.smtp_arg.require_tls`: The SMTP TLS requirement.
+* `alertmanager_arg.smtp_arg.smarthost`: The SMTP host through which emails are sent.
+* `alertmanager_arg.wechat_arg.api_agentid`: The wechat agent ID.
+* `alertmanager_arg.wechat_arg.to_party`: The WeChat department to send notifications to.
+* `alertmanager_arg.wechat_arg.api_corpid`: The corp id for authentication.
+* `alertmanager_arg.wechat_arg.api_secret`: The API key to use when talking to the WeChat API.
+* `alertmanager_arg.webhook_parameter`: The endpoint to send HTTP POST requests to.
 
 ##### Alertmanager rules
 * `prometheus_alert_rules`: Defining alerting rules.
@@ -394,7 +394,7 @@ prometheus_prober_arg:
     - '223.5.5.5'
     - '119.29.29.29'
 alertmanager_arg:
-  mail_to_user: 'somebody@somebody.com'
+  timezone: 'Local'
   group_by:
     - 'alertname'
     - 'cluster'
@@ -402,18 +402,21 @@ alertmanager_arg:
   group_wait: '60s'
   group_interval: '60s'
   repeat_interval: '2h'
-  smtp_auth_password: 'changeme'
-  smtp_auth_username: 'user'
-  smtp_from: 'do-not-reply@somebody.com'
-  smtp_require_tls: false
-  smtp_smarthost: '127.0.0.1:25'
-  wechat_api_agentid: '0'
-  wechat_to_party: '1'
-  wechat_api_corpid: 'wxe787605fxxxxxxxx'
-  wechat_api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-  webhook:
-    - name: 'alerta' 
-      url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+  smtp_arg:
+    auth_password: 'changeme'
+    auth_username: 'user'
+    require_tls: false
+    smarthost: '127.0.0.1:25'
+    from: 'do-not-reply@somebody.com'
+    to: 'somebody@somebody.com'
+  wechat_arg:
+    api_agentid: '0'
+    to_party: '1'
+    api_corpid: 'wxe787605fxxxxxxxx'
+    api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
+    webhook_parameter:
+      - name: 'alerta' 
+        url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:
   - 'Consul'
   - 'ElasticSearch'
