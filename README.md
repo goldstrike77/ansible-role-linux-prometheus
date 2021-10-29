@@ -414,7 +414,7 @@ alertmanager_arg:
     to_party: '1'
     api_corpid: 'wxe787605fxxxxxxxx'
     api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-    webhook_parameter:
+    webhook:
       - name: 'alerta' 
         url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:

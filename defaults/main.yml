@@ -181,7 +181,7 @@ alertmanager_arg:
 #   api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
 #   api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
 #   to_party: '1'
-#  webhook_parameter:
+#  webhook:
 #    - name: 'alerta' 
 #      url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
