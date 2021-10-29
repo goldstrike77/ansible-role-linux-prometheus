@@ -177,9 +177,9 @@ alertmanager_arg:
 #    from: 'do-not-reply@somebody.com'
 #    to: 'somebody@somebody.com'
 #  wechat_arg:
-#   api_corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
+#   corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
 #   api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
-#   api_agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
+#   agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
 #   to_party: '1'
 #  webhook:
 #    - name: 'alerta' 

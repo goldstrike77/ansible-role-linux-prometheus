@@ -27,6 +27,9 @@
     name: 'postfix.service'
     enabled: 'yes'
     state: 'started'
+  when:
+    - alertmanager_arg.smtp_arg is defined
+    - alertmanager_arg.smtp_arg.smarthost == '127.0.0.1:25'
 
 - name: Registered with HashiCorp Consul.
   include: 'register.yml'

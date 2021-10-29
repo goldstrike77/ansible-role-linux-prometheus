@@ -236,11 +236,11 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.smtp_arg.from`: The sender address.
 * `alertmanager_arg.smtp_arg.require_tls`: The SMTP TLS requirement.
 * `alertmanager_arg.smtp_arg.smarthost`: The SMTP host through which emails are sent.
-* `alertmanager_arg.wechat_arg.api_agentid`: The wechat agent ID.
+* `alertmanager_arg.wechat_arg.agentid`: The wechat agent ID.
 * `alertmanager_arg.wechat_arg.to_party`: The WeChat department to send notifications to.
-* `alertmanager_arg.wechat_arg.api_corpid`: The corp id for authentication.
+* `alertmanager_arg.wechat_arg.corpid`: The corp id for authentication.
 * `alertmanager_arg.wechat_arg.api_secret`: The API key to use when talking to the WeChat API.
-* `alertmanager_arg.webhook_parameter`: The endpoint to send HTTP POST requests to.
+* `alertmanager_arg.webhook`: The endpoint to send HTTP POST requests to.
 
 ##### Alertmanager rules
 * `prometheus_alert_rules`: Defining alerting rules.
@@ -410,9 +410,9 @@ alertmanager_arg:
     from: 'do-not-reply@somebody.com'
     to: 'somebody@somebody.com'
   wechat_arg:
-    api_agentid: '0'
+    agentid: '0'
     to_party: '1'
-    api_corpid: 'wxe787605fxxxxxxxx'
+    corpid: 'wxe787605fxxxxxxxx'
     api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
     webhook:
       - name: 'alerta' 
