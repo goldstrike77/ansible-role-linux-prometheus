@@ -3,13 +3,11 @@ global:
     tls_config:
       insecure_skip_verify: true
   wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
-{% if alertmanager_arg.smtp_arg is defined %}
-  smtp_smarthost: '{{ alertmanager_arg.smtp_arg.smarthost }}'
-  smtp_from: '{{ alertmanager_arg.smtp_arg.from }}'
-  smtp_require_tls: {{ alertmanager_arg.smtp_arg.require_tls | bool | to_json }}
-  smtp_auth_username: '{{ alertmanager_arg.smtp_arg.auth_username }}'
-  smtp_auth_password: '{{ alertmanager_arg.smtp_arg.auth_password }}'
-{% endif %}
+  smtp_smarthost: '{{ alertmanager_arg.smtp_arg.smarthost | default("127.0.0.1:25") }}'
+  smtp_from: '{{ alertmanager_arg.smtp_arg.from | default("do-not-reply@somebody.com") }}'
+  smtp_require_tls: {{ alertmanager_arg.smtp_arg.require_tls | bool | to_json | default(false) }}
+  smtp_auth_username: '{{ alertmanager_arg.smtp_arg.auth_username | default("user") }}'
+  smtp_auth_password: '{{ alertmanager_arg.smtp_arg.auth_password | default("changeme") }}'
 
 templates:
 - '/etc/prometheus/templates/default.tmpl'
@@ -21,9 +19,7 @@ route:
   group_wait: '{{ alertmanager_arg.group_wait }}'
   group_interval: '{{ alertmanager_arg.group_interval }}'
   repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
-{% if alertmanager_arg.smtp_arg is defined %}
   receiver: team-infra-mails
-{% endif %}
   routes:
 {% if alertmanager_arg.wechat_arg is defined %}
     - match:
@@ -51,12 +47,10 @@ inhibit_rules:
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
-{% if alertmanager_arg.smtp_arg is defined %}
   - name: 'team-infra-mails'
     email_configs:
       - send_resolved: true
-        to: '{{ alertmanager_arg.smtp_arg.to }}'
-{% endif %}
+        to: '{{ alertmanager_arg.smtp_arg.to | default("somebody@somebody.com") }}'
 {% if alertmanager_arg.wechat_arg is defined %}
   - name: "team-infra-wechat"
     wechat_configs:

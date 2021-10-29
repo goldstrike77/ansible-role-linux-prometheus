@@ -169,13 +169,13 @@ alertmanager_arg:
   group_wait: '60s'
   group_interval: '60s'
   repeat_interval: '2h'
-#  smtp_arg:
-#    auth_password: 'changeme'
-#    auth_username: 'user'
-#    require_tls: false
-#    smarthost: '127.0.0.1:25'
-#    from: 'do-not-reply@somebody.com'
-#    to: 'somebody@somebody.com'
+  smtp_arg:
+    auth_password: 'changeme'
+    auth_username: 'user'
+    require_tls: false
+    smarthost: '127.0.0.1:25'
+    from: 'do-not-reply@somebody.com'
+    to: 'somebody@somebody.com'
 #  wechat_arg:
 #   corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
 #   api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
