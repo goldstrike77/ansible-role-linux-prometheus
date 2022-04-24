@@ -2,63 +2,28 @@
 prometheus_azure_mysql_alert_rules:
 # Microsoft.DBforMySQL/servers
   - alert: azure_mysql_CPU_usage
-    expr: azure_mysql{aggregation="average",metric="cpu_percent"} > 75
-    for: 5m
-    labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
-    annotations:
-      description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
-  - alert: azure_mysql_CPU_usage
-    expr: azure_mysql{aggregation="average",metric="cpu_percent"} > 85
+    expr: azure_mysql{aggregation="average",metric="cpu_percent"} > 90
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
-  - alert: azure_mysql_CPU_usage
-    expr: azure_mysql{aggregation="average",metric="cpu_percent"} > 95
-    for: 5m
-    labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
-    annotations:
-      description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: azure_mysql_memory_usage
-    expr: azure_mysql{aggregation="average",metric="memory_percent"} > 75
-    for: 5m
-    labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
-    annotations:
-      description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
-  - alert: azure_mysql_memory_usage
-    expr: azure_mysql{aggregation="average",metric="memory_percent"} > 85
+    expr: azure_mysql{aggregation="average",metric="memory_percent"} > 90
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
-  - alert: azure_mysql_memory_usage
-    expr: azure_mysql{aggregation="average",metric="memory_percent"} > 95
-    for: 5m
-    labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
-    annotations:
-      description: 'Memory usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: azure_mysql_storage_usage
-    expr: azure_mysql{aggregation="average",metric="storage_percent"} > 75
-    for: 5m
-    labels:
-      severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].warning >>
-    annotations:
-      description: 'Storage usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
-  - alert: azure_mysql_storage_usage
-    expr: azure_mysql{aggregation="average",metric="storage_percent"} > 85
+    expr: azure_mysql{aggregation="average",metric="storage_percent"} > 80
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
       description: 'Storage usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
   - alert: azure_mysql_storage_usage
-    expr: azure_mysql{aggregation="average",metric="storage_percent"} > 95
+    expr: azure_mysql{aggregation="average",metric="storage_percent"} > 90
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
