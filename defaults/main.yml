@@ -188,6 +188,7 @@ alertmanager_arg:
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
   - 'Alertmanager'
+  - 'Azure_sqlep'
   - 'Azure_sqlmi'
   - 'Azure_mysql'
   - 'Azure_pgsql'
