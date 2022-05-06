@@ -38,6 +38,11 @@ route:
       continue: true
 {% endfor %}
 {% endif %}
+{% if alertmanager_arg.smtp_arg is defined  %}
+    - match:
+      receiver: team-infra-mails
+      continue: true
+{% endif %}
 
 inhibit_rules:
 - source_match:
