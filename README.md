@@ -231,15 +231,15 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `alertmanager_arg.group_wait`: How long to initially wait to send a notification for a group of alerts.
 * `alertmanager_arg.group_interval`: How long to wait before sending a notification about new alerts that are added to a group.
 * `alertmanager_arg.repeat_interval`: How long to wait before sending a notification again if it has already been sent successfully for an alert.
-* `alertmanager_arg.smtp_arg.auth_password`: SMTP authentication password.
-* `alertmanager_arg.smtp_arg.auth_username`: SMTP authentication username.
-* `alertmanager_arg.smtp_arg.from`: The sender address.
-* `alertmanager_arg.smtp_arg.require_tls`: The SMTP TLS requirement.
-* `alertmanager_arg.smtp_arg.smarthost`: The SMTP host through which emails are sent.
-* `alertmanager_arg.wechat_arg.agentid`: The wechat agent ID.
-* `alertmanager_arg.wechat_arg.to_party`: The WeChat department to send notifications to.
-* `alertmanager_arg.wechat_arg.corpid`: The corp id for authentication.
-* `alertmanager_arg.wechat_arg.api_secret`: The API key to use when talking to the WeChat API.
+* `alertmanager_arg.smtp.auth_password`: SMTP authentication password.
+* `alertmanager_arg.smtp.auth_username`: SMTP authentication username.
+* `alertmanager_arg.smtp.from`: The sender address.
+* `alertmanager_arg.smtp.require_tls`: The SMTP TLS requirement.
+* `alertmanager_arg.smtp.smarthost`: The SMTP host through which emails are sent.
+* `alertmanager_arg.wechat.agentid`: The wechat agent ID.
+* `alertmanager_arg.wechat.to_party`: The WeChat department to send notifications to.
+* `alertmanager_arg.wechat.corpid`: The corp id for authentication.
+* `alertmanager_arg.wechat.api_secret`: The API key to use when talking to the WeChat API.
 * `alertmanager_arg.webhook`: The endpoint to send HTTP POST requests to.
 
 ##### Alertmanager rules
@@ -402,14 +402,14 @@ alertmanager_arg:
   group_wait: '60s'
   group_interval: '60s'
   repeat_interval: '2h'
-  smtp_arg:
+  smtp:
     auth_password: 'changeme'
     auth_username: 'user'
     require_tls: false
     smarthost: '127.0.0.1:25'
     from: 'do-not-reply@somebody.com'
     to: 'somebody@somebody.com'
-  wechat_arg:
+  wechat:
     agentid: '0'
     to_party: '1'
     corpid: 'wxe787605fxxxxxxxx'
