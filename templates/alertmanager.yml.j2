@@ -5,9 +5,11 @@ global:
   wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
   smtp_smarthost: '{{ alertmanager_arg.smtp.smarthost | default("127.0.0.1:25") }}'
   smtp_from: '{{ alertmanager_arg.smtp.from | default("do-not-reply@somebody.com") }}'
+{% if alertmanager_arg.smtp.enable | bool %}
   smtp_require_tls: {{ alertmanager_arg.smtp.require_tls | bool | to_json | default(false) }}
   smtp_auth_username: '{{ alertmanager_arg.smtp.auth_username | default("user") }}'
   smtp_auth_password: '{{ alertmanager_arg.smtp.auth_password | default("changeme") }}'
+{% endif %}
 
 templates:
 - '/etc/prometheus/templates/default.tmpl'
@@ -66,7 +68,7 @@ receivers:
         api_secret: '{{ alertmanager_arg.wechat.api_secret }}'
 {% endif %}
 {% if alertmanager_arg.webhook is defined %}
-{% for webhook_parameter in alertmanager_arg.webhook %}
+{% for webhook_parameter in alertmanager_arg.webhook.apps %}
   - name: "team-infra-{{ webhook_parameter.name }}"
     webhook_configs:
       - send_resolved: true
