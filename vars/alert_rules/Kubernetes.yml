@@ -3,7 +3,7 @@ prometheus_kubernetes_alert_rules:
 # Kubernetes container orchestration system
   - alert: KubePodCrashLooping
     annotations:
-      description: Pod is restarting {{ printf "%.0f" $value }} times / 5 minutes.
+      description: Pod is restarting {{ printf "%.1f" $value }} times / 5 minutes.
     expr: "rate(kube_pod_container_status_restarts_total[15m]) * 60 * 5 > 0"
     for: 60m
     labels:

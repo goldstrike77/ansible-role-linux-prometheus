@@ -23,7 +23,7 @@ prometheus_jenkins_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].info >>
     annotations:
-      description: 'Waiting on average {{ $value | printf "%.0f" }} seconds to start a job.'
+      description: 'Waiting on average {{ $value | printf "%.1f" }} seconds to start a job.'
 
   - alert: JenkinsTooLowJobSuccessRate
     expr: "jenkins_runs_success_total / jenkins_runs_total_total < 0.60"

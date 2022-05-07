@@ -7,18 +7,18 @@ prometheus_azure_sqlep_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.1f" }}%.'
   - alert: azure_sqlelasticpool_storage_usage
     expr: azure_sqlelasticpool{aggregation="average",metric="storage_percent"} > 80
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Storage usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Storage usage has exceeded the threshold with a value of {{ $value | printf "%.1f" }}%.'
   - alert: azure_sqlelasticpool_storage_usage
     expr: azure_sqlelasticpool{aggregation="average",metric="storage_percent"} > 90
     for: 5m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
-      description: 'Storage usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Storage usage has exceeded the threshold with a value of {{ $value | printf "%.1f" }}%.'

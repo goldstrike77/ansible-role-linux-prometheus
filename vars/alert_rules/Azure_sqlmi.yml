@@ -7,4 +7,4 @@ prometheus_azure_sqlmi_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Average CPU usage has exceeded the threshold with a value of {{ $value | printf "%.1f" }}%.'

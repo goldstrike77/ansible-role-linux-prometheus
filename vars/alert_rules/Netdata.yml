@@ -15,7 +15,7 @@ prometheus_netdata_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
-      description: 'Processor usage has exceeded the threshold with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Processor usage has exceeded the threshold with a value of {{ $value | printf "%.1f" }}%.'
 
   - alert: node_high_memory_usage
     expr: '100 / sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)(netdata_system_ram_MiB_average) * sum by (datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>)(netdata_system_ram_MiB_average{dimension=~"free|cached|buffers"}) < 10'
@@ -23,7 +23,7 @@ prometheus_netdata_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Memory free has less than 10% with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Memory free has less than 10% with a value of {{ $value | printf "%.1f" }}%.'
 
   - alert: node_low_filesystem_space
     expr: '100 / sum(netdata_disk_space_GiB_average{family!~"/boot/efi|/run|/dev/shm|/dev"}) by (family,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) * sum(netdata_disk_space_GiB_average{family!~"/boot/efi|/run|/dev/shm|/dev",dimension=~"avail|cached"}) by (family,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) < 20'
@@ -31,7 +31,7 @@ prometheus_netdata_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Filesystem has less than 20% with a value of {{ $value | printf "%.0f" }}.'
+      description: 'Filesystem has less than 20% with a value of {{ $value | printf "%.1f" }}.'
 
   - alert: node_low_filesystem_space
     expr: '100 / sum(netdata_disk_space_GiB_average{family!~"/boot/efi|/run|/dev/shm|/dev"}) by (family,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) * sum(netdata_disk_space_GiB_average{family!~"/boot/efi|/run|/dev/shm|/dev",dimension=~"avail|cached"}) by (family,datacenter,customer,environment,project,group,instance,service<< tags_key | default("") >>) < 10'
@@ -39,7 +39,7 @@ prometheus_netdata_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
-      description: 'Filesystem has less than 10% with a value of {{ $value | printf "%.0f" }}.'
+      description: 'Filesystem has less than 10% with a value of {{ $value | printf "%.1f" }}.'
 
   - alert: node_Disc_Read
     expr: 'netdata_disk_await_milliseconds_operation_average{dimension="reads"} > 100'

@@ -7,4 +7,4 @@ prometheus_graylog_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
-      description: 'The message journal store utilization ratio has more than 90% with a value of {{ $value | printf "%.0f" }}.'
+      description: 'The message journal store utilization ratio has more than 90% with a value of {{ $value | printf "%.1f" }}%.'

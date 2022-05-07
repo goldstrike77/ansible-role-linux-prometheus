@@ -7,11 +7,11 @@ prometheus_smokeping_alert_rules:
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical >>
     annotations:
-      description: 'Ping package loss has more than 10% with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Ping package loss has more than 10% with a value of {{ $value | printf "%.1f" }}%.'
   - alert: Ping_lost
     expr: "(increase(smokeping_requests_total[10m]) - increase(smokeping_response_duration_seconds_count[10m])) / increase(smokeping_requests_total[10m]) * 100 > 5"
     for: 10m
     labels:
       severity: << vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high >>
     annotations:
-      description: 'Ping package loss has more than 5% with a value of {{ $value | printf "%.0f" }}%.'
+      description: 'Ping package loss has more than 5% with a value of {{ $value | printf "%.1f" }}%.'
