@@ -32,7 +32,7 @@ route:
       continue: true
 {% endif %}
 {% if alertmanager_arg.webhook.enable | bool %}
-{% for webhook_parameter in alertmanager_arg.webhook %}
+{% for webhook_parameter in alertmanager_arg.webhook.apps %}
     - match:
       receiver: team-infra-{{ webhook_parameter.name }}
       continue: true

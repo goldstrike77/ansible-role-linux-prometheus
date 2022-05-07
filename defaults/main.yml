@@ -185,8 +185,9 @@ alertmanager_arg:
 #   to_party: '1'
   webhook:
     enable: false
-#    - name: 'alerta' 
-#      url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
+#    apps:
+#      - name: 'alerta' 
+#        url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 
 # Alertmanager rules #
 prometheus_alert_rules: # Defining alerting rules.
