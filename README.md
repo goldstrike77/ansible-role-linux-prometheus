@@ -226,21 +226,13 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `prometheus_prober_arg`: Prober configuration.
 
 ##### Alertmanager System Variables
-* `alertmanager_arg.mail_to_user`: The email address to send notifications to.
 * `alertmanager_arg.group_by`: They are grouped by alertname.
 * `alertmanager_arg.group_wait`: How long to initially wait to send a notification for a group of alerts.
 * `alertmanager_arg.group_interval`: How long to wait before sending a notification about new alerts that are added to a group.
 * `alertmanager_arg.repeat_interval`: How long to wait before sending a notification again if it has already been sent successfully for an alert.
-* `alertmanager_arg.smtp.auth_password`: SMTP authentication password.
-* `alertmanager_arg.smtp.auth_username`: SMTP authentication username.
-* `alertmanager_arg.smtp.from`: The sender address.
-* `alertmanager_arg.smtp.require_tls`: The SMTP TLS requirement.
-* `alertmanager_arg.smtp.smarthost`: The SMTP host through which emails are sent.
-* `alertmanager_arg.wechat.agentid`: The wechat agent ID.
-* `alertmanager_arg.wechat.to_party`: The WeChat department to send notifications to.
-* `alertmanager_arg.wechat.corpid`: The corp id for authentication.
-* `alertmanager_arg.wechat.api_secret`: The API key to use when talking to the WeChat API.
-* `alertmanager_arg.webhook`: The endpoint to send HTTP POST requests to.
+* `alertmanager_arg.smtp`: Define mail parameters.
+* `alertmanager_arg.wechat`: Define wechat parameters.
+* `alertmanager_arg.webhook`: Define webhook parameters.
 
 ##### Alertmanager rules
 * `prometheus_alert_rules`: Defining alerting rules.
@@ -403,18 +395,26 @@ alertmanager_arg:
   group_interval: '60s'
   repeat_interval: '2h'
   smtp:
+    enable: true
     auth_password: 'changeme'
     auth_username: 'user'
     require_tls: false
     smarthost: '127.0.0.1:25'
     from: 'do-not-reply@somebody.com'
-    default_recipient: 'somebody@somebody.com'
+    apps:
+      - name: 'xxx:''
+        recipients: 'somebody@somebody.com'
+        match:
+          project: 'xx'
   wechat:
-    agentid: '0'
-    to_party: '1'
+    enable: false
     corpid: 'wxe787605fxxxxxxxx'
     api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
-    webhook:
+    agentid: '0'
+    to_party: '1'
+  webhook:
+    enable: false
+    apps:
       - name: 'alerta' 
         url: 'https://demo-prd-infra-monitor-alerta.service.dc01.local:7443/api/webhooks/prometheus?api-key=1i_3_J4G6pjqsVkwYy7ZRj7bsXCHMqFYXaIksEMq'
 prometheus_alert_rules:

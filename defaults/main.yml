@@ -177,7 +177,7 @@ alertmanager_arg:
 #    smarthost: '127.0.0.1:25'
 #    from: 'do-not-reply@somebody.com'
 #    apps:
-#      - name: 'xxx:''
+#      - name: 'xxx'
 #        recipients: 'somebody@somebody.com'
 #        match:
 #          project: 'xx'

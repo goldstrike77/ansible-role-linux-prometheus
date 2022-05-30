@@ -21,7 +21,7 @@ route:
   group_wait: '{{ alertmanager_arg.group_wait }}'
   group_interval: '{{ alertmanager_arg.group_interval }}'
   repeat_interval: '{{ alertmanager_arg.repeat_interval }}'
-  receiver: team-infra-mails
+  receiver: "null"
   routes:
 {% if alertmanager_arg.wechat.enable | bool %}
     - match:
@@ -43,11 +43,13 @@ route:
 {% if alertmanager_arg.smtp.enable | bool %}
 {% for smtp_parameter in alertmanager_arg.smtp.apps %}
     - match:
+{% if smtp_parameter.match is defined %}
+{% for key,value in smtp_parameter.match.iteritems() %}
+        {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
       receiver: team-{{ smtp_parameter.name }}-mails
       continue: true
-{% for key,value in smtp_parameter.match() %}
-      {{ key }}: {{ value }}
-{% endfor %}
 {% endfor %}
 {% endif %}
 
@@ -59,6 +61,7 @@ inhibit_rules:
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
+  - name: "null"
 {% if alertmanager_arg.smtp.enable | bool %}
 {% for smtp_parameter in alertmanager_arg.smtp.apps %}
   - name: team-{{ smtp_parameter.name }}-mails
