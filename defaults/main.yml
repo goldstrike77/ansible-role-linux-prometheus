@@ -176,7 +176,11 @@ alertmanager_arg:
 #    require_tls: false
 #    smarthost: '127.0.0.1:25'
 #    from: 'do-not-reply@somebody.com'
-#    to: 'somebody@somebody.com'
+#    apps:
+#      - name: 'xxx:''
+#        recipients: 'somebody@somebody.com'
+#        match:
+#          project: 'xx'
   wechat:
     enable: false
 #   corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID

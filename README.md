@@ -408,7 +408,7 @@ alertmanager_arg:
     require_tls: false
     smarthost: '127.0.0.1:25'
     from: 'do-not-reply@somebody.com'
-    to: 'somebody@somebody.com'
+    default_recipient: 'somebody@somebody.com'
   wechat:
     agentid: '0'
     to_party: '1'

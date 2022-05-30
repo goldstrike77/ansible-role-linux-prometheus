@@ -41,9 +41,14 @@ route:
 {% endfor %}
 {% endif %}
 {% if alertmanager_arg.smtp.enable | bool %}
+{% for smtp_parameter in alertmanager_arg.smtp.apps %}
     - match:
-      receiver: team-infra-mails
+      receiver: team-{{ smtp_parameter.name }}-mails
       continue: true
+{% for key,value in smtp_parameter.match() %}
+      {{ key }}: {{ value }}
+{% endfor %}
+{% endfor %}
 {% endif %}
 
 inhibit_rules:
@@ -54,12 +59,16 @@ inhibit_rules:
   equal: ['{{ alertmanager_arg.group_by | list | join("', '") }}']
 
 receivers:
-  - name: 'team-infra-mails'
+{% if alertmanager_arg.smtp.enable | bool %}
+{% for smtp_parameter in alertmanager_arg.smtp.apps %}
+  - name: team-{{ smtp_parameter.name }}-mails
     email_configs:
       - send_resolved: true
-        to: '{{ alertmanager_arg.smtp.to | default("somebody@somebody.com") }}'
+        to: '{{ smtp_parameter.recipients | default("somebody@somebody.com") }}'
+{% endfor %}
+{% endif %}
 {% if alertmanager_arg.wechat is defined %}
-  - name: "team-infra-wechat"
+  - name: team-infra-wechat
     wechat_configs:
       - send_resolved: true
         to_party: '{{ alertmanager_arg.wechat.to_party }}'
@@ -69,7 +78,7 @@ receivers:
 {% endif %}
 {% if alertmanager_arg.webhook is defined %}
 {% for webhook_parameter in alertmanager_arg.webhook.apps %}
-  - name: "team-infra-{{ webhook_parameter.name }}"
+  - name: team-infra-{{ webhook_parameter.name }}
     webhook_configs:
       - send_resolved: true
         url: '{{ webhook_parameter.url }}'
