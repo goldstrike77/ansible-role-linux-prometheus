@@ -411,7 +411,11 @@ alertmanager_arg:
     corpid: 'wxe787605fxxxxxxxx'
     api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx'
     agentid: '0'
-    to_party: '1'
+    apps:
+      - name: 'infra'
+        to_party: '6'
+        matchers:
+          severity: '~"p1|p2"'
   webhook:
     enable: false
     apps:

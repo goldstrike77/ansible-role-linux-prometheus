@@ -24,28 +24,30 @@ route:
   receiver: "null"
   routes:
 {% if alertmanager_arg.wechat.enable | bool %}
-    - match:
-        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].critical }}
-      receiver: team-infra-wechat
+{% for wechat_parameter in alertmanager_arg.wechat.apps %}
+    - matchers:
+{% if wechat_parameter.matchers is defined %}
+{% for key,value in wechat_parameter.matchers.iteritems() %}
+      - {{ key }}={{ value }}
+{% endfor %}
+{% endif %}
+      receiver: team-{{ wechat_parameter.name }}-wechat
       continue: true
-    - match:
-        severity: {{ vars['prometheus_alert_incident_' + prometheus_alert_incident_levels_map].high }}
-      receiver: team-infra-wechat
-      continue: true
+{% endfor %}
 {% endif %}
 {% if alertmanager_arg.webhook.enable | bool %}
 {% for webhook_parameter in alertmanager_arg.webhook.apps %}
-    - match:
+    - matchers:
       receiver: team-infra-{{ webhook_parameter.name }}
       continue: true
 {% endfor %}
 {% endif %}
 {% if alertmanager_arg.smtp.enable | bool %}
 {% for smtp_parameter in alertmanager_arg.smtp.apps %}
-    - match:
-{% if smtp_parameter.match is defined %}
-{% for key,value in smtp_parameter.match.iteritems() %}
-        {{ key }}: {{ value }}
+    - matchers:
+{% if smtp_parameter.matchers is defined %}
+{% for key,value in smtp_parameter.matchers.iteritems() %}
+      - {{ key }}={{ value }}
 {% endfor %}
 {% endif %}
       receiver: team-{{ smtp_parameter.name }}-mails
@@ -71,13 +73,15 @@ receivers:
 {% endfor %}
 {% endif %}
 {% if alertmanager_arg.wechat is defined %}
-  - name: team-infra-wechat
+{% for wechat_parameter in alertmanager_arg.wechat.apps %}
+  - name: team-{{ wechat_parameter.name }}-wechat
     wechat_configs:
       - send_resolved: true
-        to_party: '{{ alertmanager_arg.wechat.to_party }}'
+        to_party: '{{ wechat_parameter.to_party }}'
         agent_id: '{{ alertmanager_arg.wechat.agentid }}'
         corp_id: '{{ alertmanager_arg.wechat.corpid }}'
         api_secret: '{{ alertmanager_arg.wechat.api_secret }}'
+{% endfor %}
 {% endif %}
 {% if alertmanager_arg.webhook is defined %}
 {% for webhook_parameter in alertmanager_arg.webhook.apps %}

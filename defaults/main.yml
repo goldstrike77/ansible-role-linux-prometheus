@@ -171,22 +171,26 @@ alertmanager_arg:
   repeat_interval: '2h'
   smtp:
     enable: false
-#    auth_password: 'changeme'
-#    auth_username: 'user'
-#    require_tls: false
-#    smarthost: '127.0.0.1:25'
-#    from: 'do-not-reply@somebody.com'
-#    apps:
-#      - name: 'xxx'
-#        recipients: 'somebody@somebody.com'
-#        match:
-#          project: 'xx'
+#   auth_password: 'changeme'
+#   auth_username: 'user'
+#   require_tls: false
+#   smarthost: '127.0.0.1:25'
+#   from: 'do-not-reply@somebody.com'
+#   apps:
+#     - name: 'xxx'
+#       recipients: 'somebody@somebody.com'
+#       matchers:
+#         project: 'xx'
   wechat:
     enable: false
 #   corpid: 'wxe787605fxxxxxxxx' # 我的企业 > 企业ID
 #   api_secret: 'fm6Ehm6DI8PlGWxtKcgkDOZCLMTsNqKqTxxxxxxxxxx' # 应用与小程序 > 自建 > 选择应用 > Secret
 #   agentid: '0' # 应用与小程序 > 自建 > 选择应用 > AgentId
-#   to_party: '1'
+#   apps:
+#     - name: 'infra'
+#       to_party: '6'
+#       matchers:
+#         severity: '~"p1|p2"'
   webhook:
     enable: false
 #    apps:
