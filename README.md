@@ -360,7 +360,7 @@ thanos_port:
   store_grpc: '19093'
   store_http: '19193'
 prometheus_grafana_path: '/data'
-prometheus_grafana_version: '6.7'
+prometheus_grafana_version: '6.7.6'
 prometheus_grafana_admin_user: 'admin'
 prometheus_grafana_admin_password: 'changeme'
 prometheus_grafana_https: true
