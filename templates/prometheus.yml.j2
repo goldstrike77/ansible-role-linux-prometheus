@@ -4,7 +4,8 @@ global:
   scrape_timeout:      {{ prometheus_arg.scrape_timeout }}
   evaluation_interval: {{ prometheus_arg.evaluation_interval }}
   external_labels:
-    replica: {{ ansible_hostname|upper }}
+    cluster: centralized
+    prometheus_replica: {{ ansible_hostname|upper }}
 {% if prometheus_external_labels is defined %}
 {% for key,value in prometheus_external_labels.iteritems() %}
     {{ key }}: '{{ value }}'
